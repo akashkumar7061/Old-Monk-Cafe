@@ -3,9 +3,13 @@ const logger = require('../utils/logger');
 
 /**
  * Establish MongoDB connection using Mongoose.
- * Exits process on failure so process managers (PM2/Docker) can restart cleanly.
+ * Reuses existing connections in serverless environments.
  */
 const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
+
   try {
     mongoose.set('strictQuery', true);
 
@@ -25,7 +29,11 @@ const connectDB = async () => {
     });
   } catch (error) {
     logger.error(`MongoDB initial connection failed: ${error.message}`);
-    process.exit(1);
+    if (process.env.VERCEL) {
+      throw error; // Throw error in serverless environment
+    } else {
+      process.exit(1);
+    }
   }
 };
 
