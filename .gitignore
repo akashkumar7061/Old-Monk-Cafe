@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+old-monk-cafe-frontend/node_modules/
+old-monk-cafe-backend/old-monk-backend/node_modules/
+
+# Next.js Build
+.next/
+old-monk-cafe-frontend/.next/
+
+# Logs
+logs
+*.log
+old-monk-cafe-backend/old-monk-backend/logs/
+
+# Env / Secrets
+.env
+old-monk-cafe-backend/old-monk-backend/.env
+
+# Local Zip Files
+*.zip
+
+# Temporary folders
+temp_project_zip/
+temp_zip_frontend/
+temp_zip_backend/
+
+# DS_Store / OS files
+.DS_Store
+Thumbs.db

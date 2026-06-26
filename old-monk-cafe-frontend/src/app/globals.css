@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FAF9F6;
+  --foreground: #1E1A17;
+  --primary: #FFFFFF;
+  --primary-dark: #F4F2EC;
+  --secondary: #8C6239;
+  --secondary-light: #A67C52;
+  --secondary-dark: #5C3E21;
+  --accent: #EADBC8;
+  --accent-light: #F5EBE0;
+  --accent-dark: #D2B48C;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(140, 98, 57, 0.08);
+  --glass-shadow: rgba(140, 98, 57, 0.04);
+}
+
+.dark {
+  --background: #12100E;
+  --foreground: #FAF9F6;
+  --primary: #1E1A17;
+  --primary-dark: #26211E;
+  --secondary: #D2B48C;
+  --secondary-light: #EADBC8;
+  --secondary-dark: #8C6239;
+  --accent: #3E3025;
+  --accent-light: #4E3E31;
+  --accent-dark: #FAF9F6;
+  --glass-bg: rgba(30, 26, 23, 0.85);
+  --glass-border: rgba(210, 180, 140, 0.15);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-outfit), sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-dark);
+}
+
+/* Premium Light/Dark Glassmorphism utility classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 30px 0 var(--glass-shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-panel-light {
+  background: var(--glass-bg);
+  opacity: 0.8;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Swiper overrides */
+.swiper-pagination-bullet {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #8C6239 !important;
+  width: 24px !important;
+  border-radius: 4px !important;
+}
+
+.swiper-button-next, .swiper-button-prev {
+  color: #8C6239 !important;
+}
