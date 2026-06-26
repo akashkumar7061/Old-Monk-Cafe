@@ -9,6 +9,7 @@ import { FloatingCTAs } from "@/components/FloatingCTAs";
 import { Clock, Users, Coffee, Sparkles, CheckCircle2, MessageSquare, Phone } from "lucide-react";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
+import { API_BASE_URL } from "@/config/api";
 
 export default function Reserve() {
   const { user } = useAuth();
@@ -64,7 +65,7 @@ export default function Reserve() {
         timeSlot: formData.timeSlot || "7:00 PM",
       };
 
-      const res = await axios.post("http://localhost:5000/api/v1/reservations", payload);
+      const res = await axios.post(`${API_BASE_URL}/reservations`, payload);
       if (res.data?.success && res.data?.data) {
         setBookingRef(res.data.data.reservationNumber || "OMC-RES-1029");
         setSuccess(true);

@@ -7,6 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useParams, useSearchParams } from "next/navigation";
 import { CheckCircle2, Clock, Coffee, MapPin, Phone, MessageSquare, RefreshCw, ShoppingBag, ShieldCheck } from "lucide-react";
 import axios from "axios";
+import { API_BASE_URL } from "@/config/api";
 
 interface OrderDetail {
   id: string;
@@ -45,7 +46,7 @@ export default function TrackOrder() {
       }
 
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await axios.get(`http://localhost:5000/api/v1/orders/${id}`, { headers });
+      const res = await axios.get(`${API_BASE_URL}/orders/${id}`, { headers });
       if (res.data?.success && res.data?.data) {
         const o = res.data.data;
         const mappedOrder: OrderDetail = {

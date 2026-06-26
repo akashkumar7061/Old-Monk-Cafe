@@ -9,6 +9,7 @@ import { Chatbot } from "@/components/Chatbot";
 import { FloatingCTAs } from "@/components/FloatingCTAs";
 import { Search, Coffee, RefreshCw, Download } from "lucide-react";
 import axios from "axios";
+import { API_BASE_URL } from "@/config/api";
 
 // Default Menu Items with prices matching the user's request
 const fallbackMenuItems: MenuItemData[] = [
@@ -88,7 +89,7 @@ export default function Menu() {
     const fetchMenu = async () => {
       setLoading(true);
       try {
-        const res = await axios.get("http://localhost:5000/api/v1/menu");
+        const res = await axios.get(`${API_BASE_URL}/menu`);
         if (res.data?.success && res.data?.data && res.data.data.length > 0) {
           const apiItems = res.data.data.map((item: any) => ({
             id: item._id || item.id,

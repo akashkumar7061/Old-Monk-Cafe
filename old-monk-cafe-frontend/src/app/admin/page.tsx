@@ -22,6 +22,7 @@ import {
   PlusCircle
 } from "lucide-react";
 import axios from "axios";
+import { API_BASE_URL } from "@/config/api";
 
 export default function AdminDashboard() {
   const { user, login, logout, token, isAdmin, isLoading } = useAuth();
@@ -64,32 +65,32 @@ export default function AdminDashboard() {
     try {
       const headers = { Authorization: `Bearer ${token}` };
       
-      const ordRes = await axios.get("http://localhost:5000/api/v1/orders", { headers });
+      const ordRes = await axios.get(`${API_BASE_URL}/orders`, { headers });
       if (ordRes.data?.success && ordRes.data?.data) {
         setOrders(ordRes.data.data);
       }
 
-      const resRes = await axios.get("http://localhost:5000/api/v1/reservations", { headers });
+      const resRes = await axios.get(`${API_BASE_URL}/reservations`, { headers });
       if (resRes.data?.success && resRes.data?.data) {
         setReservations(resRes.data.data);
       }
 
-      const menuRes = await axios.get("http://localhost:5000/api/v1/menu", { headers });
+      const menuRes = await axios.get(`${API_BASE_URL}/menu`, { headers });
       if (menuRes.data?.success && menuRes.data?.data) {
         setMenuItems(menuRes.data.data);
       }
 
-      const revRes = await axios.get("http://localhost:5000/api/v1/reviews", { headers });
+      const revRes = await axios.get(`${API_BASE_URL}/reviews`, { headers });
       if (revRes.data?.success && revRes.data?.data) {
         setReviews(revRes.data.data);
       }
 
-      const inqRes = await axios.get("http://localhost:5000/api/v1/contact", { headers });
+      const inqRes = await axios.get(`${API_BASE_URL}/contact`, { headers });
       if (inqRes.data?.success && inqRes.data?.data) {
         setInquiries(inqRes.data.data);
       }
 
-      const anRes = await axios.get("http://localhost:5000/api/v1/analytics", { headers });
+      const anRes = await axios.get(`${API_BASE_URL}/analytics`, { headers });
       if (anRes.data?.success && anRes.data?.data) {
         const stats = anRes.data.data;
         setMetrics({
@@ -160,7 +161,7 @@ export default function AdminDashboard() {
   const handleUpdateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      await axios.patch(`http://localhost:5000/api/v1/orders/${orderId}/status`, { status: newStatus }, { headers });
+      await axios.patch(`${API_BASE_URL}/orders/${orderId}/status`, { status: newStatus }, { headers });
       setOrders(orders.map((o) => (o._id === orderId ? { ...o, status: newStatus } : o)));
     } catch (err) {
       setOrders(orders.map((o) => (o._id === orderId ? { ...o, status: newStatus } : o)));
@@ -170,7 +171,7 @@ export default function AdminDashboard() {
   const handleUpdateReservationStatus = async (resId: string, newStatus: string) => {
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      await axios.patch(`http://localhost:5000/api/v1/reservations/${resId}/status`, { status: newStatus }, { headers });
+      await axios.patch(`${API_BASE_URL}/reservations/${resId}/status`, { status: newStatus }, { headers });
       setReservations(reservations.map((r) => (r._id === resId ? { ...r, status: newStatus } : r)));
     } catch (err) {
       setReservations(reservations.map((r) => (r._id === resId ? { ...r, status: newStatus } : r)));
@@ -180,7 +181,7 @@ export default function AdminDashboard() {
   const handleToggleReviewStatus = async (revId: string, currentApproved: boolean) => {
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      await axios.patch(`http://localhost:5000/api/v1/reviews/${revId}/approve`, { isApproved: !currentApproved }, { headers });
+      await axios.patch(`${API_BASE_URL}/reviews/${revId}/approve`, { isApproved: !currentApproved }, { headers });
       setReviews(reviews.map((r) => (r._id === revId ? { ...r, isApproved: !currentApproved } : r)));
     } catch (err) {
       setReviews(reviews.map((r) => (r._id === revId ? { ...r, isApproved: !currentApproved } : r)));
@@ -191,7 +192,7 @@ export default function AdminDashboard() {
     if (!confirm("Are you sure you want to delete this menu item?")) return;
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      await axios.delete(`http://localhost:5000/api/v1/menu/${menuId}`, { headers });
+      await axios.delete(`${API_BASE_URL}/menu/${menuId}`, { headers });
       setMenuItems(menuItems.filter((m) => m._id !== menuId));
     } catch (err) {
       setMenuItems(menuItems.filter((m) => m._id !== menuId));
@@ -233,12 +234,12 @@ export default function AdminDashboard() {
     try {
       const headers = { Authorization: `Bearer ${token}` };
       if (modalMode === "add") {
-        const res = await axios.post("http://localhost:5000/api/v1/menu", menuForm, { headers });
+        const res = await axios.post(`${API_BASE_URL}/menu`, menuForm, { headers });
         if (res.data?.success && res.data?.data) {
           setMenuItems([...menuItems, res.data.data]);
         }
       } else if (modalMode === "edit" && selectedMenuItem) {
-        const res = await axios.patch(`http://localhost:5000/api/v1/menu/${selectedMenuItem._id}`, menuForm, { headers });
+        const res = await axios.patch(`${API_BASE_URL}/menu/${selectedMenuItem._id}`, menuForm, { headers });
         if (res.data?.success && res.data?.data) {
           setMenuItems(menuItems.map((m) => (m._id === selectedMenuItem._id ? res.data.data : m)));
         }

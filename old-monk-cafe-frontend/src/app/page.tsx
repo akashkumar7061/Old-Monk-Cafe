@@ -29,6 +29,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import axios from "axios";
+import { API_BASE_URL } from "@/config/api";
 
 export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -128,7 +129,7 @@ export default function Home() {
     setSubmittingContact(true);
     setContactStatus(null);
     try {
-      const res = await axios.post("http://localhost:5000/api/v1/contact", contactForm);
+      const res = await axios.post(`${API_BASE_URL}/contact`, contactForm);
       if (res.data?.success) {
         setContactStatus({ success: true, message: "Thank you! Your query has been submitted. Our team will contact you shortly." });
         setContactForm({ name: "", email: "", phone: "", message: "" });

@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { ShoppingBag, Truck, ArrowRight, ShieldCheck } from "lucide-react";
 import axios from "axios";
+import { API_BASE_URL } from "@/config/api";
 
 export default function Checkout() {
   const router = useRouter();
@@ -68,7 +69,7 @@ export default function Checkout() {
 
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       
-      const res = await axios.post("http://localhost:5000/api/v1/orders", orderPayload, { headers });
+      const res = await axios.post(`${API_BASE_URL}/orders`, orderPayload, { headers });
       
       if (res.data?.success && res.data?.data) {
         const orderData = res.data.data.order || res.data.data;
