@@ -30,7 +30,7 @@ export const FloatingCTAs: React.FC = () => {
 
       {/* Google Maps directions */}
       <a
-        href="https://www.google.com/maps/place/OLD+MONK+CAFE"
+        href="https://www.google.com/maps/place/OLD+MONK+CAFE/@26.1791599,85.896985,17z/data=!3m1!4b1!4m6!3m5!1s0x39edb70058367b4f:0x885307f4732543eb!8m2!3d26.1791551!4d85.8995599!16s%2Fg%2F11yzbf03h6?entry=ttu"
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center justify-center w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-105 border border-blue-400/20"
