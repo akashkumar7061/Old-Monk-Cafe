@@ -80,6 +80,15 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
           <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
           <span className="text-foreground text-xs font-bold font-sans">{rating.toFixed(1)}</span>
         </div>
+
+        {/* Sold Out Dark Blur Overlay */}
+        {!item.isAvailable && (
+          <div className="absolute inset-0 bg-black/55 backdrop-blur-[1px] flex items-center justify-center z-10">
+            <span className="bg-red-600 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full border border-red-500/30 shadow-md uppercase tracking-widest font-sans animate-pulse">
+              Sold Out
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Content Section */}

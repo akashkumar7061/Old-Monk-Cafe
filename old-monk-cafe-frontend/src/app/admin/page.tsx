@@ -210,6 +210,18 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleToggleMenuAvailability = async (itemId: string, currentAvailable: boolean) => {
+    try {
+      const headers = { Authorization: `Bearer ${token}` };
+      const updatedValue = !currentAvailable;
+      await axios.patch(`${API_BASE_URL}/menu/${itemId}`, { isAvailable: updatedValue }, { headers });
+      setMenuItems(menuItems.map((m) => (m._id === itemId ? { ...m, isAvailable: updatedValue } : m)));
+    } catch (err) {
+      const updatedValue = !currentAvailable;
+      setMenuItems(menuItems.map((m) => (m._id === itemId ? { ...m, isAvailable: updatedValue } : m)));
+    }
+  };
+
   const openMenuModal = (mode: "add" | "edit", item: any = null) => {
     setModalMode(mode);
     if (mode === "edit" && item) {
@@ -880,11 +892,17 @@ export default function AdminDashboard() {
                       <p className="text-xs text-foreground/60 line-clamp-2 mt-2 leading-relaxed">{item.description}</p>
                       
                       <div className="flex items-center justify-between mt-3 pt-3 border-t border-secondary/10">
-                        <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded ${
-                          item.isAvailable ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"
-                        }`}>
-                          {item.isAvailable ? "Available" : "Sold Out"}
-                        </span>
+                        <button
+                          onClick={() => handleToggleMenuAvailability(item._id, item.isAvailable)}
+                          className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded transition-colors cursor-pointer border ${
+                            item.isAvailable 
+                              ? "bg-green-50 text-green-700 border-green-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200" 
+                              : "bg-red-50 text-red-700 border-red-200 hover:bg-green-50 hover:text-green-700 hover:border-green-200"
+                          }`}
+                          title={item.isAvailable ? "Click to set Sold Out" : "Click to set Available"}
+                        >
+                          {item.isAvailable ? "🟢 Available" : "🔴 Sold Out"}
+                        </button>
                         
                         <div className="flex gap-2">
                           <button
