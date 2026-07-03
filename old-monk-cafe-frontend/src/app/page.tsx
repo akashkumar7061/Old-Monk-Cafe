@@ -57,14 +57,14 @@ export default function Home() {
     const timer = setInterval(() => {
       step++;
       setStats({
-        coffee: Math.floor((15000 / steps) * step),
+        coffee: Math.floor((150 / steps) * step),
         customers: Math.floor((3200 / steps) * step),
-        rating: Number(((5.0 / steps) * step).toFixed(1)),
+        rating: Number(((4.8 / steps) * step).toFixed(1)),
       });
 
       if (step >= steps) {
         clearInterval(timer);
-        setStats({ coffee: 15000, customers: 3200, rating: 5.0 });
+        setStats({ coffee: 150, customers: 3200, rating: 4.8 });
       }
     }, stepTime);
 
@@ -230,7 +230,7 @@ export default function Home() {
         >
           <div className="max-w-5xl mx-auto px-6 grid grid-cols-3 text-center text-white gap-2">
             <div className="flex flex-col items-center justify-center">
-              <p className="font-serif text-lg sm:text-2xl font-bold text-secondary">5.0/5</p>
+              <p className="font-serif text-lg sm:text-2xl font-bold text-secondary">4.8/5</p>
               <p className="text-[9px] sm:text-xs text-white/70 uppercase tracking-widest mt-1">⭐ Google Rating</p>
             </div>
             <div className="flex flex-col items-center justify-center border-x border-white/10 px-1 sm:px-2">
@@ -471,7 +471,7 @@ export default function Home() {
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-5 h-5 text-yellow-500 fill-yellow-500" />
             ))}
-            <span className="text-foreground/80 text-sm font-semibold ml-2">5.0 / 5.0 Google Rating</span>
+            <span className="text-foreground/80 text-sm font-semibold ml-2">4.8 / 5.0 Google Rating</span>
           </div>
         </div>
 
