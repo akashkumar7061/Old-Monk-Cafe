@@ -37,6 +37,20 @@ export default function Home() {
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [activeReviewIdx, setActiveReviewIdx] = useState(0);
   const [stats, setStats] = useState({ coffee: 0, customers: 0, rating: 0 });
+  const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
+
+  const heroImages = [
+    "/images/cafe_exterior_night.jpg",
+    "/images/cafe_interior_view.jpg",
+    "/images/cafe_interior_buddha.jpg",
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentHeroIdx((prev) => (prev + 1) % 3);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Contact form state
   const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", message: "" });
@@ -153,13 +167,22 @@ export default function Home() {
         {/* Background Overlay */}
         <div className="absolute inset-0 bg-[#1E1A17]/55 z-10" />
 
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full">
-          <img
-            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600"
-            alt="Coffee Background"
-            className="w-full h-full object-cover"
-          />
+        {/* Background Image Slideshow */}
+        <div className="absolute inset-0 w-full h-full bg-[#1E1A17]">
+          {heroImages.map((img, idx) => (
+            <div
+              key={img}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+                idx === currentHeroIdx ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <img
+                src={img}
+                alt="Old Monk Cafe"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
         </div>
 
         {/* Top Spacer to push below fixed navbar */}

@@ -24,7 +24,7 @@ const fallbackMenuItems: MenuItemData[] = [
   { id: "c8", name: "Hazelnut Cold Coffee", price: 189, description: "Specialty cold brew infused with premium sweet hazelnut extracts.", category: "coffee", image: "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?q=80&w=400", isVeg: true, isAvailable: true },
 
   // MOCKTAILS
-  { id: "m1", name: "Virgin Mojito", price: 149, description: "Refreshing blend of fresh mint, lime slices, sugar syrup, and soda.", category: "mocktails", image: "https://images.unsplash.com/photo-1575444758702-4a6b9222336e?q=80&w=400", isVeg: true, isAvailable: true },
+  { id: "m1", name: "Virgin Mojito", price: 149, description: "Refreshing blend of fresh mint, lime slices, sugar syrup, and soda.", category: "mocktails", image: "/images/old_monk_mojito.png", isVeg: true, isAvailable: true },
   { id: "m2", name: "Blue Lagoon Cooler", price: 169, description: "Exotic blue curacao mixed with tangy lemon juice, mint, and sprite.", category: "mocktails", image: "/images/premium_mocktail.png", isVeg: true, isAvailable: true },
   { id: "m3", name: "Green Apple Fizz", price: 169, description: "Tangy-sweet green apple syrup topped with soda and mint leaves.", category: "mocktails", image: "https://images.unsplash.com/photo-1536935338788-846bb9981813?q=80&w=400", isVeg: true, isAvailable: true },
   { id: "m4", name: "Watermelon Cooler", price: 159, description: "Freshly muddled sweet watermelon with a pinch of black salt and lime.", category: "mocktails", image: "/images/watermelon_cooler.png", isVeg: true, isAvailable: true },
@@ -32,13 +32,13 @@ const fallbackMenuItems: MenuItemData[] = [
 
   // BURGERS
   { id: "b1", name: "Veg Burger", price: 139, description: "Crispy vegetable patty topped with lettuce, tomato, onions, and mayo.", category: "burgers", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400", isVeg: true, isAvailable: true },
-  { id: "b2", name: "Paneer Burger", price: 179, description: "Grilled marinated paneer slab loaded with cheese and spicy house sauces.", category: "burgers", image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=400", isVeg: true, isAvailable: true },
+  { id: "b2", name: "Paneer Burger", price: 179, description: "Grilled marinated paneer slab loaded with cheese and spicy house sauces.", category: "burgers", image: "/images/old_monk_burger.png", isVeg: true, isAvailable: true },
   { id: "b3", name: "Crispy Cheese Burger", price: 189, description: "Double layered crispy veg patty with melting cheddar cheese slice.", category: "burgers", image: "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=400", isVeg: true, isAvailable: true },
   { id: "b4", name: "Mushroom Cheese Burger", price: 229, description: "Sautéed garlic mushrooms with melting swiss cheese slice and herbs.", category: "burgers", image: "https://images.unsplash.com/photo-1607013407627-6ee814329547?q=80&w=400", isVeg: true, isAvailable: true },
 
   // PIZZA
   { id: "p1", name: "Margherita Pizza", price: 249, description: "Classic stone-baked pizza topped with fresh tomato sauce, mozzarella, and basil.", category: "pizza", image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=400", isVeg: true, isAvailable: true },
-  { id: "p2", name: "Farmhouse Pizza", price: 299, description: "Loaded with crunchy capsicum, onions, golden corn, mushrooms, and tomatoes.", category: "pizza", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400", isVeg: true, isAvailable: true },
+  { id: "p2", name: "Farmhouse Pizza", price: 299, description: "Loaded with crunchy capsicum, onions, golden corn, mushrooms, and tomatoes.", category: "pizza", image: "/images/old_monk_pizza.png", isVeg: true, isAvailable: true },
   { id: "p3", name: "Paneer Tikka Pizza", price: 329, description: "Fusion pizza topped with smoky tandoori paneer tikka cubes and coriander.", category: "pizza", image: "/images/paneer_tikka_pizza.png", isVeg: true, isAvailable: true },
   { id: "p4", name: "Tandoori Mushroom Pizza", price: 369, description: "Delicious stone-baked pizza loaded with spicy marinated button mushrooms, onions, and cheese.", category: "pizza", image: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=400", isVeg: true, isAvailable: true },
 
@@ -49,14 +49,14 @@ const fallbackMenuItems: MenuItemData[] = [
   { id: "pas4", name: "Creamy Mushroom Pasta", price: 289, description: "Tender button mushroom slices tossed in rich garlic alfredo sauce with penne.", category: "pasta", image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=400", isVeg: true, isAvailable: true },
 
   // MOMOS
-  { id: "mo1", name: "Veg Steam Momos (6 Pcs)", price: 99, description: "Thin wrap loaded with minced fresh garden vegetables and served with hot dip.", category: "momos", image: "/images/veg_steam_momos.png", isVeg: true, isAvailable: true },
+  { id: "mo1", name: "Veg Steam Momos (6 Pcs)", price: 99, description: "Thin wrap loaded with minced fresh garden vegetables and served with hot dip.", category: "momos", image: "/images/old_monk_momos.png", isVeg: true, isAvailable: true },
   { id: "mo2", name: "Paneer Momos (6 Pcs)", price: 129, description: "Stuffed with minced spicy paneer and served with red momo chutney.", category: "momos", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=400", isVeg: true, isAvailable: true },
   { id: "mo3", name: "Veg Cheese Corn Momos (6 Pcs)", price: 149, description: "Steaming hot momos stuffed with sweet corn kernels and melting mozzarella cheese.", category: "momos", image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=400", isVeg: true, isAvailable: true },
   { id: "mo4", name: "Fried Momos (6 Pcs)", price: 159, description: "Golden fried crispy momos (Veg or Paneer options available).", category: "momos", image: "/images/fried_momos.png", isVeg: true, isAvailable: true },
   { id: "mo5", name: "Tandoori Momos (6 Pcs)", price: 189, description: "Momos marinated in tandoori paste, chargrilled in tandoor to perfection.", category: "momos", image: "https://images.unsplash.com/photo-1626132647523-66f5bf380027?q=80&w=400", isVeg: true, isAvailable: true },
 
   // CHINESE
-  { id: "ch1", name: "Veg Hakka Noodles", price: 169, description: "Stir-fried noodles with crunchy cabbage, capsicum, carrots, and spring onions.", category: "chinese", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400", isVeg: true, isAvailable: true },
+  { id: "ch1", name: "Veg Hakka Noodles", price: 169, description: "Stir-fried noodles with crunchy cabbage, capsicum, carrots, and spring onions.", category: "chinese", image: "/images/veg_noodles.jpg", isVeg: true, isAvailable: true },
   { id: "ch2", name: "Paneer Chilli Noodles", price: 199, description: "Stir-fried noodles loaded with spicy soy-glazed paneer cubes.", category: "chinese", image: "https://images.unsplash.com/photo-1618449840665-9ed506d73a34?q=80&w=400", isVeg: true, isAvailable: true },
   { id: "ch3", name: "Schezwan Noodles", price: 229, description: "Spicy stir-fried noodles tossed in rich garlic Schezwan sauce and vegetables.", category: "chinese", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=400", isVeg: true, isAvailable: true },
   { id: "ch4", name: "Veg Fried Rice", price: 179, description: "Wok-tossed rice with fresh seasonal vegetables and soy-garlic.", category: "chinese", image: "/images/veg_fried_rice.png", isVeg: true, isAvailable: true },
