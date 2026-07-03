@@ -37,20 +37,6 @@ export default function Home() {
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [activeReviewIdx, setActiveReviewIdx] = useState(0);
   const [stats, setStats] = useState({ coffee: 0, customers: 0, rating: 0 });
-  const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
-
-  const heroImages = [
-    { src: "/images/cafe_exterior_night.jpg", pos: "object-[center_20%]" },
-    { src: "/images/cafe_interior_view.jpg", pos: "object-[center_35%]" },
-    { src: "/images/cafe_interior_buddha.jpg", pos: "object-[center_30%]" },
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentHeroIdx((prev) => (prev + 1) % 3);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
 
   // Contact form state
   const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", message: "" });
@@ -167,22 +153,13 @@ export default function Home() {
         {/* Background Overlay */}
         <div className="absolute inset-0 bg-[#1E1A17]/55 z-10" />
 
-        {/* Background Image Slideshow */}
-        <div className="absolute inset-0 w-full h-full bg-[#1E1A17]">
-          {heroImages.map((img, idx) => (
-            <div
-              key={img.src}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-                idx === currentHeroIdx ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <img
-                src={img.src}
-                alt="Old Monk Cafe"
-                className={`w-full h-full object-cover ${img.pos}`}
-              />
-            </div>
-          ))}
+        {/* Background Image */}
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600"
+            alt="Coffee Background"
+            className="w-full h-full object-cover"
+          />
         </div>
 
         {/* Top Spacer to push below fixed navbar */}
