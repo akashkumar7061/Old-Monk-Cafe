@@ -826,8 +826,6 @@ export default function AdminDashboard() {
               </div>
             </div>
           )}
-            </div>
-          )}
 
           {/* TAB 3: TABLE BOOKINGS */}
           {activeTab === "reservations" && (
