@@ -28,7 +28,8 @@ const menuItemSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-menuItemSchema.index({ name: 'text', description: 'text', tags: 1 });
+menuItemSchema.index({ name: 'text', description: 'text' });
+menuItemSchema.index({ tags: 1 });
 menuItemSchema.index({ category: 1, isAvailable: 1 });
 menuItemSchema.index({ isFeatured: 1 });
 
