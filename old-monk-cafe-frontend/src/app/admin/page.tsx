@@ -109,9 +109,49 @@ export default function AdminDashboard() {
 
   const simulateMockData = () => {
     setOrders([
-      { _id: "ord-1", orderNumber: "OMC-ORD-9281", user: { name: "Aditya Sharma" }, orderType: "dine_in", tableNumber: "Table 4", totalAmount: 836, status: "preparing", paymentStatus: "paid", createdAt: new Date().toISOString() },
-      { _id: "ord-2", orderNumber: "OMC-ORD-8172", user: { name: "Neha Raj" }, orderType: "delivery", deliveryAddress: "Sundarpur, Darbhanga", totalAmount: 449, status: "confirmed", paymentStatus: "pending", createdAt: new Date().toISOString() },
-      { _id: "ord-3", orderNumber: "OMC-ORD-7261", user: { name: "Rohan Sen" }, orderType: "takeaway", totalAmount: 249, status: "delivered", paymentStatus: "paid", createdAt: new Date().toISOString() }
+      { 
+        _id: "ord-1", 
+        orderNumber: "OMC-ORD-9281", 
+        user: { name: "Aditya Sharma" }, 
+        orderType: "dine_in", 
+        tableNumber: "Table 4", 
+        totalAmount: 836, 
+        status: "preparing", 
+        paymentStatus: "paid", 
+        createdAt: new Date().toISOString(),
+        items: [
+          { name: "Veg Hakka Noodles", quantity: 2 },
+          { name: "Virgin Mojito", quantity: 1 }
+        ]
+      },
+      { 
+        _id: "ord-2", 
+        orderNumber: "OMC-ORD-8172", 
+        user: { name: "Neha Raj" }, 
+        orderType: "delivery", 
+        deliveryAddress: "Sundarpur, Darbhanga", 
+        totalAmount: 449, 
+        status: "confirmed", 
+        paymentStatus: "pending", 
+        createdAt: new Date().toISOString(),
+        items: [
+          { name: "Farmhouse Pizza", quantity: 1 },
+          { name: "Veg Steam Momos", quantity: 2 }
+        ]
+      },
+      { 
+        _id: "ord-3", 
+        orderNumber: "OMC-ORD-7261", 
+        user: { name: "Rohan Sen" }, 
+        orderType: "takeaway", 
+        totalAmount: 249, 
+        status: "delivered", 
+        paymentStatus: "paid", 
+        createdAt: new Date().toISOString(),
+        items: [
+          { name: "Paneer Burger", quantity: 1 }
+        ]
+      }
     ]);
 
     setReservations([
@@ -481,7 +521,8 @@ export default function AdminDashboard() {
             <div className="space-y-6">
               <h2 className="font-serif text-xl font-bold text-foreground border-b border-secondary/10 pb-2">Orders Manager</h2>
               
-              <div className="overflow-x-auto">
+              {/* Desktop Table View (visible only on desktop) */}
+              <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left text-sm font-sans border-collapse">
                   <thead>
                     <tr className="border-b border-secondary/10 text-foreground/50 text-xs uppercase tracking-widest font-bold">
@@ -512,6 +553,15 @@ export default function AdminDashboard() {
                               {ord.user?.phone && (
                                 <p className="text-[10px] text-foreground/50 mt-0.5">📞 {ord.user.phone}</p>
                               )}
+                              {/* Ordered Items List */}
+                              <div className="mt-2.5 space-y-1">
+                                {ord.items?.map((item: any, idx: number) => (
+                                  <div key={idx} className="text-[10px] bg-secondary/10 px-2 py-0.5 rounded text-secondary font-semibold w-fit flex items-center gap-1">
+                                    <span>{item.quantity}x</span>
+                                    <span>{item.name}</span>
+                                  </div>
+                                ))}
+                              </div>
                             </td>
                             <td className="py-4 px-4 text-xs font-sans">
                               <p className="font-semibold">{new Date(ord.createdAt).toLocaleDateString()}</p>
@@ -625,6 +675,157 @@ export default function AdminDashboard() {
                   </tbody>
                 </table>
               </div>
+
+              {/* Mobile Card View (visible only on mobile) */}
+              <div className="grid grid-cols-1 gap-4 md:hidden">
+                {orders.length === 0 ? (
+                  <p className="text-center py-12 text-foreground/40 font-sans">No orders placed today.</p>
+                ) : (
+                  orders.map((ord) => {
+                    const prepHistory = ord.statusHistory?.find((h: any) => h.status === "preparing");
+                    const prepTimeText = prepHistory?.note ? ` (${prepHistory.note})` : "";
+                    
+                    return (
+                      <div key={ord._id} className="bg-primary-dark p-5 rounded-xl border border-secondary/10 space-y-4 font-sans shadow-sm">
+                        <div className="flex justify-between items-start border-b border-secondary/10 pb-2.5">
+                          <div>
+                            <span className="font-bold text-foreground text-sm block">{ord.orderNumber}</span>
+                            <span className="text-[10px] text-foreground/50 mt-0.5 block">
+                              {new Date(ord.createdAt).toLocaleDateString()} at {new Date(ord.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          </div>
+                          <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded block ${
+                            ord.status === "delivered" ? "bg-green-50 text-green-700 border border-green-200" :
+                            ord.status === "preparing" ? "bg-amber-55 text-amber-700 border border-amber-200" :
+                            ord.status === "cancelled" ? "bg-red-50 text-red-700 border border-red-200" :
+                            "bg-blue-50 text-blue-700 border border-blue-200"
+                          }`}>
+                            {ord.status === "preparing" ? `Preparing${prepTimeText}` : ord.status}
+                          </span>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-3 text-xs">
+                          <div>
+                            <p className="text-[10px] uppercase text-foreground/45 font-bold">Customer</p>
+                            <p className="font-semibold text-foreground mt-0.5">{ord.user?.name || "Guest Checkout"}</p>
+                            {ord.user?.phone && (
+                              <p className="text-[10px] text-foreground/50 mt-0.5">📞 {ord.user.phone}</p>
+                            )}
+                          </div>
+                          <div>
+                            <p className="text-[10px] uppercase text-foreground/45 font-bold">Type & Table</p>
+                            <p className="font-semibold text-foreground mt-0.5 uppercase">{ord.orderType.replace("_", " ")}</p>
+                            {ord.orderType === "dine_in" && (
+                              <span className="text-[10px] text-secondary font-bold inline-block mt-1 bg-secondary/5 px-1.5 py-0.5 rounded border border-secondary/15">
+                                🪑 {ord.tableNumber || "No Table"}
+                              </span>
+                            )}
+                          </div>
+                          <div>
+                            <p className="text-[10px] uppercase text-foreground/45 font-bold">Amount</p>
+                            <p className="font-bold text-secondary text-sm mt-0.5">₹{ord.totalAmount}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] uppercase text-foreground/45 font-bold">Payment Status</p>
+                            <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded inline-block mt-1 ${
+                              ord.paymentStatus === "paid"
+                                ? "bg-green-50 text-green-700 border border-green-200"
+                                : "bg-red-50 text-red-700 border border-red-200"
+                            }`}>
+                              {ord.paymentStatus === "paid" ? `PAID (${ord.paymentMethod?.toUpperCase() || "ONLINE"})` : "UNPAID"}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Items ordered list inside card */}
+                        <div className="bg-secondary/5 p-3 rounded-lg border border-secondary/10">
+                          <p className="text-[10px] uppercase text-foreground/45 font-bold mb-1.5">Items Ordered</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {ord.items?.map((item: any, idx: number) => (
+                              <span key={idx} className="text-[10px] bg-secondary/15 px-2 py-0.5 rounded text-secondary font-bold inline-block">
+                                {item.quantity}x {item.name}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Actions & Billing Panel */}
+                        <div className="pt-3 border-t border-secondary/10 flex flex-col gap-3">
+                          <div className="flex flex-wrap gap-2">
+                            {ord.status === "pending" && (
+                              <button
+                                onClick={() => handleUpdateOrderStatus(ord._id, "confirmed")}
+                                className="flex-grow py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer text-center"
+                              >
+                                Accept
+                              </button>
+                            )}
+                            {ord.status === "confirmed" && (
+                              <button
+                                onClick={() => {
+                                  const mins = prompt("Enter preparation time (e.g. 15 mins, 20 mins):", "20 mins");
+                                  if (mins !== null) {
+                                    handleUpdateOrderStatus(ord._id, "preparing", mins);
+                                  }
+                                }}
+                                className="flex-grow py-2 bg-amber-600 hover:bg-amber-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer text-center"
+                              >
+                                Prepare
+                              </button>
+                            )}
+                            {ord.status === "preparing" && (
+                              <button
+                                onClick={() => handleUpdateOrderStatus(ord._id, ord.orderType === "delivery" ? "out_for_delivery" : "delivered")}
+                                className="flex-grow py-2 bg-green-600 hover:bg-green-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer text-center animate-pulse"
+                              >
+                                {ord.orderType === "delivery" ? "Dispatch" : "Serve"}
+                              </button>
+                            )}
+                            {ord.status === "out_for_delivery" && (
+                              <button
+                                onClick={() => handleUpdateOrderStatus(ord._id, "delivered")}
+                                className="flex-grow py-2 bg-green-600 hover:bg-green-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer text-center"
+                              >
+                                Complete
+                              </button>
+                            )}
+                            {ord.status !== "delivered" && ord.status !== "cancelled" && (
+                              <button
+                                onClick={() => handleUpdateOrderStatus(ord._id, "cancelled")}
+                                className="py-2 px-3 border border-red-200 text-red-500 hover:bg-red-500 hover:text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+                              >
+                                Cancel
+                              </button>
+                            )}
+                          </div>
+
+                          {ord.paymentStatus !== "paid" && (
+                            <div className="bg-secondary/5 p-3 rounded-lg border border-secondary/10 flex items-center justify-between gap-4">
+                              <span className="text-[10px] uppercase tracking-widest text-foreground/45 font-bold">Collect Bill:</span>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => handleUpdateOrderStatus(ord._id, ord.status, undefined, "paid", "cod")}
+                                  className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+                                >
+                                  Cash
+                                </button>
+                                <button
+                                  onClick={() => handleUpdateOrderStatus(ord._id, ord.status, undefined, "paid", "razorpay")}
+                                  className="px-4 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+                                >
+                                  Online
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          )}
             </div>
           )}
 

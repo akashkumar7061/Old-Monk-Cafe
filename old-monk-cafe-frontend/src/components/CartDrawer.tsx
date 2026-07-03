@@ -22,6 +22,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
     tableNumber,
     setTableNumber,
     deliveryAddress,
+    setDeliveryAddress,
   } = useCart();
 
   if (!isOpen) return null;
