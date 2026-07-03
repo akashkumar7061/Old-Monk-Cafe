@@ -480,10 +480,10 @@ export default function Home() {
         <div className="max-w-3xl mx-auto relative px-12">
           <div className="overflow-hidden">
             <div className="glass-panel p-8 sm:p-12 rounded-2xl border border-secondary/15 relative bg-primary">
-              <span className="absolute top-6 left-6 font-serif text-8xl text-secondary/10 select-none font-bold">“</span>
+              <span className="absolute top-3 left-4 sm:top-5 sm:left-6 font-serif text-8xl text-secondary/10 select-none font-bold">“</span>
               
               <div className="relative z-10 space-y-6">
-                <p className="text-foreground/85 text-base sm:text-lg leading-relaxed italic pt-4">
+                <p className="text-foreground/85 text-base sm:text-lg leading-relaxed italic pt-10 sm:pt-8">
                   {reviews[activeReviewIdx].text}
                 </p>
                 
