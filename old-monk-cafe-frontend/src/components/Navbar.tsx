@@ -239,7 +239,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
               </div>
             ) : (
               <Link
-                href="/login"
+                href="/admin"
                 className={`flex items-center gap-1.5 p-2 px-4 border border-secondary/20 hover:border-secondary rounded text-xs uppercase tracking-wider hover:bg-secondary/5 transition-all font-medium ${
                   isDarkBg ? "text-white hover:text-secondary" : "text-foreground hover:text-secondary"
                 }`}
@@ -298,6 +298,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
                 >
                   <UserIcon className="w-4 h-4" />
                   My Profile
+                </Link>
+              )}
+              {!isAuthenticated && (
+                <Link
+                  href="/admin"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full py-3 border border-secondary text-secondary font-bold uppercase tracking-wider rounded text-sm transition-colors hover:bg-secondary/5"
+                >
+                  <UserIcon className="w-4 h-4" />
+                  Login
                 </Link>
               )}
               <button
