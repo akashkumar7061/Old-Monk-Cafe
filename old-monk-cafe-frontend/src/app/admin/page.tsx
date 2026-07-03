@@ -165,13 +165,36 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleUpdateOrderStatus = async (orderId: string, newStatus: string) => {
+  const handleUpdateOrderStatus = async (
+    orderId: string, 
+    newStatus: string, 
+    note?: string, 
+    paymentStatus?: string, 
+    paymentMethod?: string
+  ) => {
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      await axios.patch(`${API_BASE_URL}/orders/${orderId}/status`, { status: newStatus }, { headers });
-      setOrders(orders.map((o) => (o._id === orderId ? { ...o, status: newStatus } : o)));
+      const payload: any = { status: newStatus };
+      if (note !== undefined) payload.note = note;
+      if (paymentStatus !== undefined) payload.paymentStatus = paymentStatus;
+      if (paymentMethod !== undefined) payload.paymentMethod = paymentMethod;
+
+      const res = await axios.patch(`${API_BASE_URL}/orders/${orderId}/status`, payload, { headers });
+      const updatedOrder = res.data?.data || { 
+        status: newStatus,
+        paymentStatus: paymentStatus || "pending",
+        paymentMethod: paymentMethod || "cod"
+      };
+      
+      setOrders(orders.map((o) => (o._id === orderId ? { ...o, ...updatedOrder } : o)));
     } catch (err) {
-      setOrders(orders.map((o) => (o._id === orderId ? { ...o, status: newStatus } : o)));
+      setOrders(orders.map((o) => (o._id === orderId ? { 
+        ...o, 
+        status: newStatus,
+        paymentStatus: paymentStatus !== undefined ? paymentStatus : o.paymentStatus,
+        paymentMethod: paymentMethod !== undefined ? paymentMethod : o.paymentMethod,
+        statusHistory: note ? [...(o.statusHistory || []), { status: newStatus, note }] : o.statusHistory
+      } : o)));
     }
   };
 
@@ -464,7 +487,8 @@ export default function AdminDashboard() {
                     <tr className="border-b border-secondary/10 text-foreground/50 text-xs uppercase tracking-widest font-bold">
                       <th className="py-3 px-4">Order Ref</th>
                       <th className="py-3 px-4">Customer</th>
-                      <th className="py-3 px-4">Type</th>
+                      <th className="py-3 px-4">Date & Time</th>
+                      <th className="py-3 px-4">Type & Table</th>
                       <th className="py-3 px-4">Amount</th>
                       <th className="py-3 px-4">Status</th>
                       <th className="py-3 px-4">Actions</th>
@@ -473,69 +497,130 @@ export default function AdminDashboard() {
                   <tbody className="divide-y divide-secondary/10 text-foreground/90">
                     {orders.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="py-12 text-center text-foreground/40 font-sans">No orders placed today.</td>
+                        <td colSpan={7} className="py-12 text-center text-foreground/40 font-sans">No orders placed today.</td>
                       </tr>
                     ) : (
-                      orders.map((ord) => (
-                        <tr key={ord._id} className="hover:bg-secondary/2 font-sans">
-                          <td className="py-4 px-4 font-bold text-foreground">{ord.orderNumber}</td>
-                          <td className="py-4 px-4">{ord.user?.name || "Guest Checkout"}</td>
-                          <td className="py-4 px-4 uppercase text-xs font-semibold">{ord.orderType.replace("_", " ")}</td>
-                          <td className="py-4 px-4 font-bold text-secondary">₹{ord.totalAmount}</td>
-                          <td className="py-4 px-4">
-                            <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded ${
-                              ord.status === "delivered" ? "bg-green-50 text-green-700 border border-green-200" :
-                              ord.status === "preparing" ? "bg-amber-55 text-amber-700 border border-amber-200" :
-                              ord.status === "cancelled" ? "bg-red-50 text-red-700 border border-red-200" :
-                              "bg-blue-50 text-blue-700 border border-blue-200"
-                            }`}>
-                              {ord.status}
-                            </span>
-                          </td>
-                          <td className="py-4 px-4 flex gap-1.5 font-sans">
-                            {ord.status === "pending" && (
-                              <button
-                                onClick={() => handleUpdateOrderStatus(ord._id, "confirmed")}
-                                className="p-1 px-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer"
-                              >
-                                Accept
-                              </button>
-                            )}
-                            {ord.status === "confirmed" && (
-                              <button
-                                onClick={() => handleUpdateOrderStatus(ord._id, "preparing")}
-                                className="p-1 px-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer"
-                              >
-                                Prepare
-                              </button>
-                            )}
-                            {ord.status === "preparing" && (
-                              <button
-                                onClick={() => handleUpdateOrderStatus(ord._id, ord.orderType === "delivery" ? "out_for_delivery" : "delivered")}
-                                className="p-1 px-2.5 bg-green-600 hover:bg-green-700 text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer"
-                              >
-                                {ord.orderType === "delivery" ? "Dispatch" : "Serve"}
-                              </button>
-                            )}
-                            {ord.status === "out_for_delivery" && (
-                              <button
-                                onClick={() => handleUpdateOrderStatus(ord._id, "delivered")}
-                                className="p-1 px-2.5 bg-green-600 hover:bg-green-700 text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer"
-                              >
-                                Complete
-                              </button>
-                            )}
-                            {ord.status !== "delivered" && ord.status !== "cancelled" && (
-                              <button
-                                onClick={() => handleUpdateOrderStatus(ord._id, "cancelled")}
-                                className="p-1 px-2 border border-red-200 text-red-500 hover:bg-red-500 hover:text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer"
-                              >
-                                Cancel
-                              </button>
-                            )}
-                          </td>
-                        </tr>
-                      ))
+                      orders.map((ord) => {
+                        const prepHistory = ord.statusHistory?.find((h: any) => h.status === "preparing");
+                        const prepTimeText = prepHistory?.note ? ` (${prepHistory.note})` : "";
+                        
+                        return (
+                          <tr key={ord._id} className="hover:bg-secondary/2 font-sans border-b border-secondary/5">
+                            <td className="py-4 px-4 font-bold text-foreground">{ord.orderNumber}</td>
+                            <td className="py-4 px-4">
+                              <p className="font-semibold">{ord.user?.name || "Guest Checkout"}</p>
+                              {ord.user?.phone && (
+                                <p className="text-[10px] text-foreground/50 mt-0.5">📞 {ord.user.phone}</p>
+                              )}
+                            </td>
+                            <td className="py-4 px-4 text-xs font-sans">
+                              <p className="font-semibold">{new Date(ord.createdAt).toLocaleDateString()}</p>
+                              <p className="text-[10px] text-foreground/50 mt-0.5">
+                                {new Date(ord.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </p>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className="uppercase text-xs font-semibold block">{ord.orderType.replace("_", " ")}</span>
+                              {ord.orderType === "dine_in" && (
+                                <span className="text-[11px] text-secondary font-bold block mt-0.5 bg-secondary/5 px-2 py-0.5 rounded border border-secondary/15 w-fit">
+                                  🪑 {ord.tableNumber || "No Table"}
+                                </span>
+                              )}
+                            </td>
+                            <td className="py-4 px-4">
+                              <p className="font-bold text-secondary">₹{ord.totalAmount}</p>
+                              <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded inline-block mt-1 ${
+                                ord.paymentStatus === "paid"
+                                  ? "bg-green-50 text-green-700 border border-green-200"
+                                  : "bg-red-50 text-red-700 border border-red-200"
+                              }`}>
+                                {ord.paymentStatus === "paid" ? `PAID (${ord.paymentMethod?.toUpperCase() || "ONLINE"})` : "UNPAID"}
+                              </span>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded block w-fit ${
+                                ord.status === "delivered" ? "bg-green-50 text-green-700 border border-green-200" :
+                                ord.status === "preparing" ? "bg-amber-55 text-amber-700 border border-amber-200" :
+                                ord.status === "cancelled" ? "bg-red-50 text-red-700 border border-red-200" :
+                                "bg-blue-50 text-blue-700 border border-blue-200"
+                              }`}>
+                                {ord.status === "preparing" ? `Preparing${prepTimeText}` : ord.status}
+                              </span>
+                            </td>
+                            <td className="py-4 px-4 space-y-2.5 font-sans">
+                              {/* Status Action Buttons */}
+                              <div className="flex flex-wrap gap-1.5">
+                                {ord.status === "pending" && (
+                                  <button
+                                    onClick={() => handleUpdateOrderStatus(ord._id, "confirmed")}
+                                    className="p-1 px-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer"
+                                  >
+                                    Accept
+                                  </button>
+                                )}
+                                {ord.status === "confirmed" && (
+                                  <button
+                                    onClick={() => {
+                                      const mins = prompt("Enter preparation time (e.g. 15 mins, 20 mins):", "20 mins");
+                                      if (mins !== null) {
+                                        handleUpdateOrderStatus(ord._id, "preparing", mins);
+                                      }
+                                    }}
+                                    className="p-1 px-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer"
+                                  >
+                                    Prepare
+                                  </button>
+                                )}
+                                {ord.status === "preparing" && (
+                                  <button
+                                    onClick={() => handleUpdateOrderStatus(ord._id, ord.orderType === "delivery" ? "out_for_delivery" : "delivered")}
+                                    className="p-1 px-2.5 bg-green-600 hover:bg-green-700 text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer animate-pulse"
+                                  >
+                                    {ord.orderType === "delivery" ? "Dispatch" : "Serve"}
+                                  </button>
+                                )}
+                                {ord.status === "out_for_delivery" && (
+                                  <button
+                                    onClick={() => handleUpdateOrderStatus(ord._id, "delivered")}
+                                    className="p-1 px-2.5 bg-green-600 hover:bg-green-700 text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer"
+                                  >
+                                    Complete
+                                  </button>
+                                )}
+                                {ord.status !== "delivered" && ord.status !== "cancelled" && (
+                                  <button
+                                    onClick={() => handleUpdateOrderStatus(ord._id, "cancelled")}
+                                    className="p-1 px-2 border border-red-200 text-red-500 hover:bg-red-500 hover:text-white rounded text-[10px] font-bold uppercase tracking-wider cursor-pointer"
+                                  >
+                                    Cancel
+                                  </button>
+                                )}
+                              </div>
+
+                              {/* Billing Action Buttons (Post-serving payment collection) */}
+                              {ord.paymentStatus !== "paid" && (
+                                <div className="border-t border-secondary/10 pt-2 space-y-1">
+                                  <p className="text-[9px] uppercase tracking-widest text-foreground/45 font-bold">Collect Payment</p>
+                                  <div className="flex gap-1">
+                                    <button
+                                      onClick={() => handleUpdateOrderStatus(ord._id, ord.status, undefined, "paid", "cod")}
+                                      className="p-1 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[9px] font-bold uppercase tracking-wider cursor-pointer"
+                                    >
+                                      Cash
+                                    </button>
+                                    <button
+                                      onClick={() => handleUpdateOrderStatus(ord._id, ord.status, undefined, "paid", "razorpay")}
+                                      className="p-1 px-2 bg-sky-600 hover:bg-sky-700 text-white rounded text-[9px] font-bold uppercase tracking-wider cursor-pointer"
+                                    >
+                                      Online
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })
                     )}
                   </tbody>
                 </table>

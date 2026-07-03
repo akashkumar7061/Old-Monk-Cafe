@@ -194,13 +194,16 @@ const getAllOrders = asyncHandler(async (req, res) => {
 // @route   PATCH /api/v1/orders/:id/status
 // @access  Private/Admin
 const updateOrderStatus = asyncHandler(async (req, res) => {
-  const { status, note } = req.body;
+  const { status, note, paymentStatus, paymentMethod } = req.body;
 
   const order = await Order.findById(req.params.id).populate('user', 'name email phone');
   if (!order) throw ApiError.notFound('Order not found');
 
-  order.status = status;
-  if (note) order.statusHistory.push({ status, note });
+  if (status) order.status = status;
+  if (paymentStatus) order.paymentStatus = paymentStatus;
+  if (paymentMethod) order.paymentMethod = paymentMethod;
+
+  if (note) order.statusHistory.push({ status: status || order.status, note });
   await order.save();
 
   sendOrderStatusUpdate(order).catch(() => {});
