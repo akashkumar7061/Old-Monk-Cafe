@@ -108,71 +108,12 @@ export default function AdminDashboard() {
   };
 
   const simulateMockData = () => {
-    setOrders([
-      { 
-        _id: "ord-1", 
-        orderNumber: "OMC-ORD-9281", 
-        user: { name: "Aditya Sharma" }, 
-        orderType: "dine_in", 
-        tableNumber: "Table 4", 
-        totalAmount: 836, 
-        status: "preparing", 
-        paymentStatus: "paid", 
-        createdAt: new Date().toISOString(),
-        items: [
-          { name: "Veg Hakka Noodles", quantity: 2 },
-          { name: "Virgin Mojito", quantity: 1 }
-        ]
-      },
-      { 
-        _id: "ord-2", 
-        orderNumber: "OMC-ORD-8172", 
-        user: { name: "Neha Raj" }, 
-        orderType: "delivery", 
-        deliveryAddress: "Sundarpur, Darbhanga", 
-        totalAmount: 449, 
-        status: "confirmed", 
-        paymentStatus: "pending", 
-        createdAt: new Date().toISOString(),
-        items: [
-          { name: "Farmhouse Pizza", quantity: 1 },
-          { name: "Veg Steam Momos", quantity: 2 }
-        ]
-      },
-      { 
-        _id: "ord-3", 
-        orderNumber: "OMC-ORD-7261", 
-        user: { name: "Rohan Sen" }, 
-        orderType: "takeaway", 
-        totalAmount: 249, 
-        status: "delivered", 
-        paymentStatus: "paid", 
-        createdAt: new Date().toISOString(),
-        items: [
-          { name: "Paneer Burger", quantity: 1 }
-        ]
-      }
-    ]);
-
-    setReservations([
-      { _id: "res-1", reservationNumber: "OMC-RES-4921", name: "Vikram Kumar", phone: "9876543210", date: "2026-06-25", timeSlot: "7:00 PM", guests: 4, seatingPreference: "couple_zone", status: "pending" },
-      { _id: "res-2", reservationNumber: "OMC-RES-1082", name: "Priya Mishra", phone: "9999999999", date: "2026-06-26", timeSlot: "2:30 PM", guests: 2, seatingPreference: "window_side", status: "approved" }
-    ]);
-
-    setMenuItems([
-      { _id: "m-1", id: "c1", name: "Espresso Shot", price: 89, description: "Strong espresso.", category: "coffee", isVeg: true, isAvailable: true },
-      { _id: "m-2", id: "m1", name: "Virgin Mojito", price: 149, description: "Fresh mint soda.", category: "mocktails", isVeg: true, isAvailable: true },
-      { _id: "m-3", id: "b1", name: "Veg Burger", price: 139, description: "Crispy patty burger.", category: "burgers", isVeg: true, isAvailable: true }
-    ]);
-
-    setReviews([
-      { _id: "rev-1", name: "Aditya Sharma", rating: 5, text: "Best cold coffee in Darbhanga!", isApproved: false },
-      { _id: "rev-2", name: "Neha Raj", rating: 5, text: "Excellent pizza crust.", isApproved: true }
-    ]);
-
-    setInquiries([
-      { _id: "inq-1", name: "Aman Gupta", email: "aman@gmail.com", phone: "9123456789", message: "Do you offer outdoor catering for birthday parties?", createdAt: new Date().toISOString() }
-    ]);
+    setOrders([]);
+    setReservations([]);
+    setMenuItems([]);
+    setReviews([]);
+    setInquiries([]);
+    setMetrics({ revenue: 0, orders: 0, reservations: 0, popular: "None" });
   };
 
   useEffect(() => {
