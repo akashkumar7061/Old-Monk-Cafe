@@ -40,9 +40,9 @@ export default function Home() {
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
 
   const heroImages = [
-    "/images/cafe_exterior_night.jpg",
-    "/images/cafe_interior_view.jpg",
-    "/images/cafe_interior_buddha.jpg",
+    { src: "/images/cafe_exterior_night.jpg", pos: "object-[center_20%]" },
+    { src: "/images/cafe_interior_view.jpg", pos: "object-[center_35%]" },
+    { src: "/images/cafe_interior_buddha.jpg", pos: "object-[center_30%]" },
   ];
 
   useEffect(() => {
@@ -171,15 +171,15 @@ export default function Home() {
         <div className="absolute inset-0 w-full h-full bg-[#1E1A17]">
           {heroImages.map((img, idx) => (
             <div
-              key={img}
+              key={img.src}
               className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
                 idx === currentHeroIdx ? "opacity-100" : "opacity-0"
               }`}
             >
               <img
-                src={img}
+                src={img.src}
                 alt="Old Monk Cafe"
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover ${img.pos}`}
               />
             </div>
           ))}
