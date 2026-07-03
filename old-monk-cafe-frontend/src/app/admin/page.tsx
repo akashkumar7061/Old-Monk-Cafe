@@ -138,6 +138,13 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (user && isAdmin) {
       loadDashboardData();
+      
+      // Auto-poll database for incoming orders/reservations every 15 seconds
+      const pollTimer = setInterval(() => {
+        loadDashboardData();
+      }, 15000);
+      
+      return () => clearInterval(pollTimer);
     }
   }, [user, token, activeTab]);
 

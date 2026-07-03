@@ -28,6 +28,7 @@ export const Footer: React.FC = () => {
     { name: "Gallery Showcase", href: "/#gallery" },
     { name: "Reviews & Ratings", href: "/#reviews" },
     { name: "Book a Table", href: "/reserve" },
+    { name: "Admin Portal", href: "/admin" },
   ];
 
   return (
