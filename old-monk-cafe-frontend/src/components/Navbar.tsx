@@ -34,6 +34,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
   const [currentHash, setCurrentHash] = useState("");
 
   const isDarkBg = !scrolled && pathname === "/";
+  const logoSrc = (isDarkBg || theme === "dark") ? "/logo_black_bg.jpg" : "/logo_white_bg.jpg";
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
@@ -108,9 +109,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
           <Link
             href="/"
             onClick={() => handleLinkClick("/")}
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-2.5 group"
           >
-            <Coffee className="w-8 h-8 text-secondary group-hover:rotate-12 transition-transform duration-300" />
+            <img
+              src={logoSrc}
+              alt="Old Monk Cafe Logo"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover transition-transform duration-300 group-hover:scale-105 border border-secondary/20"
+            />
             <span className={`font-serif text-xl sm:text-2xl font-bold tracking-wider transition-colors duration-300 ${
               isDarkBg ? "text-white" : "text-foreground"
             }`}>

@@ -36,8 +36,17 @@ export const Footer: React.FC = () => {
         
         {/* Brand & Hours */}
         <div className="flex flex-col gap-5">
-          <Link href="/" className="flex items-center gap-2">
-            <Coffee className="w-8 h-8 text-secondary" />
+          <Link href="/" className="flex items-center gap-2.5">
+            <img
+              src="/logo_white_bg.jpg"
+              alt="Old Monk Cafe Logo"
+              className="dark:hidden w-10 h-10 rounded-full object-cover border border-secondary/20"
+            />
+            <img
+              src="/logo_black_bg.jpg"
+              alt="Old Monk Cafe Logo"
+              className="hidden dark:block w-10 h-10 rounded-full object-cover border border-secondary/20"
+            />
             <span className="font-serif text-2xl font-bold tracking-wider text-foreground">
               OLD MONK<span className="text-secondary"> CAFE</span>
             </span>

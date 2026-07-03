@@ -17,21 +17,21 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "OLD MONK CAFE | Best Café & Restaurant in Darbhanga, Bihar",
+  title: "Old Monk Cafe | Best Café & Restaurant in Darbhanga, Bihar",
   description: "Experience the finest luxury café atmosphere in Darbhanga. Handcrafted specialty coffees, premium mocktails, delicious fast food, Chinese delicacy, and custom momos. Open daily 10 AM - 12 AM.",
   keywords: "Old Monk Cafe, Cafe in Darbhanga, Best Restaurant in Darbhanga, Darbhanga Coffee Shop, Sundarpur Cafe, Mocktails, Pizza Darbhanga",
-  authors: [{ name: "OLD MONK CAFE" }],
+  authors: [{ name: "Old Monk Cafe" }],
   openGraph: {
-    title: "OLD MONK CAFE | Darbhanga's Finest Culinary Hangout",
+    title: "Old Monk Cafe | Darbhanga's Finest Culinary Hangout",
     description: "handcrafted coffees, premium mocktails, delicious food, and unforgettable memories at Sundarpur, Darbhanga.",
     url: "https://oldmonkcafe.com",
-    siteName: "OLD MONK CAFE",
+    siteName: "Old Monk Cafe",
     images: [
       {
         url: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800",
         width: 800,
         height: 600,
-        alt: "OLD MONK CAFE Ambiance",
+        alt: "Old Monk Cafe Ambiance",
       },
     ],
     locale: "en_US",
