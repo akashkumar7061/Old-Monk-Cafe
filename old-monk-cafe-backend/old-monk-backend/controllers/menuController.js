@@ -10,7 +10,10 @@ const { uploadBufferToCloudinary, deleteFromCloudinary } = require('../config/cl
 const getMenuItems = asyncHandler(async (req, res) => {
   const { category, search, isVeg, featured, minPrice, maxPrice, page = 1, limit = 50, sort } = req.query;
 
-  const filter = { isAvailable: true };
+  const filter = {};
+  if (req.query.isAvailable !== undefined) {
+    filter.isAvailable = req.query.isAvailable === 'true';
+  }
   if (category) filter.category = category;
   if (isVeg !== undefined) filter.isVeg = isVeg === 'true';
   if (featured !== undefined) filter.isFeatured = featured === 'true';
