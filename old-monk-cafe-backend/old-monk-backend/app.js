@@ -15,6 +15,9 @@ const logger = require('./utils/logger');
 
 const app = express();
 
+// Trust proxy for rate limiting (Render is behind a load balancer/reverse proxy)
+app.set('trust proxy', 1);
+
 // ---- Security headers ----
 app.use(helmet());
 
