@@ -47,6 +47,7 @@ export default function AdminDashboard() {
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [seedingMenu, setSeedingMenu] = useState(false);
   const [categories, setCategories] = useState<any[]>([]);
+  const [earningsFilter, setEarningsFilter] = useState<"weekly" | "monthly" | "yearly">("weekly");
 
   // Edit/Add Menu Item modal state
   const [showMenuModal, setShowMenuModal] = useState(false);
@@ -421,6 +422,73 @@ export default function AdminDashboard() {
     }
   };
 
+  const getFilteredEarningsData = () => {
+    const now = new Date();
+    const validOrders = orders.filter((o) => o.status !== "cancelled");
+    
+    if (earningsFilter === "weekly") {
+      const last7Days = Array.from({ length: 7 }).map((_, i) => {
+        const d = new Date();
+        d.setDate(now.getDate() - (6 - i));
+        return d;
+      });
+      return last7Days.map((date) => {
+        const dateStr = date.toDateString();
+        const total = validOrders
+          .filter((o) => new Date(o.createdAt).toDateString() === dateStr)
+          .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+        const label = date.toLocaleDateString("en-US", { weekday: "short" });
+        return { label, value: total };
+      });
+    }
+    
+    if (earningsFilter === "monthly") {
+      const weeks = [
+        { label: "Wk 1", startDaysAgo: 27, endDaysAgo: 21 },
+        { label: "Wk 2", startDaysAgo: 20, endDaysAgo: 14 },
+        { label: "Wk 3", startDaysAgo: 13, endDaysAgo: 7 },
+        { label: "Wk 4", startDaysAgo: 6, endDaysAgo: 0 },
+      ];
+      return weeks.map((wk) => {
+        const start = new Date();
+        start.setDate(now.getDate() - wk.startDaysAgo);
+        start.setHours(0, 0, 0, 0);
+        const end = new Date();
+        end.setDate(now.getDate() - wk.endDaysAgo);
+        end.setHours(23, 59, 59, 999);
+        const total = validOrders
+          .filter((o) => {
+            const oDate = new Date(o.createdAt);
+            return oDate >= start && oDate <= end;
+          })
+          .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+        return { label: wk.label, value: total };
+      });
+    }
+    
+    if (earningsFilter === "yearly") {
+      const months = Array.from({ length: 12 }).map((_, i) => {
+        const d = new Date();
+        d.setMonth(now.getMonth() - (11 - i));
+        return d;
+      });
+      return months.map((monthDate) => {
+        const total = validOrders
+          .filter((o) => {
+            const oDate = new Date(o.createdAt);
+            return oDate.getMonth() === monthDate.getMonth() && oDate.getFullYear() === monthDate.getFullYear();
+          })
+          .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+        const label = monthDate.toLocaleDateString("en-US", { month: "short" });
+        return { label, value: total };
+      });
+    }
+    return [];
+  };
+
+  const chartData = getFilteredEarningsData();
+  const maxValue = Math.max(...chartData.map((d) => d.value), 100);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -593,23 +661,49 @@ export default function AdminDashboard() {
               </div>
 
               {/* Chart */}
-              <div className="bg-primary-dark p-6 rounded-xl border border-secondary/10 space-y-4 shadow-sm">
-                <h3 className="font-serif text-base font-bold text-foreground">Daily Performance Metrics</h3>
-                <div className="h-44 flex items-end gap-3.5 border-b border-l border-secondary/20 pb-4 pl-4 pt-4">
-                  {[45, 60, 52, 75, 90, 85, 110].map((val, idx) => (
-                    <div key={idx} className="flex-1 flex flex-col items-center gap-2 group cursor-pointer h-full justify-end">
-                      <span className="text-[10px] text-secondary font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                        ₹{val * 100}
-                      </span>
-                      <div
-                        className="w-full bg-secondary/70 hover:bg-secondary rounded-t transition-all"
-                        style={{ height: `${val}%` }}
-                      />
-                      <span className="text-[10px] text-foreground/40 mt-1 uppercase font-semibold">
-                        {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][idx]}
-                      </span>
-                    </div>
-                  ))}
+              <div className="bg-primary-dark p-6 rounded-xl border border-secondary/10 space-y-4 shadow-sm font-sans">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <h3 className="font-serif text-base font-bold text-foreground">Earnings Analytics</h3>
+                  <div className="flex bg-primary border border-secondary/15 rounded-lg p-0.5 text-xs font-bold uppercase tracking-wider">
+                    {[
+                      { key: "weekly", label: "Weekly" },
+                      { key: "monthly", label: "Monthly" },
+                      { key: "yearly", label: "Yearly" }
+                    ].map((opt) => (
+                      <button
+                        key={opt.key}
+                        onClick={() => setEarningsFilter(opt.key as any)}
+                        className={`px-3 py-1 rounded cursor-pointer transition-colors ${
+                          earningsFilter === opt.key 
+                            ? "bg-secondary text-white shadow-sm" 
+                            : "text-foreground/60 hover:text-secondary"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="h-44 flex items-end gap-2.5 border-b border-l border-secondary/20 pb-4 pl-4 pt-4 relative">
+                  {chartData.map((item, idx) => {
+                    const pct = (item.value / maxValue) * 80 + 5; // scaled nicely
+                    return (
+                      <div key={idx} className="flex-1 flex flex-col items-center gap-2 group cursor-pointer h-full justify-end relative">
+                        {/* Hover Tooltip */}
+                        <div className="absolute bottom-full mb-1 bg-secondary text-white text-[10px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-md z-10 whitespace-nowrap">
+                          ₹{item.value}
+                        </div>
+                        <div
+                          className="w-full bg-secondary/70 hover:bg-secondary rounded-t transition-all duration-300"
+                          style={{ height: `${pct}%` }}
+                        />
+                        <span className="text-[9px] text-foreground/45 mt-1 uppercase font-bold tracking-wider">
+                          {item.label}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
