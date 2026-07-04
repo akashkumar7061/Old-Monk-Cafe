@@ -18,10 +18,29 @@ const app = express();
 // ---- Security headers ----
 app.use(helmet());
 
-// ---- CORS: only allow the configured frontend origin, with credentials for cookies ----
+// ---- CORS: allow local development and Vercel subdomains dynamically ----
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'https://old-monk-cafe-frontend.vercel.app',
+];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // Allow curl and postman
+      
+      const isAllowed = allowedOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app') ||
+        /^http:\/\/localhost:\d+$/.test(origin) ||
+        /^http:\/\/127\.0\.0\.1:\d+$/.test(origin);
+        
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );
