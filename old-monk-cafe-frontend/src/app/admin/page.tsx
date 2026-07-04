@@ -112,8 +112,12 @@ export default function AdminDashboard() {
     } catch (err: any) {
       console.error("Failed to fetch menu items:", err);
       setMenuItems([]);
+      const isLocalUrl = typeof window !== "undefined" && 
+        (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
       setConnectionError(
-        "Could not connect to the backend server. If you are viewing the live Vercel site, please note that it cannot talk to a local backend (localhost:5000) due to browser security (Mixed Content). Please run the app locally at http://localhost:3000/admin to test."
+        isLocalUrl
+          ? "Could not connect to the local backend server (http://localhost:5000). Please ensure your Node backend server is running locally!"
+          : "Could not connect to the live backend server on Render (https://old-monk-cafe.onrender.com). If the server was asleep, please give it up to 50 seconds to complete its cold-start spin-up."
       );
     }
 
