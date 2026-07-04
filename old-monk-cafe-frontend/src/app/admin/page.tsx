@@ -37,7 +37,7 @@ export default function AdminDashboard() {
   const [menuItems, setMenuItems] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
   const [inquiries, setInquiries] = useState<any[]>([]);
-  const [metrics, setMetrics] = useState({ revenue: 12450, orders: 48, reservations: 12, popular: "Cold Coffee" });
+  const [metrics, setMetrics] = useState({ revenue: 0, orders: 0, reservations: 0, popular: "N/A" });
 
   // Login form state
   const [email, setEmail] = useState("admin@oldmonkcafe.com");
