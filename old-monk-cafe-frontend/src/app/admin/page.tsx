@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import { API_BASE_URL } from "@/config/api";
+import { fallbackMenuItems } from "@/config/menuDefaults";
 
 export default function AdminDashboard() {
   const { user, login, logout, token, isAdmin, isLoading } = useAuth();
@@ -43,6 +44,8 @@ export default function AdminDashboard() {
   const [password, setPassword] = useState("Admin@12345");
   const [authError, setAuthError] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [seedingMenu, setSeedingMenu] = useState(false);
 
   // Edit/Add Menu Item modal state
   const [showMenuModal, setShowMenuModal] = useState(false);
@@ -62,48 +65,82 @@ export default function AdminDashboard() {
   // Load Dashboard Data
   const loadDashboardData = async () => {
     if (!token) return;
+    const headers = { Authorization: `Bearer ${token}` };
+    setConnectionError(null);
+
+    // 1. Fetch Orders
     try {
-      const headers = { Authorization: `Bearer ${token}` };
-      
       const ordRes = await axios.get(`${API_BASE_URL}/orders`, { headers });
       if (ordRes.data?.success && ordRes.data?.data) {
         setOrders(ordRes.data.data);
       }
+    } catch (err) {
+      console.warn("Failed to fetch orders:", err);
+      setOrders([]);
+    }
 
+    // 2. Fetch Reservations
+    try {
       const resRes = await axios.get(`${API_BASE_URL}/reservations`, { headers });
       if (resRes.data?.success && resRes.data?.data) {
         setReservations(resRes.data.data);
       }
+    } catch (err) {
+      console.warn("Failed to fetch reservations:", err);
+      setReservations([]);
+    }
 
+    // 3. Fetch Menu Items
+    try {
       const menuRes = await axios.get(`${API_BASE_URL}/menu`, { headers });
       if (menuRes.data?.success && menuRes.data?.data) {
         setMenuItems(menuRes.data.data);
       }
+    } catch (err: any) {
+      console.error("Failed to fetch menu items:", err);
+      setMenuItems([]);
+      setConnectionError(
+        "Could not connect to the backend server. If you are viewing the live Vercel site, please note that it cannot talk to a local backend (localhost:5000) due to browser security (Mixed Content). Please run the app locally at http://localhost:3000/admin to test."
+      );
+    }
 
+    // 4. Fetch Reviews
+    try {
       const revRes = await axios.get(`${API_BASE_URL}/reviews`, { headers });
       if (revRes.data?.success && revRes.data?.data) {
         setReviews(revRes.data.data);
       }
+    } catch (err) {
+      console.warn("Failed to fetch reviews:", err);
+      setReviews([]);
+    }
 
+    // 5. Fetch Contact Inquiries
+    try {
       const inqRes = await axios.get(`${API_BASE_URL}/contact`, { headers });
       if (inqRes.data?.success && inqRes.data?.data) {
         setInquiries(inqRes.data.data);
       }
+    } catch (err) {
+      console.warn("Failed to fetch contact inquiries:", err);
+      setInquiries([]);
+    }
 
+    // 6. Fetch Analytics Summary
+    try {
       const anRes = await axios.get(`${API_BASE_URL}/analytics`, { headers });
       if (anRes.data?.success && anRes.data?.data) {
         const stats = anRes.data.data;
         setMetrics({
-          revenue: stats.revenue || 12450,
-          orders: stats.ordersCount || 48,
-          reservations: stats.reservationsCount || 12,
-          popular: stats.popularItem || "Cold Coffee",
+          revenue: stats.revenue || 0,
+          orders: stats.ordersCount || 0,
+          reservations: stats.reservationsCount || 0,
+          popular: stats.popularItem || "None",
         });
       }
-
     } catch (err) {
-      console.warn("Backend analytical queries failed or offline. Generating mock backoffice data.", err);
-      simulateMockData();
+      console.warn("Failed to fetch analytics:", err);
+      setMetrics({ revenue: 0, orders: 0, reservations: 0, popular: "None" });
     }
   };
 
@@ -219,6 +256,94 @@ export default function AdminDashboard() {
     } catch (err) {
       const updatedValue = !currentAvailable;
       setMenuItems(menuItems.map((m) => (m._id === itemId ? { ...m, isAvailable: updatedValue } : m)));
+    }
+  };
+
+  const handleSeedDefaultMenu = async () => {
+    if (!token) return;
+    if (!confirm("Are you sure you want to seed the database with the default cafe menu items? This will create categories first if they don't exist in the database.")) return;
+    
+    setSeedingMenu(true);
+    try {
+      const headers = { Authorization: `Bearer ${token}` };
+      
+      // 1. Fetch existing categories
+      let categories: any[] = [];
+      try {
+        const catRes = await axios.get(`${API_BASE_URL}/categories`, { headers });
+        if (catRes.data?.success && catRes.data?.data) {
+          categories = catRes.data.data;
+        }
+      } catch (err) {
+        console.warn("Failed to fetch existing categories, proceeding to create them:", err);
+      }
+      
+      // Map category slug to id
+      const categoryMap: { [key: string]: string } = {};
+      categories.forEach((cat) => {
+        categoryMap[cat.slug] = cat._id;
+      });
+      
+      // Categories definition
+      const categoriesToCreate = [
+        { name: "Coffee & Beverages", slug: "coffee", displayOrder: 1 },
+        { name: "Signature Mocktails", slug: "mocktails", displayOrder: 2 },
+        { name: "Burgers & Slides", slug: "burgers", displayOrder: 3 },
+        { name: "Stone-baked Pizza", slug: "pizza", displayOrder: 4 },
+        { name: "Gourmet Pasta", slug: "pasta", displayOrder: 5 },
+        { name: "Steaming Momos", slug: "momos", displayOrder: 6 },
+        { name: "Chinese Mains", slug: "chinese", displayOrder: 7 },
+        { name: "Desserts & Sweets", slug: "desserts", displayOrder: 8 },
+        { name: "Value Combos", slug: "combos", displayOrder: 9 }
+      ];
+      
+      // Create missing categories
+      for (const cat of categoriesToCreate) {
+        if (!categoryMap[cat.slug]) {
+          try {
+            const newCatRes = await axios.post(`${API_BASE_URL}/categories`, cat, { headers });
+            if (newCatRes.data?.success && newCatRes.data?.data) {
+              categoryMap[cat.slug] = newCatRes.data.data._id;
+            }
+          } catch (err) {
+            console.warn(`Category ${cat.slug} creation failed:`, err);
+          }
+        }
+      }
+      
+      // 3. Seed menu items in parallel / sequential batches
+      let count = 0;
+      for (const item of fallbackMenuItems) {
+        const categoryId = categoryMap[item.category];
+        if (!categoryId) continue;
+        
+        const payload = {
+          name: item.name,
+          description: item.description,
+          price: item.price,
+          category: categoryId,
+          image: { url: typeof item.image === "string" ? item.image : (item.image as any)?.url || "", publicId: "" },
+          isVeg: item.isVeg,
+          isAvailable: true,
+          isFeatured: item.id.startsWith("co") || item.id === "c6" || item.id === "m1" || item.id === "p2",
+          prepTimeMinutes: 15
+        };
+        
+        try {
+          await axios.post(`${API_BASE_URL}/menu`, payload, { headers });
+          count++;
+        } catch (itemErr) {
+          console.warn(`Failed to seed item: ${item.name}`, itemErr);
+        }
+      }
+      
+      alert(`Seeded ${count} menu items successfully!`);
+      loadDashboardData();
+    } catch (err) {
+      console.error("Error seeding menu:", err);
+      alert("Seeding failed. Please check the backend connection.");
+    } finally {
+      setSeedingMenu(false);
     }
   };
 
@@ -417,6 +542,15 @@ export default function AdminDashboard() {
 
         {/* Content Box */}
         <div className="lg:col-span-9 glass-panel p-6 sm:p-8 rounded-2xl border border-secondary/10 bg-primary shadow-sm min-h-[480px]">
+          {connectionError && (
+            <div className="bg-red-500/10 border border-red-500/25 text-red-500 p-4 rounded-xl text-xs font-semibold leading-relaxed mb-6 flex items-start gap-2.5 font-sans">
+              <AlertCircle className="w-5 h-5 shrink-0 text-red-500" />
+              <div>
+                <p className="font-bold mb-1 uppercase tracking-wider text-[10px]">Database Connection Warning</p>
+                <p>{connectionError}</p>
+              </div>
+            </div>
+          )}
           
           {/* TAB 1: ANALYTICS */}
           {activeTab === "analytics" && (
@@ -873,58 +1007,86 @@ export default function AdminDashboard() {
               </div>
 
               {/* Items List */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {menuItems.map((item) => (
-                  <div key={item._id} className="bg-primary-dark p-4 rounded-xl border border-secondary/10 flex gap-4 items-start font-sans shadow-sm">
-                    <img
-                      src={(typeof item.image === "string" ? item.image : item.image?.url) || "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=200"}
-                      alt={item.name}
-                      className="w-16 h-16 object-cover rounded-lg bg-primary border border-secondary/10 shrink-0"
-                    />
-                    <div className="flex-grow min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <h4 className="font-bold text-foreground text-sm truncate">{item.name}</h4>
-                        <span className="text-secondary font-bold text-sm shrink-0">₹{item.price}</span>
-                      </div>
-                      <p className="text-xs text-foreground/50 line-clamp-1 mt-0.5 uppercase tracking-wider font-semibold">
-                        {item.category} | {item.isVeg ? "VEG" : "NON-VEG"}
-                      </p>
-                      <p className="text-xs text-foreground/60 line-clamp-2 mt-2 leading-relaxed">{item.description}</p>
-                      
-                      <div className="flex items-center justify-between mt-3 pt-3 border-t border-secondary/10">
-                        <button
-                          onClick={() => handleToggleMenuAvailability(item._id, item.isAvailable)}
-                          className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded transition-colors cursor-pointer border ${
-                            item.isAvailable 
-                              ? "bg-green-50 text-green-700 border-green-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200" 
-                              : "bg-red-50 text-red-700 border-red-200 hover:bg-green-50 hover:text-green-700 hover:border-green-200"
-                          }`}
-                          title={item.isAvailable ? "Click to set Sold Out" : "Click to set Available"}
-                        >
-                          {item.isAvailable ? "🟢 Available" : "🔴 Sold Out"}
-                        </button>
+              {menuItems.length === 0 ? (
+                <div className="text-center py-16 border border-dashed border-secondary/20 rounded-xl bg-primary-dark/20 flex flex-col items-center justify-center font-sans space-y-4">
+                  <Coffee className="w-10 h-10 text-foreground/20" />
+                  <div>
+                    <h3 className="font-serif text-sm font-bold text-foreground">No menu items found</h3>
+                    <p className="text-xs text-foreground/45 mt-1 max-w-xs mx-auto">
+                      Your database is currently empty of menu items. Populate them by seeding the default items list.
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleSeedDefaultMenu}
+                    disabled={seedingMenu}
+                    className={`px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer shadow-sm flex items-center gap-1.5 ${
+                      seedingMenu ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    {seedingMenu ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        <span>Seeding Items...</span>
+                      </>
+                    ) : (
+                      <span>Seed Default Cafe Menu</span>
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {menuItems.map((item) => (
+                    <div key={item._id} className="bg-primary-dark p-4 rounded-xl border border-secondary/10 flex gap-4 items-start font-sans shadow-sm">
+                      <img
+                        src={(typeof item.image === "string" ? item.image : item.image?.url) || "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=200"}
+                        alt={item.name}
+                        className="w-16 h-16 object-cover rounded-lg bg-primary border border-secondary/10 shrink-0"
+                      />
+                      <div className="flex-grow min-w-0">
+                        <div className="flex items-start justify-between gap-2">
+                          <h4 className="font-bold text-foreground text-sm truncate">{item.name}</h4>
+                          <span className="text-secondary font-bold text-sm shrink-0">₹{item.price}</span>
+                        </div>
+                        <p className="text-xs text-foreground/50 line-clamp-1 mt-0.5 uppercase tracking-wider font-semibold">
+                          {item.category} | {item.isVeg ? "VEG" : "NON-VEG"}
+                        </p>
+                        <p className="text-xs text-foreground/60 line-clamp-2 mt-2 leading-relaxed">{item.description}</p>
                         
-                        <div className="flex gap-2">
+                        <div className="flex items-center justify-between mt-3 pt-3 border-t border-secondary/10">
                           <button
-                            onClick={() => openMenuModal("edit", item)}
-                            className="p-1 text-foreground/65 hover:text-secondary transition-colors cursor-pointer"
-                            title="Edit"
+                            onClick={() => handleToggleMenuAvailability(item._id, item.isAvailable)}
+                            className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded transition-colors cursor-pointer border ${
+                              item.isAvailable 
+                                ? "bg-green-50 text-green-700 border-green-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200" 
+                                : "bg-red-50 text-red-700 border-red-200 hover:bg-green-50 hover:text-green-700 hover:border-green-200"
+                            }`}
+                            title={item.isAvailable ? "Click to set Sold Out" : "Click to set Available"}
                           >
-                            <Edit3 className="w-4 h-4" />
+                            {item.isAvailable ? "🟢 Available" : "🔴 Sold Out"}
                           </button>
-                          <button
-                            onClick={() => handleDeleteMenuItem(item._id)}
-                            className="p-1 text-foreground/45 hover:text-red-600 transition-colors cursor-pointer"
-                            title="Delete"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                          
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => openMenuModal("edit", item)}
+                              className="p-1 text-foreground/65 hover:text-secondary transition-colors cursor-pointer"
+                              title="Edit"
+                            >
+                              <Edit3 className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteMenuItem(item._id)}
+                              className="p-1 text-foreground/45 hover:text-red-600 transition-colors cursor-pointer"
+                              title="Delete"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
