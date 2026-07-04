@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useCart } from "@/context/CartContext";
-import { Plus, ShoppingCart, Check, Star } from "lucide-react";
+import { Plus } from "lucide-react";
 
 export interface MenuItemData {
   _id?: string;
@@ -24,8 +24,7 @@ interface MenuCardProps {
 }
 
 export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
-  const { addToCart } = useCart();
-  const [added, setAdded] = useState(false);
+  const { cart, addToCart, updateQuantity } = useCart();
 
   const imageUrl = item.image
     ? typeof item.image === "string"
@@ -37,17 +36,14 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
     addToCart({
       id: item.id,
       name: item.name,
-      price: item.discountPrice || item.price,
+      price: item.price,
       image: imageUrl,
       category: item.category,
     });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
   };
 
-  const hasDiscount = item.discountPrice !== undefined && item.discountPrice < item.price;
-  const displayPrice = hasDiscount ? item.discountPrice : item.price;
-  const rating = item.rating || 4.8;
+  const cartItem = cart.find((i) => i.id === item.id);
+  const quantityInCart = cartItem ? cartItem.quantity : 0;
 
   return (
     <div className="glass-panel rounded-xl overflow-hidden hover:border-secondary/30 transition-all duration-300 group flex flex-col h-full hover:shadow-lg bg-primary">
@@ -75,12 +71,6 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
           </span>
         </div>
 
-        {/* Rating Badge */}
-        <div className="absolute top-3 right-3 bg-primary/90 backdrop-blur-sm py-1 px-2 rounded flex items-center gap-1 border border-secondary/10">
-          <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
-          <span className="text-foreground text-xs font-bold font-sans">{rating.toFixed(1)}</span>
-        </div>
-
         {/* Sold Out Dark Blur Overlay */}
         {!item.isAvailable && (
           <div className="absolute inset-0 bg-black/55 backdrop-blur-[1px] flex items-center justify-center z-10">
@@ -104,40 +94,48 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
         <div className="flex items-center justify-between border-t border-secondary/10 pt-4 mt-auto">
           <div className="flex items-baseline gap-2">
             <span className="text-xl font-bold font-sans text-foreground">
-              ₹{displayPrice}
+              ₹{item.price}
             </span>
-            {hasDiscount && (
-              <span className="text-sm font-sans text-foreground/40 line-through">
-                ₹{item.price}
-              </span>
-            )}
           </div>
 
-          <button
-            onClick={handleAdd}
-            disabled={!item.isAvailable}
-            className={`flex items-center justify-center gap-1.5 px-4 py-2 rounded text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-              !item.isAvailable
-                ? "bg-foreground/5 text-foreground/30 border border-foreground/10 cursor-not-allowed"
-                : added
-                ? "bg-green-600 text-white shadow-lg shadow-green-600/25"
-                : "bg-secondary text-white hover:bg-secondary-dark hover:shadow-lg hover:shadow-secondary/25"
-            }`}
-          >
-            {added ? (
-              <>
-                <Check className="w-3.5 h-3.5" />
-                <span>Added</span>
-              </>
-            ) : !item.isAvailable ? (
-              <span>Sold Out</span>
-            ) : (
-              <>
-                <ShoppingCart className="w-3.5 h-3.5" />
-                <span>Add</span>
-              </>
-            )}
-          </button>
+          {quantityInCart > 0 ? (
+            <div className="flex items-center bg-secondary text-white rounded border border-secondary font-sans font-bold h-9">
+              <button
+                onClick={() => updateQuantity(item.id, quantityInCart - 1)}
+                className="px-3.5 h-full flex items-center justify-center hover:bg-secondary-dark rounded-l transition-colors cursor-pointer text-sm"
+              >
+                —
+              </button>
+              <span className="px-1 text-xs tracking-wider min-w-[1.5rem] text-center select-none">
+                {quantityInCart}
+              </span>
+              <button
+                onClick={() => updateQuantity(item.id, quantityInCart + 1)}
+                className="px-3.5 h-full flex items-center justify-center hover:bg-secondary-dark rounded-r transition-colors cursor-pointer text-sm"
+              >
+                +
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={handleAdd}
+              disabled={!item.isAvailable}
+              className={`flex items-center justify-center gap-1.5 px-4 py-2 rounded text-xs font-bold uppercase tracking-wider transition-all duration-300 h-9 ${
+                !item.isAvailable
+                  ? "bg-foreground/5 text-foreground/30 border border-foreground/10 cursor-not-allowed"
+                  : "bg-secondary text-white hover:bg-secondary-dark hover:shadow-lg hover:shadow-secondary/25 cursor-pointer"
+              }`}
+            >
+              {!item.isAvailable ? (
+                <span>Sold Out</span>
+              ) : (
+                <>
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add</span>
+                </>
+              )}
+            </button>
+          )}
         </div>
       </div>
     </div>
