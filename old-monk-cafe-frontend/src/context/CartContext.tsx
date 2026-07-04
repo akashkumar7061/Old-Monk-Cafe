@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export interface CartItem {
   id: string;
@@ -35,6 +36,7 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user } = useAuth();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [orderType, setOrderType] = useState<OrderType>("dine_in");
   const [tableNumber, setTableNumber] = useState<string>("");
@@ -42,8 +44,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [guestDetails, setGuestDetails] = useState({ name: "", phone: "" });
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load cart from localStorage on mount
+  // Load cart from localStorage on mount & when user auth state changes
   useEffect(() => {
+    if (!user) {
+      setCart([]);
+      localStorage.removeItem("omc_cart");
+      setIsLoaded(true);
+      return;
+    }
+
     const savedCart = localStorage.getItem("omc_cart");
     if (savedCart) {
       try {
@@ -53,7 +62,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
     setIsLoaded(true);
-  }, []);
+  }, [user]);
 
   // Save cart to localStorage when it changes
   const saveCart = (newCart: CartItem[]) => {

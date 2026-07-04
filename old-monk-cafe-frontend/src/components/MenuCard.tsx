@@ -2,6 +2,8 @@
 
 import React from "react";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
 
 export interface MenuItemData {
@@ -25,6 +27,8 @@ interface MenuCardProps {
 
 export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
   const { cart, addToCart, updateQuantity } = useCart();
+  const { user } = useAuth();
+  const router = useRouter();
 
   const imageUrl = item.image
     ? typeof item.image === "string"
@@ -33,6 +37,10 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
     : "";
 
   const handleAdd = () => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
     addToCart({
       id: item.id,
       name: item.name,
@@ -128,6 +136,8 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
             >
               {!item.isAvailable ? (
                 <span>Sold Out</span>
+              ) : !user ? (
+                <span>Login to Add</span>
               ) : (
                 <>
                   <Plus className="w-3.5 h-3.5" />
