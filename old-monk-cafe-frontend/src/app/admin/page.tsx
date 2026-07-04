@@ -46,6 +46,7 @@ export default function AdminDashboard() {
   const [authLoading, setAuthLoading] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [seedingMenu, setSeedingMenu] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
 
   // Edit/Add Menu Item modal state
   const [showMenuModal, setShowMenuModal] = useState(false);
@@ -56,7 +57,7 @@ export default function AdminDashboard() {
     price: 150,
     discountPrice: 0,
     description: "",
-    category: "coffee",
+    category: "",
     image: "",
     isVeg: true,
     isAvailable: true,
@@ -88,6 +89,17 @@ export default function AdminDashboard() {
     } catch (err) {
       console.warn("Failed to fetch reservations:", err);
       setReservations([]);
+    }
+
+    // 2.5 Fetch Categories
+    try {
+      const catRes = await axios.get(`${API_BASE_URL}/categories`, { headers });
+      if (catRes.data?.success && catRes.data?.data) {
+        setCategories(catRes.data.data);
+      }
+    } catch (err) {
+      console.warn("Failed to fetch categories:", err);
+      setCategories([]);
     }
 
     // 3. Fetch Menu Items
@@ -356,7 +368,7 @@ export default function AdminDashboard() {
         price: item.price,
         discountPrice: item.discountPrice || 0,
         description: item.description || "",
-        category: item.category || "coffee",
+        category: (typeof item.category === "object" && item.category !== null) ? item.category._id : item.category || "",
         image: item.image || "",
         isVeg: item.isVeg ?? true,
         isAvailable: item.isAvailable ?? true,
@@ -1048,7 +1060,7 @@ export default function AdminDashboard() {
                           <span className="text-secondary font-bold text-sm shrink-0">₹{item.price}</span>
                         </div>
                         <p className="text-xs text-foreground/50 line-clamp-1 mt-0.5 uppercase tracking-wider font-semibold">
-                          {item.category} | {item.isVeg ? "VEG" : "NON-VEG"}
+                          {(typeof item.category === "object" && item.category !== null) ? item.category.name : item.category} | {item.isVeg ? "VEG" : "NON-VEG"}
                         </p>
                         <p className="text-xs text-foreground/60 line-clamp-2 mt-2 leading-relaxed">{item.description}</p>
                         
@@ -1226,17 +1238,29 @@ export default function AdminDashboard() {
                   <select
                     value={menuForm.category}
                     onChange={(e) => setMenuForm({ ...menuForm, category: e.target.value })}
-                    className="w-full bg-background border border-secondary/20 rounded px-3 py-2.5 text-sm text-foreground focus:outline-none focus:border-secondary"
+                    className="w-full bg-background border border-secondary/20 rounded px-3 py-2.5 text-sm text-foreground focus:outline-none focus:border-secondary font-sans"
+                    required
                   >
-                    <option value="coffee">Coffee</option>
-                    <option value="mocktails">Mocktails</option>
-                    <option value="burgers">Burgers</option>
-                    <option value="pizza">Pizzas</option>
-                    <option value="pasta">Pastas</option>
-                    <option value="momos">Momos</option>
-                    <option value="chinese">Chinese</option>
-                    <option value="desserts">Desserts</option>
-                    <option value="combos">Combos</option>
+                    <option value="" disabled>Select Category</option>
+                    {categories.length > 0 ? (
+                      categories.map((cat) => (
+                        <option key={cat._id} value={cat._id}>
+                          {cat.name}
+                        </option>
+                      ))
+                    ) : (
+                      <>
+                        <option value="coffee">Coffee</option>
+                        <option value="mocktails">Mocktails</option>
+                        <option value="burgers">Burgers</option>
+                        <option value="pizza">Pizzas</option>
+                        <option value="pasta">Pastas</option>
+                        <option value="momos">Momos</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="desserts">Desserts</option>
+                        <option value="combos">Combos</option>
+                      </>
+                    )}
                   </select>
                 </div>
 
