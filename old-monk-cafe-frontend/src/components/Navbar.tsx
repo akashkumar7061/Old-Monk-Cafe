@@ -104,16 +104,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
             : "bg-transparent py-6"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link
             href="/"
             onClick={() => handleLinkClick("/")}
             className="flex flex-col items-center group select-none leading-none py-1"
           >
-            <span className="font-sans font-black tracking-widest text-lg sm:text-2xl text-foreground transition-colors duration-300 flex items-center">
+            <span className="font-sans font-black tracking-widest text-lg sm:text-2xl text-foreground transition-colors duration-300 flex items-center whitespace-nowrap">
               OLD M
-              <span className="relative inline-flex items-center justify-center mx-0.5 w-[1.1em] h-[1.1em]">
+              <span className="relative inline-flex items-center justify-center mx-1.5 w-[0.95em] h-[0.95em] -mt-0.5 select-none shrink-0">
                 <img
                   src={logoSrc}
                   alt="O"
@@ -122,10 +122,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
               </span>
               NK
             </span>
-            <span className="text-foreground font-serif italic font-semibold text-xs sm:text-sm tracking-widest flex items-center justify-center w-full mt-1 opacity-95">
-              <span className="h-[1px] w-3 sm:w-5 bg-[#E53935] mr-1.5 shrink-0"></span>
+            <span className="text-foreground font-serif italic font-semibold text-[10px] sm:text-xs tracking-[0.2em] flex items-center justify-center w-full mt-1.5 opacity-95 uppercase">
+              <span className="h-[1px] w-4 sm:w-6 bg-[#E53935] mr-2 shrink-0"></span>
               Cafe
-              <span className="h-[1px] w-3 sm:w-5 bg-[#E53935] ml-1.5 shrink-0"></span>
+              <span className="h-[1px] w-4 sm:w-6 bg-[#E53935] ml-2 shrink-0"></span>
             </span>
           </Link>
 
