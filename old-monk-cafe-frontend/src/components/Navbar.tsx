@@ -33,7 +33,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
   const [scrolled, setScrolled] = useState(false);
   const [currentHash, setCurrentHash] = useState("");
 
-  const logoSrc = theme === "dark" ? "/logo_black_bg.jpg" : "/logo_white_bg.jpg";
+  const isHeaderDark = theme === "dark" || (!scrolled && (pathname === "/" || pathname === "/menu"));
+  const logoSrc = isHeaderDark ? "/logo_black_bg.jpg" : "/logo_white_bg.jpg";
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
@@ -110,18 +111,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
             onClick={() => handleLinkClick("/")}
             className="flex flex-col items-center group select-none leading-none py-1"
           >
-            <span className="font-sans font-black tracking-widest text-lg sm:text-2xl text-foreground transition-colors duration-300 flex items-center whitespace-nowrap">
+            <span className={`font-sans font-black tracking-widest text-lg sm:text-2xl transition-colors duration-300 flex items-center whitespace-nowrap ${
+              isHeaderDark ? "text-white" : "text-foreground"
+            }`}>
               OLD M
               <span className="relative inline-flex items-center justify-center mx-1.5 w-[0.95em] h-[0.95em] -mt-0.5 select-none shrink-0">
                 <img
                   src={logoSrc}
                   alt="O"
-                  className="absolute w-full h-full rounded-full object-cover border border-[#E53935] transition-transform duration-300 group-hover:scale-110"
+                  className="absolute w-full h-full rounded-full object-cover border border-[#E53935]"
                 />
               </span>
               NK
             </span>
-            <span className="text-foreground font-serif italic font-semibold text-[10px] sm:text-xs tracking-[0.2em] flex items-center justify-center w-full mt-1.5 opacity-95 uppercase">
+            <span className={`font-serif italic font-semibold text-[10px] sm:text-xs tracking-[0.2em] flex items-center justify-center w-full mt-1.5 opacity-95 uppercase ${
+              isHeaderDark ? "text-white" : "text-foreground"
+            }`}>
               <span className="h-[1px] w-4 sm:w-6 bg-[#E53935] mr-2 shrink-0"></span>
               Cafe
               <span className="h-[1px] w-4 sm:w-6 bg-[#E53935] ml-2 shrink-0"></span>
@@ -138,7 +143,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
                 className={`text-sm font-medium tracking-wide transition-colors duration-300 hover:text-secondary ${
                   pathname === link.href || (link.href.startsWith("/#") && pathname === "/" && currentHash === link.href.substring(1))
                     ? "text-secondary font-semibold"
-                    : "text-foreground/80"
+                    : isHeaderDark
+                      ? "text-white/80"
+                      : "text-foreground/80"
                 }`}
               >
                 {link.name}
@@ -160,7 +167,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2.5 hover:bg-secondary/10 rounded-full transition-colors duration-300 group text-foreground"
+              className={`p-2.5 hover:bg-secondary/10 rounded-full transition-colors duration-300 group ${
+                isHeaderDark ? "text-white" : "text-foreground"
+              }`}
               aria-label="Toggle Theme"
             >
               {theme === "light" ? (
@@ -176,7 +185,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
               className="relative p-2.5 hover:bg-secondary/10 rounded-full transition-colors duration-300 group"
               aria-label="Open Cart"
             >
-              <ShoppingBag className="w-5.5 h-5.5 group-hover:text-secondary transition-colors duration-300 text-foreground" />
+              <ShoppingBag className={`w-5.5 h-5.5 group-hover:text-secondary transition-colors duration-300 ${
+                isHeaderDark ? "text-white" : "text-foreground"
+              }`} />
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-secondary text-white font-sans text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center animate-pulse">
                   {cartCount}
@@ -188,7 +199,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
             {isAuthenticated ? (
               <div className="relative group/profile hidden md:block">
                 <button
-                  className="flex items-center gap-1.5 p-1 px-3 hover:bg-secondary/10 rounded-full transition-colors duration-300 border border-secondary/20 text-foreground"
+                  className={`flex items-center gap-1.5 p-1 px-3 hover:bg-secondary/10 rounded-full transition-colors duration-300 border border-secondary/20 ${
+                    isHeaderDark ? "text-white" : "text-foreground"
+                  }`}
                 >
                   <UserIcon className="w-4.5 h-4.5 text-secondary" />
                   <span className="hidden sm:inline text-xs font-medium max-w-[80px] truncate">
@@ -237,7 +250,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
             ) : (
               <Link
                 href="/login"
-                className="hidden md:flex items-center gap-1.5 p-2 px-4 border border-secondary/20 hover:border-secondary rounded text-xs uppercase tracking-wider hover:bg-secondary/5 transition-all font-medium text-foreground hover:text-secondary"
+                className={`hidden md:flex items-center gap-1.5 p-2 px-4 border border-secondary/20 hover:border-secondary rounded text-xs uppercase tracking-wider hover:bg-secondary/5 transition-all font-medium ${
+                  isHeaderDark ? "text-white hover:text-secondary" : "text-foreground hover:text-secondary"
+                }`}
               >
                 <UserIcon className="w-4 h-4" />
                 <span>Login</span>
@@ -247,7 +262,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 md:hidden hover:bg-secondary/10 rounded-full transition-colors text-foreground"
+              className={`p-2 md:hidden hover:bg-secondary/10 rounded-full transition-colors ${
+                isHeaderDark ? "text-white" : "text-foreground"
+              }`}
               aria-label="Toggle Mobile Menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
