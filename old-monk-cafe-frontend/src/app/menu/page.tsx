@@ -1,24 +1,46 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { MenuCard, MenuItemData } from "@/components/MenuCard";
 import { CartDrawer } from "@/components/CartDrawer";
 import { Chatbot } from "@/components/Chatbot";
 import { FloatingCTAs } from "@/components/FloatingCTAs";
-import { Search, Coffee, RefreshCw, Download } from "lucide-react";
+import { Search, Coffee, RefreshCw, Download, ChevronRight, LogIn, Plus, Sparkles } from "lucide-react";
 import axios from "axios";
 import { API_BASE_URL } from "@/config/api";
 import { fallbackMenuItems } from "@/config/menuDefaults";
+import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+
+export interface MenuItemData {
+  _id?: string;
+  id: string;
+  name: string;
+  price: number;
+  discountPrice?: number;
+  description: string;
+  category: string;
+  image: string | { url: string; publicId?: string };
+  isVeg: boolean;
+  isAvailable: boolean;
+  rating?: number;
+  orderCount?: number;
+}
 
 export default function Menu() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [menuItems, setMenuItems] = useState<MenuItemData[]>(fallbackMenuItems);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [vegOnly, setVegOnly] = useState(true);
   const [loading, setLoading] = useState(false);
+
+  const { cart, addToCart, updateQuantity } = useCart();
+  const { user } = useAuth();
+  const router = useRouter();
+  
+  const menuSectionRef = useRef<HTMLDivElement>(null);
 
   // Fetch from backend
   useEffect(() => {
@@ -52,153 +74,354 @@ export default function Menu() {
   }, []);
 
   const categories = [
-    { key: "all", label: "All Items" },
-    { key: "kadak_chai", label: "Kadak Chai" },
-    { key: "hot_coffee", label: "Hot Coffee" },
-    { key: "hot_milk", label: "Hot Milk" },
-    { key: "cold_coffee", label: "Cold Coffee" },
-    { key: "milk_shake", label: "Milk Shakes" },
-    { key: "coolers", label: "Coolers" },
-    { key: "garlic_bread", label: "Garlic Bread" },
-    { key: "french_fries", label: "French Fries" },
-    { key: "burgers", label: "Burgers" },
-    { key: "pizza", label: "Pizzas" },
-    { key: "sandwich", label: "Sandwiches" },
-    { key: "maggie", label: "Maggie" },
-    { key: "special", label: "Old Monk Specials" },
-    { key: "momos", label: "Momos" },
-    { key: "pasta", label: "Pastas" },
-    { key: "noodles", label: "Noodles" },
-    { key: "fried_rice", label: "Fried Rice" },
-    { key: "rolls", label: "Rolls" },
-    { key: "chinese_snacks", label: "Chinese Snacks" },
-    { key: "soup", label: "Soups" },
-    { key: "desi_paneer", label: "Desi Paneer" },
-    { key: "mushroom", label: "Mushroom Delights" },
-    { key: "roti_rice", label: "Roti & Rice" },
-    { key: "pav", label: "Pav Specials" },
-    { key: "south_indian", label: "South Indian" },
-    { key: "desserts", label: "Dessert Dhamaka" },
+    { key: "all", label: "All Items", icon: "🍽️" },
+    { key: "kadak_chai", label: "Kadak Chai", icon: "☕" },
+    { key: "hot_coffee", label: "Hot Coffee", icon: "☕" },
+    { key: "hot_milk", label: "Hot Milk", icon: "🥛" },
+    { key: "cold_coffee", label: "Cold Coffee", icon: "🧋" },
+    { key: "milk_shake", label: "Milk Shakes", icon: "🥤" },
+    { key: "coolers", label: "Coolers", icon: "🥤" },
+    { key: "garlic_bread", label: "Garlic Bread", icon: "🥖" },
+    { key: "french_fries", label: "French Fries", icon: "🍟" },
+    { key: "burgers", label: "Burgers", icon: "🍔" },
+    { key: "pizza", label: "Pizzas", icon: "🍕" },
+    { key: "sandwich", label: "Sandwiches", icon: "🥪" },
+    { key: "maggie", label: "Maggie", icon: "🍜" },
+    { key: "special", label: "Old Monk Specials", icon: "🌟" },
+    { key: "momos", label: "Momos", icon: "🥟" },
+    { key: "pasta", label: "Pastas", icon: "🍝" },
+    { key: "noodles", label: "Noodles", icon: "🍜" },
+    { key: "fried_rice", label: "Fried Rice", icon: "🍚" },
+    { key: "rolls", label: "Rolls", icon: "🌯" },
+    { key: "chinese_snacks", label: "Chinese Snacks", icon: "🥡" },
+    { key: "soup", label: "Soups", icon: "🥣" },
+    { key: "desi_paneer", label: "Desi Paneer", icon: "🥘" },
+    { key: "mushroom", label: "Mushroom Delights", icon: "🍄" },
+    { key: "roti_rice", label: "Roti & Rice", icon: "🍛" },
+    { key: "pav", label: "Pav Specials", icon: "🥖" },
+    { key: "south_indian", label: "South Indian", icon: "🥞" },
+    { key: "desserts", label: "Dessert Dhamaka", icon: "🍨" },
   ];
-
-  // Filtering logic
-  const filteredItems = menuItems.filter((item) => {
-    const matchesCategory = selectedCategory === "all" || item.category.toLowerCase() === selectedCategory.toLowerCase();
-    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          item.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesVeg = !vegOnly || item.isVeg === true;
-
-    return matchesCategory && matchesSearch && matchesVeg;
-  });
 
   const handleDownloadMenuPDF = () => {
     window.print();
   };
 
+  const handleScrollToMenu = () => {
+    menuSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Zomato style add to cart handler
+  const handleAdd = (item: MenuItemData, imageUrl: string) => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+    addToCart({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: imageUrl,
+      category: item.category,
+    });
+  };
+
   return (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative min-h-screen bg-[#111111] text-[#FAF9F6] font-poppins selection:bg-[#F59E0B] selection:text-[#111111] overflow-x-hidden">
       <Navbar onCartClick={() => setIsCartOpen(true)} />
 
-      {/* Header Banner */}
-      <div className="pt-32 pb-16 bg-primary-dark border-b border-secondary/10 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#8c6239_1px,transparent_1px)] opacity-5 [background-size:24px_24px]" />
-        
-        <div className="relative z-10 max-w-4xl mx-auto px-4 space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-secondary/10 text-xs text-secondary font-bold uppercase tracking-widest font-sans">
-            <Coffee className="w-3.5 h-3.5" />
-            <span>Artisanal Kitchen</span>
+      {/* Hero Section */}
+      <div className="relative h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black">
+        {/* Background Image with slight blur */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-[10s] ease-out"
+          style={{ 
+            backgroundImage: "url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1600')",
+          }}
+        />
+        {/* Overlay with slight blur */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-[#111111] backdrop-blur-[2px]" />
+
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-8 mt-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A1A1A]/80 border border-white/10 text-xs text-[#F59E0B] font-semibold uppercase tracking-widest font-montserrat backdrop-blur-sm">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Premium Café Experience</span>
           </div>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-foreground tracking-wide">
-            Our Signature <span className="text-gold-gradient font-serif">Menu</span>
+          
+          <h1 className="font-montserrat text-5xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-none drop-shadow-2xl">
+            Old Monk <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] to-[#D97706] font-montserrat">Cafe</span>
           </h1>
-          <p className="text-foreground/60 text-sm sm:text-base max-w-lg mx-auto leading-relaxed font-sans">
-            Every dish is handcrafted using fresh local ingredients and custom recipes inspired by modern high-end café brands.
+          
+          <p className="text-gray-300 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide leading-relaxed">
+            Fresh Food <span className="text-[#F59E0B]">•</span> Premium Coffee <span className="text-[#F59E0B]">•</span> Delicious Meals
           </p>
 
-          {/* Menu PDF download button */}
-          <div className="pt-2 flex justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <button
+              onClick={handleScrollToMenu}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-black font-bold uppercase tracking-wider rounded-full shadow-lg shadow-[#F59E0B]/20 hover:shadow-[#F59E0B]/35 transition-all duration-300 cursor-pointer"
+            >
+              <span>Explore Menu</span>
+              <ChevronRight className="w-5 h-5" />
+            </button>
+            
             <button
               onClick={handleDownloadMenuPDF}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-secondary/20 hover:border-secondary hover:text-secondary rounded text-xs font-bold uppercase tracking-wider text-foreground transition-all cursor-pointer font-sans"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-bold uppercase tracking-wider rounded-full transition-all duration-300 cursor-pointer backdrop-blur-sm"
             >
-              <Download className="w-4 h-4" />
-              <span>Download PDF Menu</span>
+              <Download className="w-5 h-5" />
+              <span>Download Menu</span>
             </button>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 animate-bounce">
+          <span className="text-[10px] uppercase tracking-widest font-semibold font-montserrat">Scroll Down</span>
+          <div className="w-1.5 h-6 bg-white/20 rounded-full relative overflow-hidden">
+            <div className="w-full h-2 bg-[#F59E0B] rounded-full absolute top-0 left-0" />
           </div>
         </div>
       </div>
 
       {/* Main Filter & Grid Section */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Search and Veg Toggle Panel */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12 border-b border-secondary/10 pb-8">
-          
-          {/* Search bar */}
-          <div className="relative w-full md:max-w-md shrink-0">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4.5 h-4.5 text-foreground/45" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search dishes, coffee, mocktails..."
-              className="w-full bg-primary border border-secondary/20 rounded-lg pl-10 pr-4 py-3 text-sm text-foreground focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/50 placeholder-foreground/30 font-sans"
-            />
-          </div>
-          {/* 100% Veg Certified Badge */}
-          <div className="flex items-center gap-2 bg-green-600/10 border border-green-600/25 rounded-full px-5 py-2.5 self-end md:self-auto font-sans">
-            <span className="w-2.5 h-2.5 rounded-full bg-green-600 animate-pulse"></span>
-            <span className="text-xs font-bold text-green-700 uppercase tracking-wider">100% Pure Vegetarian Cafe</span>
-          </div>
-        </div>
+      <main id="menu-section" ref={menuSectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+        
+        {/* Sticky Filter & Search Control Panel */}
+        <div className="sticky top-20 z-40 bg-[#111111]/90 backdrop-blur-md border border-white/5 rounded-2xl p-4 mb-16 shadow-xl space-y-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            {/* Search Input */}
+            <div className="relative w-full md:max-w-md shrink-0">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search dishes, coffee, mocktails..."
+                className="w-full bg-[#1A1A1A] border border-white/10 focus:border-[#F59E0B]/50 rounded-xl pl-12 pr-4 py-3.5 text-sm text-white focus:outline-none placeholder-gray-500 font-poppins transition-colors"
+              />
+            </div>
 
-        {/* Categories Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-6 mb-12 scrollbar-thin scrollbar-thumb-secondary scrollbar-track-transparent">
-          {categories.map((cat) => (
-            <button
-              key={cat.key}
-              onClick={() => setSelectedCategory(cat.key)}
-              className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider border shrink-0 transition-all cursor-pointer font-sans ${
-                selectedCategory === cat.key
-                  ? "bg-secondary border-secondary text-white shadow-md"
-                  : "bg-primary border-secondary/15 hover:border-secondary/35 text-foreground/75 hover:text-secondary"
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+            {/* 100% Veg Certified Badge */}
+            <div className="flex items-center gap-2.5 bg-green-500/10 border border-green-500/20 rounded-full px-5 py-2.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+              <span className="text-xs font-bold text-green-400 uppercase tracking-widest font-montserrat">100% Pure Vegetarian Cafe</span>
+            </div>
+          </div>
+
+          {/* Categories Tab Navigation */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-t border-white/5 pt-4">
+            {categories.map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => setSelectedCategory(cat.key)}
+                className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider border shrink-0 transition-all duration-300 cursor-pointer font-montserrat flex items-center gap-2 ${
+                  selectedCategory === cat.key
+                    ? "bg-[#F59E0B] border-[#F59E0B] text-black shadow-lg shadow-[#F59E0B]/10 font-bold"
+                    : "bg-[#1A1A1A] border-white/5 hover:border-white/20 text-gray-400 hover:text-white"
+                }`}
+              >
+                <span>{cat.icon}</span>
+                <span>{cat.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Loading Indicator */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-24 space-y-4 font-sans">
-            <RefreshCw className="w-8 h-8 text-secondary animate-spin" />
-            <p className="text-sm text-foreground/50">Fetching signature recipes...</p>
-          </div>
-        ) : filteredItems.length === 0 ? (
-          /* Empty Grid state */
-          <div className="text-center py-24 glass-panel rounded-2xl border border-secondary/10 max-w-lg mx-auto bg-primary">
-            <Coffee className="w-12 h-12 text-foreground/20 mx-auto mb-4" />
-            <h3 className="font-serif text-lg font-bold text-foreground">No items found</h3>
-            <p className="text-sm text-foreground/50 max-w-xs mx-auto mt-2 font-sans">
-              We couldn't find any dishes matching your filters. Try clearing some selections or search queries.
-            </p>
-            <button
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("all");
-                setVegOnly(false);
-              }}
-              className="mt-6 text-xs font-bold uppercase tracking-wider text-secondary border border-secondary/30 rounded px-4 py-2 hover:bg-secondary hover:text-white transition-colors font-sans"
-            >
-              Reset Filters
-            </button>
+          <div className="flex flex-col items-center justify-center py-32 space-y-4">
+            <RefreshCw className="w-10 h-10 text-[#F59E0B] animate-spin" />
+            <p className="text-sm text-gray-400 font-light font-montserrat">Preparing signature recipes...</p>
           </div>
         ) : (
-          /* Food Grid */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {filteredItems.map((item) => (
-              <MenuCard key={item.id} item={item} />
-            ))}
+          /* Categories cards container */
+          <div className="space-y-12">
+            {categories
+              .filter(cat => cat.key !== "all" && (selectedCategory === "all" || selectedCategory === cat.key))
+              .map((cat) => {
+                // Filter items belonging to this category
+                const itemsInCategory = menuItems.filter(item => {
+                  const matchesCategory = item.category === cat.key;
+                  const matchesSearch = searchQuery === "" || 
+                                       item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                       item.description.toLowerCase().includes(searchQuery.toLowerCase());
+                  return matchesCategory && matchesSearch;
+                });
+
+                // If no items match the search query in this category, don't render the category card
+                if (itemsInCategory.length === 0) return null;
+
+                return (
+                  <div 
+                    key={cat.key} 
+                    id={`category-${cat.key}`}
+                    className="glass-card bg-[#1A1A1A]/40 backdrop-blur-md border border-white/5 shadow-2xl rounded-2xl p-6 md:p-8 space-y-6 scroll-mt-28 transition-all duration-300 hover:border-white/10"
+                  >
+                    {/* Category Title Header */}
+                    <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl">{cat.icon}</span>
+                        <h2 className="text-xl md:text-2xl font-bold tracking-wide font-montserrat text-white">
+                          {cat.label}
+                        </h2>
+                      </div>
+                      <span className="text-xs text-gray-500 uppercase tracking-widest font-medium font-montserrat">
+                        {itemsInCategory.length} {itemsInCategory.length === 1 ? "Item" : "Items"}
+                      </span>
+                    </div>
+
+                    {/* Category Menu Items Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {itemsInCategory.map((item) => {
+                        const imageUrl = item.image
+                          ? typeof item.image === "string"
+                            ? item.image
+                            : (item.image as any).url || ""
+                          : "";
+
+                        const cartItem = cart.find((i) => i.id === item.id);
+                        const quantityInCart = cartItem ? cartItem.quantity : 0;
+                        
+                        // Deterministic popular tag (e.g. first item or special item)
+                        const isPopular = item.price > 140 || item.name.includes("Special") || item.name.includes("Premium");
+
+                        return (
+                          <div 
+                            key={item.id} 
+                            className={`relative flex gap-4 bg-[#1A1A1A]/55 hover:bg-[#1A1A1A]/85 border border-white/5 hover:border-[#F59E0B]/25 p-4 rounded-xl transition-all duration-300 group shadow-lg ${
+                              !item.isAvailable ? "opacity-75" : ""
+                            }`}
+                          >
+                            {/* Small food image */}
+                            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden shrink-0 bg-black/20">
+                              <img 
+                                src={imageUrl || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=400"} 
+                                alt={item.name} 
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                                loading="lazy" 
+                              />
+                              {/* Optional Popular Badge */}
+                              {isPopular && item.isAvailable && (
+                                <span className="absolute top-1.5 left-1.5 bg-[#F59E0B] text-black text-[8px] font-extrabold px-1.5 py-0.5 rounded uppercase tracking-wider font-montserrat shadow-md">
+                                  Popular
+                                </span>
+                              )}
+
+                              {/* Sold Out Dark Blur Overlay */}
+                              {!item.isAvailable && (
+                                <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] flex items-center justify-center">
+                                  <span className="bg-red-600/90 text-white text-[8px] font-extrabold px-1.5 py-1 rounded border border-red-500/25 uppercase tracking-wider font-montserrat">
+                                    Sold Out
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Content Block */}
+                            <div className="flex-grow flex flex-col justify-between h-full min-w-0">
+                              {/* Heading & Price aligned right */}
+                              <div>
+                                <div className="flex justify-between items-start gap-3">
+                                  <h3 className="text-white font-semibold text-sm sm:text-base font-poppins group-hover:text-[#F59E0B] transition-colors truncate">
+                                    {item.name}
+                                  </h3>
+                                  <span className="text-[#F59E0B] font-bold font-sans text-sm sm:text-base whitespace-nowrap">
+                                    ₹{item.price}
+                                  </span>
+                                </div>
+                                <p className="text-gray-400 text-xs line-clamp-2 mt-1 font-light leading-relaxed pr-1">
+                                  {item.description || "Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe."}
+                                </p>
+                              </div>
+
+                              {/* Controls/Veg Tag footer */}
+                              <div className="flex justify-between items-center mt-3 pt-2.5 border-t border-white/5">
+                                <div className="flex items-center gap-1">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                  <span className="text-[9px] text-green-400 font-bold uppercase tracking-widest font-montserrat">Veg</span>
+                                </div>
+
+                                {/* Cart quantity updater or Add button */}
+                                {quantityInCart > 0 ? (
+                                  <div className="flex items-center bg-[#F59E0B] text-black rounded font-sans font-bold h-7.5 overflow-hidden">
+                                    <button
+                                      onClick={() => updateQuantity(item.id, quantityInCart - 1)}
+                                      className="px-2.5 h-full flex items-center justify-center hover:bg-[#D97706] transition-colors cursor-pointer text-xs"
+                                    >
+                                      —
+                                    </button>
+                                    <span className="px-1 text-[11px] tracking-wider min-w-[1.25rem] text-center select-none text-black">
+                                      {quantityInCart}
+                                    </span>
+                                    <button
+                                      onClick={() => updateQuantity(item.id, quantityInCart + 1)}
+                                      className="px-2.5 h-full flex items-center justify-center hover:bg-[#D97706] transition-colors cursor-pointer text-xs"
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    onClick={() => handleAdd(item, imageUrl)}
+                                    disabled={!item.isAvailable}
+                                    className={`flex items-center justify-center gap-1 px-4 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider transition-all duration-300 h-7.5 ${
+                                      !item.isAvailable
+                                        ? "bg-white/5 text-gray-600 border border-white/5 cursor-not-allowed"
+                                        : "bg-white/5 hover:bg-[#F59E0B] text-white hover:text-black border border-white/10 hover:border-[#F59E0B] hover:shadow-md hover:shadow-[#F59E0B]/10 cursor-pointer"
+                                    }`}
+                                  >
+                                    {!item.isAvailable ? (
+                                      <span>Sold Out</span>
+                                    ) : !user ? (
+                                      <span className="flex items-center gap-1">
+                                        <LogIn className="w-3 h-3" />
+                                        <span>Login to Add</span>
+                                      </span>
+                                    ) : (
+                                      <>
+                                        <Plus className="w-3 h-3" />
+                                        <span>Add</span>
+                                      </>
+                                    )}
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+
+            {/* Empty state if search returned absolutely nothing */}
+            {menuItems.filter(item => {
+              const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
+              const matchesSearch = searchQuery === "" || 
+                                   item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                   item.description.toLowerCase().includes(searchQuery.toLowerCase());
+              return matchesCategory && matchesSearch;
+            }).length === 0 && (
+              <div className="text-center py-24 glass-card bg-[#1A1A1A]/40 border border-white/5 rounded-2xl max-w-lg mx-auto">
+                <Coffee className="w-12 h-12 text-[#F59E0B]/20 mx-auto mb-4" />
+                <h3 className="font-montserrat text-lg font-bold text-white">No items match your search</h3>
+                <p className="text-sm text-gray-400 max-w-xs mx-auto mt-2 font-light">
+                  We couldn't find any dishes matching "{searchQuery}". Try editing your keyword or filter.
+                </p>
+                <button
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("all");
+                  }}
+                  className="mt-6 text-xs font-bold uppercase tracking-wider text-black bg-[#F59E0B] hover:bg-[#D97706] rounded-full px-6 py-2.5 transition-colors cursor-pointer font-montserrat"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            )}
           </div>
         )}
       </main>
