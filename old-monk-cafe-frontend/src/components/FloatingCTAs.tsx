@@ -18,6 +18,22 @@ export const FloatingCTAs: React.FC = () => {
         <MessageCircle className="w-6 h-6 fill-white text-green-500" />
       </a>
 
+      {/* Instagram Follow Button */}
+      <a
+        href="https://www.instagram.com/oldmonkcafe_dbg?igsh=Z2JsMXZldnlsNHg1"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center w-12 h-12 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-105"
+        title="Follow us on Instagram"
+        aria-label="Instagram"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5.5 h-5.5">
+          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+        </svg>
+      </a>
+
       {/* Direct Call Button (Mobile Focus) */}
       <a
         href="tel:+919296935757"
