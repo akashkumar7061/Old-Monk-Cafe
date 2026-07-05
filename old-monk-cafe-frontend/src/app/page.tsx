@@ -553,27 +553,34 @@ export default function Home() {
 
         {/* Carousel Slider */}
         <div className="max-w-3xl mx-auto relative px-12">
-          <div className="overflow-hidden">
-            <div className="glass-panel p-8 sm:p-12 rounded-2xl border border-secondary/15 relative bg-primary">
-              <span className="absolute top-3 left-4 sm:top-5 sm:left-6 font-serif text-8xl text-secondary/10 select-none font-bold">“</span>
-              
-              <div className="relative z-10 space-y-6">
-                <p className="text-foreground/85 text-base sm:text-lg leading-relaxed italic pt-10 sm:pt-8">
-                  {reviews[activeReviewIdx].text}
-                </p>
-                
-                <div className="flex items-center justify-between font-sans border-t border-secondary/10 pt-4">
-                  <div>
-                    <h3 className="font-serif text-lg font-bold text-foreground">{reviews[activeReviewIdx].name}</h3>
-                    <p className="text-xs text-foreground/40 mt-0.5">{reviews[activeReviewIdx].date}</p>
-                  </div>
-                  <div className="flex gap-0.5 bg-yellow-500/10 px-2.5 py-1 rounded-full border border-yellow-500/20">
-                    {[...Array(reviews[activeReviewIdx].rating)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
-                    ))}
+          <div className="overflow-hidden rounded-2xl border border-secondary/15 shadow-2xl bg-primary">
+            <div 
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${activeReviewIdx * 100}%)` }}
+            >
+              {reviews.map((review, idx) => (
+                <div key={idx} className="w-full shrink-0 p-8 sm:p-12 relative bg-primary glass-panel border-none rounded-none">
+                  <span className="absolute top-3 left-4 sm:top-5 sm:left-6 font-serif text-8xl text-secondary/10 select-none font-bold">“</span>
+                  
+                  <div className="relative z-10 space-y-6">
+                    <p className="text-foreground/85 text-base sm:text-lg leading-relaxed italic pt-10 sm:pt-8 min-h-[100px]">
+                      {review.text}
+                    </p>
+                    
+                    <div className="flex items-center justify-between font-sans border-t border-secondary/10 pt-4">
+                      <div>
+                        <h3 className="font-serif text-lg font-bold text-foreground">{review.name}</h3>
+                        <p className="text-xs text-foreground/45 mt-0.5">{review.date}</p>
+                      </div>
+                      <div className="flex gap-0.5 bg-yellow-500/10 px-2.5 py-1 rounded-full border border-yellow-500/20">
+                        {[...Array(review.rating)].map((_, i) => (
+                          <Star key={i} className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
 
