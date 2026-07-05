@@ -8,7 +8,7 @@ const { uploadBufferToCloudinary, deleteFromCloudinary } = require('../config/cl
 // @route   GET /api/v1/menu?category=&search=&isVeg=&featured=&page=&limit=&sort=
 // @access  Public
 const getMenuItems = asyncHandler(async (req, res) => {
-  const { category, search, isVeg, featured, minPrice, maxPrice, page = 1, limit = 50, sort } = req.query;
+  const { category, search, isVeg, featured, minPrice, maxPrice, page = 1, limit = 200, sort } = req.query;
 
   const filter = {};
   if (req.query.isAvailable !== undefined) {

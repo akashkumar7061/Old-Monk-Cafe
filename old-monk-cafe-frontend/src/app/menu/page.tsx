@@ -25,7 +25,7 @@ export default function Menu() {
     const fetchMenu = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${API_BASE_URL}/menu`);
+        const res = await axios.get(`${API_BASE_URL}/menu?limit=250`);
         if (res.data?.success && res.data?.data && res.data.data.length > 0) {
           const apiItems = res.data.data.map((item: any) => ({
             id: item._id || item.id,
