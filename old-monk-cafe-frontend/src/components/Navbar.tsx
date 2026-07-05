@@ -269,69 +269,155 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
         </div>
       </header>
 
-      {/* Mobile Nav Overlay Menu */}
+      {/* Mobile Nav Sidebar Overlay & Drawer */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 right-0 z-40 bg-background pt-24 pb-8 px-6 border-b border-secondary/10 shadow-lg md:hidden"
-          >
-            <nav className="flex flex-col gap-5 mb-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => handleLinkClick(link.href)}
-                  className={`text-lg font-semibold py-1 transition-colors ${
-                    pathname === link.href || (link.href.startsWith("/#") && pathname === "/" && currentHash === link.href.substring(1))
-                      ? "text-secondary font-semibold"
-                      : "text-foreground/80"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
-            <div className="flex flex-col gap-4 border-t border-secondary/10 pt-6">
-              {isAuthenticated && (
-                <Link
-                  href="/profile"
+          <>
+            {/* Backdrop Blur Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+            />
+
+            {/* Sliding Sidebar Drawer */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 bottom-0 z-50 w-72 sm:w-80 bg-background border-l border-secondary/10 shadow-2xl flex flex-col p-6 md:hidden overflow-y-auto"
+            >
+              {/* Header: Logo & Close Button */}
+              <div className="flex items-center justify-between pb-6 border-b border-secondary/10">
+                <span className="font-sans font-black tracking-widest text-lg text-foreground flex items-center">
+                  OLD M
+                  <span className="relative inline-flex items-center justify-center mx-1.5 w-[0.9em] h-[0.9em] -mt-0.5 select-none shrink-0">
+                    <img
+                      src={logoSrc}
+                      alt="O"
+                      className="absolute w-full h-full rounded-full object-cover border border-[#E53935]"
+                    />
+                  </span>
+                  NK
+                </span>
+                <button
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 w-full py-3 border border-secondary text-secondary font-bold uppercase tracking-wider rounded text-sm transition-colors hover:bg-secondary/5"
+                  className="p-2 hover:bg-secondary/10 rounded-full text-foreground transition-colors"
+                  aria-label="Close Mobile Menu"
                 >
-                  <UserIcon className="w-4 h-4" />
-                  My Profile
-                </Link>
-              )}
-              <button
-                onClick={toggleTheme}
-                className="flex items-center justify-center gap-2 w-full py-3 border border-secondary text-secondary font-bold uppercase tracking-wider rounded text-sm transition-colors hover:bg-secondary/5"
-              >
-                {theme === "light" ? (
-                  <>
-                    <Moon className="w-4 h-4" />
-                    <span>Dark Mode</span>
-                  </>
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Navigation links */}
+              <nav className="flex flex-col gap-4 py-8">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`text-base font-semibold py-1.5 transition-colors border-b border-transparent hover:border-secondary/20 hover:text-secondary ${
+                      pathname === link.href || (link.href.startsWith("/#") && pathname === "/" && currentHash === link.href.substring(1))
+                        ? "text-secondary font-bold"
+                        : "text-foreground/80"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </nav>
+
+              {/* User Login / Profile Section */}
+              <div className="mt-auto border-t border-secondary/10 pt-6 flex flex-col gap-4">
+                {isAuthenticated ? (
+                  <div className="space-y-4">
+                    {/* User Profile Card */}
+                    <div className="flex items-center gap-3 p-3 bg-secondary/5 rounded-xl border border-secondary/10">
+                      <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary font-bold select-none">
+                        {user?.name ? user.name[0].toUpperCase() : "U"}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs text-foreground/50">Welcome back,</p>
+                        <p className="text-sm font-bold text-foreground truncate">{user?.name}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Navigation Links inside Profile */}
+                    <div className="flex flex-col gap-2">
+                      <Link
+                        href="/profile"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-foreground/80 hover:text-secondary hover:bg-secondary/5 rounded-lg transition-colors"
+                      >
+                        <UserIcon className="w-4 h-4 text-secondary" />
+                        My Profile
+                      </Link>
+                      {isAdmin && (
+                        <Link
+                          href="/admin"
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-foreground/80 hover:text-secondary hover:bg-secondary/5 rounded-lg transition-colors"
+                        >
+                          <LayoutDashboard className="w-4 h-4 text-secondary" />
+                          Admin Dashboard
+                        </Link>
+                      )}
+                      <button
+                        onClick={() => {
+                          logout();
+                          setIsOpen(false);
+                        }}
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors w-full text-left"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Log Out
+                      </button>
+                    </div>
+                  </div>
                 ) : (
-                  <>
-                    <Sun className="w-4 h-4" />
-                    <span>Light Mode</span>
-                  </>
+                  <Link
+                    href="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-center gap-2 w-full py-3 bg-secondary/10 hover:bg-secondary/20 border border-secondary/20 text-secondary font-bold uppercase tracking-wider rounded text-sm transition-all shadow-sm"
+                  >
+                    <UserIcon className="w-4.5 h-4.5" />
+                    <span>Login / Register</span>
+                  </Link>
                 )}
-              </button>
-              <Link
-                href="/reserve"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-3 bg-secondary text-white font-bold uppercase tracking-wider rounded text-sm transition-colors hover:bg-secondary-dark"
-              >
-                <Calendar className="w-4 h-4" />
-                Book A Table
-              </Link>
-            </div>
-          </motion.div>
+
+                {/* Actions: Theme Toggle & Book a Table */}
+                <div className="grid grid-cols-2 gap-3 mt-2">
+                  <button
+                    onClick={toggleTheme}
+                    className="flex items-center justify-center gap-1.5 py-2.5 border border-secondary/25 hover:bg-secondary/5 text-foreground rounded text-xs font-bold uppercase tracking-wider transition-colors"
+                  >
+                    {theme === "light" ? (
+                      <>
+                        <Moon className="w-4 h-4 text-secondary" />
+                        <span>Dark</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sun className="w-4 h-4 text-secondary" />
+                        <span>Light</span>
+                      </>
+                    )}
+                  </button>
+                  <Link
+                    href="/reserve"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-center gap-1.5 py-2.5 bg-secondary hover:bg-secondary-dark text-white rounded text-xs font-bold uppercase tracking-wider transition-colors shadow-md"
+                  >
+                    <Calendar className="w-4 h-4" />
+                    <span>Book</span>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
