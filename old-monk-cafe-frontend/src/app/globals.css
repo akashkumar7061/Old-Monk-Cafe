@@ -5,19 +5,19 @@
 @tailwind utilities;
 
 :root {
-  --background: #111111;
-  --foreground: #FFFFFF;
-  --primary: #1A1A1A;
-  --primary-dark: #0C0C0C;
+  --background: #FAF9F6;
+  --foreground: #1E1A17;
+  --primary: #FFFFFF;
+  --primary-dark: #F4F2EC;
   --secondary: #E53935;
   --secondary-light: #FF6A00;
   --secondary-dark: #D32F2F;
   --accent: #FFA726;
   --accent-light: #FFA726;
   --accent-dark: #F4511E;
-  --glass-bg: rgba(26, 26, 26, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: rgba(0, 0, 0, 0.5);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.04);
 }
 
 .dark {

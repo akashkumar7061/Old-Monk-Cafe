@@ -127,39 +127,39 @@ export default function Menu() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#111111] text-[#FAF9F6] font-poppins selection:bg-[#F59E0B] selection:text-[#111111] overflow-x-hidden">
+    <div className="relative min-h-screen bg-background text-foreground font-poppins selection:bg-secondary selection:text-white overflow-x-hidden transition-colors duration-300">
       <Navbar onCartClick={() => setIsCartOpen(true)} />
 
       {/* Hero Section */}
       <div className="relative h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black">
         {/* Background Image with slight blur */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-[10s] ease-out"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-[10s] ease-out animate-pulse-slow"
           style={{ 
             backgroundImage: "url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1600')",
           }}
         />
-        {/* Overlay with slight blur */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-[#111111] backdrop-blur-[2px]" />
+        {/* Overlay with slight blur transitioning to theme background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-background backdrop-blur-[2px] transition-colors duration-300" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-8 mt-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A1A1A]/80 border border-white/10 text-xs text-[#F59E0B] font-semibold uppercase tracking-widest font-montserrat backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/80 dark:bg-[#1A1A1A]/80 border border-secondary/10 dark:border-white/10 text-xs text-secondary dark:text-[#FFA726] font-semibold uppercase tracking-widest font-montserrat backdrop-blur-sm">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Premium Café Experience</span>
           </div>
           
           <h1 className="font-montserrat text-5xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-none drop-shadow-2xl">
-            Old Monk <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] to-[#D97706] font-montserrat">Cafe</span>
+            Old Monk <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-secondary-light font-montserrat">Cafe</span>
           </h1>
           
           <p className="text-gray-300 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide leading-relaxed">
-            Fresh Food <span className="text-[#F59E0B]">•</span> Premium Coffee <span className="text-[#F59E0B]">•</span> Delicious Meals
+            Fresh Food <span className="text-secondary">•</span> Premium Coffee <span className="text-secondary">•</span> Delicious Meals
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
               onClick={handleScrollToMenu}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-black font-bold uppercase tracking-wider rounded-full shadow-lg shadow-[#F59E0B]/20 hover:shadow-[#F59E0B]/35 transition-all duration-300 cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-secondary hover:bg-secondary-dark text-white font-bold uppercase tracking-wider rounded-full shadow-lg shadow-secondary/20 hover:shadow-secondary/35 transition-all duration-300 cursor-pointer"
             >
               <span>Explore Menu</span>
               <ChevronRight className="w-5 h-5" />
@@ -179,7 +179,7 @@ export default function Menu() {
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 animate-bounce">
           <span className="text-[10px] uppercase tracking-widest font-semibold font-montserrat">Scroll Down</span>
           <div className="w-1.5 h-6 bg-white/20 rounded-full relative overflow-hidden">
-            <div className="w-full h-2 bg-[#F59E0B] rounded-full absolute top-0 left-0" />
+            <div className="w-full h-2 bg-secondary rounded-full absolute top-0 left-0" />
           </div>
         </div>
       </div>
@@ -188,7 +188,7 @@ export default function Menu() {
       <main id="menu-section" ref={menuSectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
         
         {/* Sticky Filter & Search Control Panel */}
-        <div className="sticky top-20 z-40 bg-[#111111]/90 backdrop-blur-md border border-white/5 rounded-2xl p-4 mb-16 shadow-xl space-y-4">
+        <div className="sticky top-20 z-40 bg-background/90 backdrop-blur-md border border-secondary/10 dark:border-white/5 rounded-2xl p-4 mb-16 shadow-xl space-y-4 transition-colors duration-300">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             
             {/* Search Input */}
@@ -199,27 +199,27 @@ export default function Menu() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search dishes, coffee, mocktails..."
-                className="w-full bg-[#1A1A1A] border border-white/10 focus:border-[#F59E0B]/50 rounded-xl pl-12 pr-4 py-3.5 text-sm text-white focus:outline-none placeholder-gray-500 font-poppins transition-colors"
+                className="w-full bg-primary dark:bg-[#1A1A1A] border border-secondary/15 dark:border-white/10 focus:border-secondary/50 rounded-xl pl-12 pr-4 py-3.5 text-sm text-foreground focus:outline-none placeholder-gray-500 font-poppins transition-colors"
               />
             </div>
 
             {/* 100% Veg Certified Badge */}
             <div className="flex items-center gap-2.5 bg-green-500/10 border border-green-500/20 rounded-full px-5 py-2.5">
               <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
-              <span className="text-xs font-bold text-green-400 uppercase tracking-widest font-montserrat">100% Pure Vegetarian Cafe</span>
+              <span className="text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-widest font-montserrat">100% Pure Vegetarian Cafe</span>
             </div>
           </div>
 
           {/* Categories Tab Navigation */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-t border-white/5 pt-4">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-t border-secondary/10 dark:border-white/5 pt-4">
             {categories.map((cat) => (
               <button
                 key={cat.key}
                 onClick={() => setSelectedCategory(cat.key)}
                 className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider border shrink-0 transition-all duration-300 cursor-pointer font-montserrat flex items-center gap-2 ${
                   selectedCategory === cat.key
-                    ? "bg-[#F59E0B] border-[#F59E0B] text-black shadow-lg shadow-[#F59E0B]/10 font-bold"
-                    : "bg-[#1A1A1A] border-white/5 hover:border-white/20 text-gray-400 hover:text-white"
+                    ? "bg-secondary border-secondary text-white dark:text-black shadow-lg shadow-secondary/10 font-bold"
+                    : "bg-primary dark:bg-[#1A1A1A] border-secondary/10 dark:border-white/5 text-foreground/60 hover:text-foreground"
                 }`}
               >
                 <span>{cat.icon}</span>
@@ -232,7 +232,7 @@ export default function Menu() {
         {/* Loading Indicator */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-32 space-y-4">
-            <RefreshCw className="w-10 h-10 text-[#F59E0B] animate-spin" />
+            <RefreshCw className="w-10 h-10 text-secondary animate-spin" />
             <p className="text-sm text-gray-400 font-light font-montserrat">Preparing signature recipes...</p>
           </div>
         ) : (
@@ -257,17 +257,17 @@ export default function Menu() {
                   <div 
                     key={cat.key} 
                     id={`category-${cat.key}`}
-                    className="glass-card bg-[#1A1A1A]/40 backdrop-blur-md border border-white/5 shadow-2xl rounded-2xl p-6 md:p-8 space-y-6 scroll-mt-28 transition-all duration-300 hover:border-white/10"
+                    className="glass-panel bg-primary/40 dark:bg-[#1A1A1A]/40 border border-secondary/10 dark:border-white/5 shadow-2xl rounded-2xl p-6 md:p-8 space-y-6 scroll-mt-28 transition-all duration-300"
                   >
                     {/* Category Title Header */}
-                    <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                    <div className="flex items-center justify-between border-b border-secondary/10 dark:border-white/5 pb-4">
                       <div className="flex items-center gap-3">
                         <span className="text-3xl">{cat.icon}</span>
-                        <h2 className="text-xl md:text-2xl font-bold tracking-wide font-montserrat text-white">
+                        <h2 className="text-xl md:text-2xl font-bold tracking-wide font-montserrat text-foreground">
                           {cat.label}
                         </h2>
                       </div>
-                      <span className="text-xs text-gray-500 uppercase tracking-widest font-medium font-montserrat">
+                      <span className="text-xs text-foreground/50 uppercase tracking-widest font-medium font-montserrat">
                         {itemsInCategory.length} {itemsInCategory.length === 1 ? "Item" : "Items"}
                       </span>
                     </div>
@@ -290,12 +290,12 @@ export default function Menu() {
                         return (
                           <div 
                             key={item.id} 
-                            className={`relative flex gap-4 bg-[#1A1A1A]/55 hover:bg-[#1A1A1A]/85 border border-white/5 hover:border-[#F59E0B]/25 p-4 rounded-xl transition-all duration-300 group shadow-lg ${
+                            className={`relative flex gap-4 bg-primary/55 dark:bg-[#1A1A1A]/55 hover:bg-primary-dark/80 dark:hover:bg-[#1A1A1A]/85 border border-secondary/10 dark:border-white/5 hover:border-secondary/25 dark:hover:border-secondary/25 p-4 rounded-xl transition-all duration-300 group shadow-md hover:shadow-lg ${
                               !item.isAvailable ? "opacity-75" : ""
                             }`}
                           >
                             {/* Small food image */}
-                            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden shrink-0 bg-black/20">
+                            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden shrink-0 bg-black/5 dark:bg-black/20">
                               <img 
                                 src={imageUrl || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=400"} 
                                 alt={item.name} 
@@ -304,7 +304,7 @@ export default function Menu() {
                               />
                               {/* Optional Popular Badge */}
                               {isPopular && item.isAvailable && (
-                                <span className="absolute top-1.5 left-1.5 bg-[#F59E0B] text-black text-[8px] font-extrabold px-1.5 py-0.5 rounded uppercase tracking-wider font-montserrat shadow-md">
+                                <span className="absolute top-1.5 left-1.5 bg-secondary text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded uppercase tracking-wider font-montserrat shadow-md">
                                   Popular
                                 </span>
                               )}
@@ -324,40 +324,40 @@ export default function Menu() {
                               {/* Heading & Price aligned right */}
                               <div>
                                 <div className="flex justify-between items-start gap-3">
-                                  <h3 className="text-white font-semibold text-sm sm:text-base font-poppins group-hover:text-[#F59E0B] transition-colors truncate">
+                                  <h3 className="text-foreground font-semibold text-sm sm:text-base font-poppins group-hover:text-secondary transition-colors truncate">
                                     {item.name}
                                   </h3>
-                                  <span className="text-[#F59E0B] font-bold font-sans text-sm sm:text-base whitespace-nowrap">
+                                  <span className="text-secondary font-bold font-sans text-sm sm:text-base whitespace-nowrap">
                                     ₹{item.price}
                                   </span>
                                 </div>
-                                <p className="text-gray-400 text-xs line-clamp-2 mt-1 font-light leading-relaxed pr-1">
+                                <p className="text-foreground/70 text-xs line-clamp-2 mt-1 font-light leading-relaxed pr-1">
                                   {item.description || "Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe."}
                                 </p>
                               </div>
 
                               {/* Controls/Veg Tag footer */}
-                              <div className="flex justify-between items-center mt-3 pt-2.5 border-t border-white/5">
+                              <div className="flex justify-between items-center mt-3 pt-2.5 border-t border-secondary/10 dark:border-white/5">
                                 <div className="flex items-center gap-1">
                                   <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                                  <span className="text-[9px] text-green-400 font-bold uppercase tracking-widest font-montserrat">Veg</span>
+                                  <span className="text-[9px] text-green-600 dark:text-green-400 font-bold uppercase tracking-widest font-montserrat">Veg</span>
                                 </div>
 
                                 {/* Cart quantity updater or Add button */}
                                 {quantityInCart > 0 ? (
-                                  <div className="flex items-center bg-[#F59E0B] text-black rounded font-sans font-bold h-7.5 overflow-hidden">
+                                  <div className="flex items-center bg-secondary text-white rounded font-sans font-bold h-7.5 overflow-hidden">
                                     <button
                                       onClick={() => updateQuantity(item.id, quantityInCart - 1)}
-                                      className="px-2.5 h-full flex items-center justify-center hover:bg-[#D97706] transition-colors cursor-pointer text-xs"
+                                      className="px-2.5 h-full flex items-center justify-center hover:bg-secondary-dark transition-colors cursor-pointer text-xs"
                                     >
                                       —
                                     </button>
-                                    <span className="px-1 text-[11px] tracking-wider min-w-[1.25rem] text-center select-none text-black">
+                                    <span className="px-1 text-[11px] tracking-wider min-w-[1.25rem] text-center select-none text-white">
                                       {quantityInCart}
                                     </span>
                                     <button
                                       onClick={() => updateQuantity(item.id, quantityInCart + 1)}
-                                      className="px-2.5 h-full flex items-center justify-center hover:bg-[#D97706] transition-colors cursor-pointer text-xs"
+                                      className="px-2.5 h-full flex items-center justify-center hover:bg-secondary-dark transition-colors cursor-pointer text-xs"
                                     >
                                       +
                                     </button>
@@ -368,8 +368,8 @@ export default function Menu() {
                                     disabled={!item.isAvailable}
                                     className={`flex items-center justify-center gap-1 px-4 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider transition-all duration-300 h-7.5 ${
                                       !item.isAvailable
-                                        ? "bg-white/5 text-gray-600 border border-white/5 cursor-not-allowed"
-                                        : "bg-white/5 hover:bg-[#F59E0B] text-white hover:text-black border border-white/10 hover:border-[#F59E0B] hover:shadow-md hover:shadow-[#F59E0B]/10 cursor-pointer"
+                                        ? "bg-black/5 dark:bg-white/5 text-gray-500 dark:text-gray-600 border border-secondary/10 dark:border-white/5 cursor-not-allowed"
+                                        : "bg-secondary/5 dark:bg-white/5 hover:bg-secondary text-secondary hover:text-white border border-secondary/15 dark:border-white/10 hover:border-secondary hover:shadow-md hover:shadow-secondary/10 cursor-pointer"
                                     }`}
                                   >
                                     {!item.isAvailable ? (
@@ -405,10 +405,10 @@ export default function Menu() {
                                    item.description.toLowerCase().includes(searchQuery.toLowerCase());
               return matchesCategory && matchesSearch;
             }).length === 0 && (
-              <div className="text-center py-24 glass-card bg-[#1A1A1A]/40 border border-white/5 rounded-2xl max-w-lg mx-auto">
-                <Coffee className="w-12 h-12 text-[#F59E0B]/20 mx-auto mb-4" />
-                <h3 className="font-montserrat text-lg font-bold text-white">No items match your search</h3>
-                <p className="text-sm text-gray-400 max-w-xs mx-auto mt-2 font-light">
+              <div className="text-center py-24 glass-panel bg-primary/40 dark:bg-[#1A1A1A]/40 border border-secondary/10 dark:border-white/5 rounded-2xl max-w-lg mx-auto">
+                <Coffee className="w-12 h-12 text-secondary/20 mx-auto mb-4" />
+                <h3 className="font-montserrat text-lg font-bold text-foreground">No items match your search</h3>
+                <p className="text-sm text-foreground/50 max-w-xs mx-auto mt-2 font-light">
                   We couldn't find any dishes matching "{searchQuery}". Try editing your keyword or filter.
                 </p>
                 <button
@@ -416,7 +416,7 @@ export default function Menu() {
                     setSearchQuery("");
                     setSelectedCategory("all");
                   }}
-                  className="mt-6 text-xs font-bold uppercase tracking-wider text-black bg-[#F59E0B] hover:bg-[#D97706] rounded-full px-6 py-2.5 transition-colors cursor-pointer font-montserrat"
+                  className="mt-6 text-xs font-bold uppercase tracking-wider text-white bg-secondary hover:bg-secondary-dark rounded-full px-6 py-2.5 transition-colors cursor-pointer font-montserrat"
                 >
                   Clear Filters
                 </button>
