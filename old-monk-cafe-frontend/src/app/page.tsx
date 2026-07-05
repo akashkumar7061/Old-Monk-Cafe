@@ -10,6 +10,7 @@ import {
   Star, 
   MapPin, 
   Clock, 
+  ChevronLeft,
   ChevronRight, 
   Coffee, 
   Heart, 
@@ -34,9 +35,15 @@ import { API_BASE_URL } from "@/config/api";
 export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeGalleryCat, setActiveGalleryCat] = useState("all");
+  const [activeGalleryIdx, setActiveGalleryIdx] = useState(0);
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [activeReviewIdx, setActiveReviewIdx] = useState(0);
   const [stats, setStats] = useState({ coffee: 0, customers: 0, rating: 0 });
+
+  // Reset slider index when gallery filter category changes
+  useEffect(() => {
+    setActiveGalleryIdx(0);
+  }, [activeGalleryCat]);
 
   // Contact form state
   const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", message: "" });
@@ -91,7 +98,6 @@ export default function Home() {
     { cat: "interior", title: "Cozy Seating & Wall Art", img: "/images/cafe_interior_buddha.jpg" },
     { cat: "interior", title: "Warm Cafe Ambience", img: "/images/cafe_interior_view.jpg" },
     { cat: "interior", title: "Cashier Counter & Logo", img: "/images/cafe_counter_close.jpg" },
-    { cat: "food", title: "Handcrafted Veg Noodles", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400" },
     { cat: "coffee", title: "Pour Over Latte Art", img: "/images/coffee_art.png" },
     { cat: "drinks", title: "Blue Lagoon Mocktail", img: "/images/premium_mocktail.png" },
     { cat: "food", title: "Premium Paneer Burger", img: "/images/old_monk_burger.png" },
@@ -103,6 +109,15 @@ export default function Home() {
   const filteredGallery = activeGalleryCat === "all" 
     ? galleryItems 
     : galleryItems.filter(item => item.cat === activeGalleryCat);
+
+  // Gallery auto slide interval
+  useEffect(() => {
+    if (filteredGallery.length <= 1) return;
+    const timer = setInterval(() => {
+      setActiveGalleryIdx((prev) => (prev + 1) % filteredGallery.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [filteredGallery.length]);
 
   const reviews = [
     { name: "Aditya Sharma", rating: 5, date: "2 weeks ago", text: "Amazing light interior and cozy seating! Honestly, this is the best cold coffee I have ever had in Darbhanga. The staff was super friendly too." },
@@ -434,27 +449,79 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Masonry-Style Grid */}
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-            {filteredGallery.map((item, idx) => (
-              <div
-                key={idx}
-                onClick={() => setLightboxImg(item.img)}
-                className="break-inside-avoid relative rounded-xl overflow-hidden border border-secondary/10 cursor-pointer group shadow-sm bg-primary"
+          {/* Carousel Slider */}
+          <div className="relative w-full max-w-4xl mx-auto">
+            <div className="overflow-hidden rounded-2xl border border-secondary/15 shadow-2xl bg-primary">
+              <div 
+                className="flex transition-transform duration-700 ease-in-out"
+                style={{ transform: `translateX(-${activeGalleryIdx * 100}%)` }}
               >
-                <img
-                  src={item.img}
-                  alt={item.title}
-                  className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-background/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
-                  <Camera className="w-8 h-8 text-secondary mb-2 transform translate-y-2 group-hover:translate-y-0 transition-transform" />
-                  <p className="font-serif font-bold text-foreground text-lg transform translate-y-2 group-hover:translate-y-0 transition-transform delay-75">{item.title}</p>
-                  <p className="text-secondary text-xs uppercase tracking-widest mt-1">Zoom View</p>
-                </div>
+                {filteredGallery.map((item, idx) => (
+                  <div 
+                    key={idx} 
+                    className="w-full shrink-0 aspect-[16/10] sm:aspect-[16/9] relative group cursor-pointer"
+                    onClick={() => setLightboxImg(item.img)}
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                    />
+                    {/* Widescreen Bottom Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-6 sm:p-10 animate-fade-in">
+                      <div className="flex items-center gap-3">
+                        <span className="bg-secondary text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-wider">
+                          {item.cat}
+                        </span>
+                        <span className="text-white/60 text-xs flex items-center gap-1.5 font-medium">
+                          <Camera className="w-3.5 h-3.5" />
+                          Click to expand
+                        </span>
+                      </div>
+                      <h3 className="font-serif text-xl sm:text-3xl font-bold text-white mt-2 group-hover:text-secondary transition-colors">
+                        {item.title}
+                      </h3>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            {filteredGallery.length > 1 && (
+              <>
+                <button
+                  onClick={() => setActiveGalleryIdx((prev) => (prev - 1 + filteredGallery.length) % filteredGallery.length)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-secondary text-white p-2.5 rounded-full backdrop-blur-sm transition-all shadow-lg hover:scale-110 cursor-pointer border border-white/10"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => setActiveGalleryIdx((prev) => (prev + 1) % filteredGallery.length)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-secondary text-white p-2.5 rounded-full backdrop-blur-sm transition-all shadow-lg hover:scale-110 cursor-pointer border border-white/10"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </>
+            )}
+
+            {/* Progress indicators (Dots) */}
+            {filteredGallery.length > 1 && (
+              <div className="flex justify-center gap-2 mt-6">
+                {filteredGallery.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveGalleryIdx(idx)}
+                    className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                      activeGalleryIdx === idx ? "w-6 bg-secondary" : "w-1.5 bg-foreground/20 hover:bg-foreground/45"
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
