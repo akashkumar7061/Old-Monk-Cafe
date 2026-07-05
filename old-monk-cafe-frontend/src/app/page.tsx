@@ -38,6 +38,7 @@ export default function Home() {
   const [activeGalleryIdx, setActiveGalleryIdx] = useState(0);
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
   const [activeReviewIdx, setActiveReviewIdx] = useState(0);
+  const [activeFeatureIdx, setActiveFeatureIdx] = useState(0);
   const [stats, setStats] = useState({ coffee: 0, customers: 0, rating: 0 });
 
   // Reset slider index when gallery filter category changes
@@ -147,6 +148,14 @@ export default function Home() {
     }, 4500);
     return () => clearInterval(timer);
   }, [activeReviewIdx]);
+
+  // Auto-slide choose us features on mobile every 3.5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveFeatureIdx((prev) => (prev + 1) % 8);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [activeFeatureIdx]);
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -392,7 +401,54 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Mobile-only sliding carousel */}
+        <div className="block sm:hidden max-w-sm mx-auto relative px-8">
+          <div className="overflow-hidden rounded-2xl border border-secondary/15 shadow-2xl bg-primary">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${activeFeatureIdx * 100}%)` }}
+            >
+              {[
+                { icon: Coffee, title: "Premium Coffee", desc: "100% Arabica artisanal blends roasted to perfection." },
+                { icon: Sparkles, title: "Freshly Prepared Food", desc: "Made-to-order dishes using high-quality local produce." },
+                { icon: Camera, title: "Instagram Ambience", desc: "Modern light luxury design with bright cozy lighting." },
+                { icon: PartyPopper, title: "Perfect for Parties", desc: "Spacious seating ideal for birthdays & gatherings." },
+                { icon: UserCheck, title: "Family Friendly", desc: "A safe, welcoming environment for families." },
+                { icon: Laptop, title: "Work-Friendly Cafe", desc: "High-speed Wi-Fi, quiet vibes, and power plugs." },
+                { icon: Clock, title: "Late Night Cravings", desc: "Open till 12:00 AM (midnight) for late night dining." },
+                { icon: Heart, title: "Loved by Customers", desc: "Voted #1 cafe in Darbhanga on Google reviews." },
+              ].map((item, idx) => (
+                <div 
+                  key={idx} 
+                  className="w-full shrink-0 p-8 flex flex-col items-center text-center bg-primary"
+                >
+                  <div className="w-14 h-14 rounded-lg bg-secondary/10 flex items-center justify-center border border-secondary/20 mb-6 text-secondary">
+                    <item.icon className="w-7 h-7" />
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-foreground mb-3">{item.title}</h3>
+                  <p className="text-foreground/60 text-sm leading-relaxed max-w-[250px]">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="flex justify-center gap-1.5 mt-6">
+            {[...Array(8)].map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveFeatureIdx(idx)}
+                className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                  activeFeatureIdx === idx ? "w-5 bg-secondary" : "w-1.5 bg-foreground/20 hover:bg-foreground/45"
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop/Tablet-only grid layout */}
+        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-8">
           {[
             { icon: Coffee, title: "Premium Coffee", desc: "100% Arabica artisanal blends roasted to perfection." },
             { icon: Sparkles, title: "Freshly Prepared Food", desc: "Made-to-order dishes using high-quality local produce." },
