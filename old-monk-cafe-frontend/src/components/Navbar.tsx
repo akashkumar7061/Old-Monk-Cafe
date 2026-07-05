@@ -109,20 +109,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
           <Link
             href="/"
             onClick={() => handleLinkClick("/")}
-            className="flex items-center gap-2.5 group"
+            className="flex items-center group select-none"
           >
-            <img
-              src={logoSrc}
-              alt="Old Monk Cafe Logo"
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover transition-transform duration-300 group-hover:scale-105 border border-secondary/20"
-            />
-            <img
-              src="/logo_text.jpg"
-              alt="Old Monk Cafe"
-              className={`h-9 sm:h-10 w-auto object-contain transition-all duration-300 ${
-                (isDarkBg || theme === "dark") ? "invert brightness-200" : ""
-              }`}
-            />
+            <span className={`font-sans font-black tracking-widest text-lg sm:text-2xl transition-colors duration-300 flex items-center ${
+              isDarkBg ? "text-white" : "text-foreground"
+            }`}>
+              OLD M
+              <span className="relative inline-flex items-center justify-center mx-0.5 w-[1.1em] h-[1.1em]">
+                <img
+                  src={logoSrc}
+                  alt="O"
+                  className="absolute w-full h-full rounded-full object-cover border border-secondary/20 transition-transform duration-300 group-hover:scale-110"
+                />
+              </span>
+              NK
+              <span className="text-secondary ml-2 font-serif italic font-bold">CAFE</span>
+            </span>
           </Link>
 
           {/* Desktop Nav Links */}

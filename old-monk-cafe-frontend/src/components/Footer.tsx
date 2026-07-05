@@ -37,22 +37,24 @@ export const Footer: React.FC = () => {
         
         {/* Brand & Hours */}
         <div className="flex flex-col gap-5">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img
-              src="/logo_white_bg.jpg"
-              alt="Old Monk Cafe Logo"
-              className="dark:hidden w-10 h-10 rounded-full object-cover border border-secondary/20"
-            />
-            <img
-              src="/logo_black_bg.jpg"
-              alt="Old Monk Cafe Logo"
-              className="hidden dark:block w-10 h-10 rounded-full object-cover border border-secondary/20"
-            />
-            <img
-              src="/logo_text.jpg"
-              alt="Old Monk Cafe"
-              className="h-10 w-auto object-contain transition-all duration-300 dark:invert dark:brightness-200"
-            />
+          <Link href="/" className="flex items-center group select-none">
+            <span className="font-sans font-black tracking-widest text-lg sm:text-2xl text-foreground transition-colors duration-300 flex items-center">
+              OLD M
+              <span className="relative inline-flex items-center justify-center mx-0.5 w-[1.1em] h-[1.1em]">
+                <img
+                  src="/logo_white_bg.jpg"
+                  alt="O"
+                  className="dark:hidden absolute w-full h-full rounded-full object-cover border border-secondary/20 transition-transform duration-300 group-hover:scale-110"
+                />
+                <img
+                  src="/logo_black_bg.jpg"
+                  alt="O"
+                  className="hidden dark:block absolute w-full h-full rounded-full object-cover border border-secondary/20 transition-transform duration-300 group-hover:scale-110"
+                />
+              </span>
+              NK
+              <span className="text-secondary ml-2 font-serif italic font-bold">CAFE</span>
+            </span>
           </Link>
           <p className="text-sm leading-relaxed opacity-70">
             Experience the finest premium café atmosphere in Darbhanga with handcrafted coffee, artisanal pizzas, cooling mocktails, and cozy spaces designed for great conversations.
