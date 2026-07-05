@@ -755,7 +755,7 @@ export default function Home() {
                 <div>
                   <h4 className="font-serif text-base font-bold text-foreground">Our Address</h4>
                   <p className="text-foreground/70 text-sm mt-1 leading-relaxed">
-                    OLD MONK CAFE, Near Naka No. 5, Darbhanga, Bihar 846004
+                    7, Sundarpur, Darbhanga, Basdeopur, Bihar 846005
                   </p>
                 </div>
               </div>
