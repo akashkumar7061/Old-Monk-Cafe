@@ -5,35 +5,35 @@
 @tailwind utilities;
 
 :root {
-  --background: #FAF9F6;
-  --foreground: #1E1A17;
-  --primary: #FFFFFF;
-  --primary-dark: #F4F2EC;
-  --secondary: #8C6239;
-  --secondary-light: #A67C52;
-  --secondary-dark: #5C3E21;
-  --accent: #EADBC8;
-  --accent-light: #F5EBE0;
-  --accent-dark: #D2B48C;
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(140, 98, 57, 0.08);
-  --glass-shadow: rgba(140, 98, 57, 0.04);
+  --background: #111111;
+  --foreground: #FFFFFF;
+  --primary: #1A1A1A;
+  --primary-dark: #0C0C0C;
+  --secondary: #E53935;
+  --secondary-light: #FF6A00;
+  --secondary-dark: #D32F2F;
+  --accent: #FFA726;
+  --accent-light: #FFA726;
+  --accent-dark: #F4511E;
+  --glass-bg: rgba(26, 26, 26, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
 }
 
 .dark {
-  --background: #12100E;
-  --foreground: #FAF9F6;
-  --primary: #1E1A17;
-  --primary-dark: #26211E;
-  --secondary: #D2B48C;
-  --secondary-light: #EADBC8;
-  --secondary-dark: #8C6239;
-  --accent: #3E3025;
-  --accent-light: #4E3E31;
-  --accent-dark: #FAF9F6;
-  --glass-bg: rgba(30, 26, 23, 0.85);
-  --glass-border: rgba(210, 180, 140, 0.15);
-  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --background: #111111;
+  --foreground: #FFFFFF;
+  --primary: #1A1A1A;
+  --primary-dark: #0C0C0C;
+  --secondary: #E53935;
+  --secondary-light: #FF6A00;
+  --secondary-dark: #D32F2F;
+  --accent: #FFA726;
+  --accent-light: #FFA726;
+  --accent-dark: #F4511E;
+  --glass-bg: rgba(26, 26, 26, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
 }
 
 html {
@@ -44,7 +44,7 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-outfit), sans-serif;
+  font-family: 'Poppins', 'Montserrat', sans-serif;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -97,11 +97,11 @@ body {
 }
 
 .swiper-pagination-bullet-active {
-  background: #8C6239 !important;
+  background: #E53935 !important;
   width: 24px !important;
   border-radius: 4px !important;
 }
 
 .swiper-button-next, .swiper-button-prev {
-  color: #8C6239 !important;
+  color: #E53935 !important;
 }

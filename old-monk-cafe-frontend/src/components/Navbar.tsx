@@ -111,23 +111,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
             onClick={() => handleLinkClick("/")}
             className="flex flex-col items-center group select-none leading-none py-1"
           >
-            <span className={`font-sans font-black tracking-widest text-lg sm:text-2xl transition-colors duration-300 flex items-center ${
-              isDarkBg ? "text-white" : "text-foreground"
-            }`}>
+            <span className="font-sans font-black tracking-widest text-lg sm:text-2xl text-white transition-colors duration-300 flex items-center">
               OLD M
               <span className="relative inline-flex items-center justify-center mx-0.5 w-[1.1em] h-[1.1em]">
                 <img
                   src={logoSrc}
                   alt="O"
-                  className="absolute w-full h-full rounded-full object-cover border border-secondary/20 transition-transform duration-300 group-hover:scale-110"
+                  className="absolute w-full h-full rounded-full object-cover border border-[#E53935] transition-transform duration-300 group-hover:scale-110"
                 />
               </span>
               NK
             </span>
-            <span className="text-secondary font-serif italic font-semibold text-xs sm:text-sm tracking-widest flex items-center justify-center w-full mt-1 opacity-95">
-              <span className="h-[1px] w-3 sm:w-5 bg-secondary/40 mr-1.5 shrink-0"></span>
+            <span className="text-white font-serif italic font-semibold text-xs sm:text-sm tracking-widest flex items-center justify-center w-full mt-1 opacity-95">
+              <span className="h-[1px] w-3 sm:w-5 bg-[#E53935] mr-1.5 shrink-0"></span>
               Cafe
-              <span className="h-[1px] w-3 sm:w-5 bg-secondary/40 ml-1.5 shrink-0"></span>
+              <span className="h-[1px] w-3 sm:w-5 bg-[#E53935] ml-1.5 shrink-0"></span>
             </span>
           </Link>
 
