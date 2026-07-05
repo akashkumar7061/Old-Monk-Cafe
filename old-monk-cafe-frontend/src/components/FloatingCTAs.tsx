@@ -1,11 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { MessageCircle, Phone, Compass } from "lucide-react";
 
 export const FloatingCTAs: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const threshold = 550; // Distance from the bottom of the document
+      const totalHeight = document.documentElement.scrollHeight;
+      const scrollPosition = window.innerHeight + window.scrollY;
+
+      if (totalHeight - scrollPosition < threshold) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    // Call once initially
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="fixed bottom-6 left-6 z-40 flex flex-col gap-3">
+    <div className={`fixed bottom-6 left-6 z-40 flex flex-col gap-3 transition-all duration-300 ${
+      isVisible ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
+    }`}>
       {/* WhatsApp Chat Button */}
       <a
         href="https://wa.me/919296935757?text=Hi%20OLD%20MONK%20CAFE%2C%20I%20would%20like%20to%20inquire%20about%20ordering%20food%20or%20booking%20a%20table!"
