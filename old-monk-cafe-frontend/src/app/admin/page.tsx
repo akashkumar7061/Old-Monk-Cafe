@@ -385,7 +385,7 @@ export default function AdminDashboard() {
         price: 150,
         discountPrice: 0,
         description: "",
-        category: "coffee",
+        category: "kadak_chai",
         image: "",
         isVeg: true,
         isAvailable: true,
@@ -1348,15 +1348,32 @@ export default function AdminDashboard() {
                       ))
                     ) : (
                       <>
-                        <option value="coffee">Coffee</option>
-                        <option value="mocktails">Mocktails</option>
+                        <option value="kadak_chai">Kadak Chai</option>
+                        <option value="hot_coffee">Hot Coffee</option>
+                        <option value="hot_milk">Hot Milk</option>
+                        <option value="cold_coffee">Cold Coffee</option>
+                        <option value="milk_shake">Milk Shakes</option>
+                        <option value="coolers">Coolers</option>
+                        <option value="garlic_bread">Garlic Bread</option>
+                        <option value="french_fries">French Fries</option>
                         <option value="burgers">Burgers</option>
                         <option value="pizza">Pizzas</option>
-                        <option value="pasta">Pastas</option>
+                        <option value="sandwich">Sandwiches</option>
+                        <option value="maggie">Maggie</option>
+                        <option value="special">Old Monk Specials</option>
                         <option value="momos">Momos</option>
-                        <option value="chinese">Chinese</option>
-                        <option value="desserts">Desserts</option>
-                        <option value="combos">Combos</option>
+                        <option value="pasta">Pastas</option>
+                        <option value="noodles">Noodles</option>
+                        <option value="fried_rice">Fried Rice</option>
+                        <option value="rolls">Rolls</option>
+                        <option value="chinese_snacks">Chinese Snacks</option>
+                        <option value="soup">Soups</option>
+                        <option value="desi_paneer">Desi Paneer</option>
+                        <option value="mushroom">Mushroom Delights</option>
+                        <option value="roti_rice">Roti & Rice</option>
+                        <option value="pav">Pav Specials</option>
+                        <option value="south_indian">South Indian</option>
+                        <option value="desserts">Dessert Dhamaka</option>
                       </>
                     )}
                   </select>
