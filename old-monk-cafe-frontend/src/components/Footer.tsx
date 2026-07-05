@@ -48,9 +48,11 @@ export const Footer: React.FC = () => {
               alt="Old Monk Cafe Logo"
               className="hidden dark:block w-10 h-10 rounded-full object-cover border border-secondary/20"
             />
-            <span className="font-serif text-2xl font-bold tracking-wider text-foreground">
-              OLD MONK<span className="text-secondary"> CAFE</span>
-            </span>
+            <img
+              src="/logo_text.jpg"
+              alt="Old Monk Cafe"
+              className="h-10 w-auto object-contain transition-all duration-300 dark:invert dark:brightness-200"
+            />
           </Link>
           <p className="text-sm leading-relaxed opacity-70">
             Experience the finest premium café atmosphere in Darbhanga with handcrafted coffee, artisanal pizzas, cooling mocktails, and cozy spaces designed for great conversations.

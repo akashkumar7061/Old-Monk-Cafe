@@ -116,11 +116,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
               alt="Old Monk Cafe Logo"
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover transition-transform duration-300 group-hover:scale-105 border border-secondary/20"
             />
-            <span className={`font-serif text-xl sm:text-2xl font-bold tracking-wider transition-colors duration-300 ${
-              isDarkBg ? "text-white" : "text-foreground"
-            }`}>
-              OLD MONK<span className="text-secondary"> CAFE</span>
-            </span>
+            <img
+              src="/logo_text.jpg"
+              alt="Old Monk Cafe"
+              className={`h-9 sm:h-10 w-auto object-contain transition-all duration-300 ${
+                (isDarkBg || theme === "dark") ? "invert brightness-200" : ""
+              }`}
+            />
           </Link>
 
           {/* Desktop Nav Links */}
