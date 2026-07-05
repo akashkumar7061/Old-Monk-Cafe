@@ -746,15 +746,43 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
           {/* Map & Quick Details */}
           <div className="flex flex-col gap-6 h-full justify-between">
-            {/* Embedded Google Map */}
-            <div className="rounded-xl overflow-hidden border border-secondary/15 h-[320px] relative shadow-sm">
-              <iframe
-                title="Old Monk Cafe Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m4!2m3!1i360!2i200!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39edb70058367b4f%3A0x885307f4732543eb!2sOLD+MONK+CAFE!5e0!3m2!1sen!2sin!4v1719232360481!5m2!1sen!2sin"
-                className="absolute inset-0 w-full h-full border-0 opacity-90"
-                allowFullScreen={false}
-                loading="lazy"
-              />
+            {/* Premium Location Details Card */}
+            <div className="rounded-xl border border-secondary/15 p-6 bg-primary shadow-sm flex flex-col justify-center gap-4 flex-grow min-h-[320px]">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-serif text-base font-bold text-foreground">Our Address</h4>
+                  <p className="text-foreground/70 text-sm mt-1 leading-relaxed">
+                    OLD MONK CAFE, Near Naka No. 5, Darbhanga, Bihar 846004
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 border-t border-secondary/10 pt-4">
+                <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-serif text-base font-bold text-foreground">Operating Hours</h4>
+                  <p className="text-foreground/70 text-sm mt-1">
+                    Everyday: 11:00 AM - 12:00 AM (Midnight)
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 border-t border-secondary/10 pt-4">
+                <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-serif text-base font-bold text-foreground">Direct Line</h4>
+                  <p className="text-foreground/70 text-sm mt-1">
+                    +91 92969 35757
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Quick Actions buttons */}
