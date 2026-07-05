@@ -109,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
           <Link
             href="/"
             onClick={() => handleLinkClick("/")}
-            className="flex items-center group select-none"
+            className="flex flex-col items-center group select-none leading-none py-1"
           >
             <span className={`font-sans font-black tracking-widest text-lg sm:text-2xl transition-colors duration-300 flex items-center ${
               isDarkBg ? "text-white" : "text-foreground"
@@ -123,7 +123,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
                 />
               </span>
               NK
-              <span className="text-secondary ml-2 font-serif italic font-bold">CAFE</span>
+            </span>
+            <span className="text-secondary font-serif italic font-semibold text-xs sm:text-sm tracking-widest flex items-center justify-center w-full mt-1 opacity-95">
+              <span className="h-[1px] w-3 sm:w-5 bg-secondary/40 mr-1.5 shrink-0"></span>
+              Cafe
+              <span className="h-[1px] w-3 sm:w-5 bg-secondary/40 ml-1.5 shrink-0"></span>
             </span>
           </Link>
 

@@ -37,7 +37,7 @@ export const Footer: React.FC = () => {
         
         {/* Brand & Hours */}
         <div className="flex flex-col gap-5">
-          <Link href="/" className="flex items-center group select-none">
+          <Link href="/" className="flex flex-col items-start md:items-center group select-none leading-none py-1 max-w-fit">
             <span className="font-sans font-black tracking-widest text-lg sm:text-2xl text-foreground transition-colors duration-300 flex items-center">
               OLD M
               <span className="relative inline-flex items-center justify-center mx-0.5 w-[1.1em] h-[1.1em]">
@@ -53,7 +53,11 @@ export const Footer: React.FC = () => {
                 />
               </span>
               NK
-              <span className="text-secondary ml-2 font-serif italic font-bold">CAFE</span>
+            </span>
+            <span className="text-secondary font-serif italic font-semibold text-xs sm:text-sm tracking-widest flex items-center justify-center w-full mt-1 opacity-95">
+              <span className="h-[1px] w-3 sm:w-5 bg-secondary/40 mr-1.5 shrink-0"></span>
+              Cafe
+              <span className="h-[1px] w-3 sm:w-5 bg-secondary/40 ml-1.5 shrink-0"></span>
             </span>
           </Link>
           <p className="text-sm leading-relaxed opacity-70">
