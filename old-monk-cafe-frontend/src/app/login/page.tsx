@@ -127,7 +127,7 @@ export default function Login() {
                 {isLoginMode && (
                   <button
                     type="button"
-                    onClick={() => alert("Please contact the administrator to reset your password or sign in with admin@oldmonkcafe.com / Admin@12345.")}
+                    onClick={() => alert("Please contact the administrator to reset your password.")}
                     className="text-[10px] uppercase text-secondary hover:underline font-bold"
                   >
                     Forgot?

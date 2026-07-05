@@ -122,35 +122,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (err: any) {
       setIsLoading(false);
       const errMsg = err.response?.data?.message || err.message || "Login failed";
-      
-      // Fallback for offline testing / demo
-      if (email === "admin@oldmonkcafe.com" && password === "Admin@12345") {
-        const mockAdmin: User = {
-          id: "mock-admin-id",
-          name: "Old Monk Admin (Offline)",
-          email: "admin@oldmonkcafe.com",
-          phone: "9296935757",
-          role: "admin",
-        };
-        setToken("mock-jwt-token-admin");
-        setUser(mockAdmin);
-        localStorage.setItem("omc_token", "mock-jwt-token-admin");
-        localStorage.setItem("omc_user", JSON.stringify(mockAdmin));
-        return mockAdmin;
-      } else if (email && password) {
-        // Mock user login
-        const mockUser: User = {
-          id: "mock-user-id",
-          name: email.split("@")[0].toUpperCase(),
-          email: email,
-          phone: "9999999999",
-          role: "customer",
-        };
-        setToken("mock-jwt-token-user");
-        setUser(mockUser);
-        localStorage.setItem("omc_token", "mock-jwt-token-user");
-        localStorage.setItem("omc_user", JSON.stringify(mockUser));
-        return mockUser;
+      const isNetworkError = !err.response;
+      if (isNetworkError) {
+        // Fallback for offline testing / demo
+        if (email === "admin@oldmonkcafe.com" && password === "Admin@12345") {
+          const mockAdmin: User = {
+            id: "mock-admin-id",
+            name: "Old Monk Admin (Offline)",
+            email: "admin@oldmonkcafe.com",
+            phone: "9296935757",
+            role: "admin",
+          };
+          setToken("mock-jwt-token-admin");
+          setUser(mockAdmin);
+          localStorage.setItem("omc_token", "mock-jwt-token-admin");
+          localStorage.setItem("omc_user", JSON.stringify(mockAdmin));
+          return mockAdmin;
+        } else if (email && password) {
+          // Mock user login
+          const mockUser: User = {
+            id: "mock-user-id",
+            name: email.split("@")[0].toUpperCase(),
+            email: email,
+            phone: "9999999999",
+            role: "customer",
+          };
+          setToken("mock-jwt-token-user");
+          setUser(mockUser);
+          localStorage.setItem("omc_token", "mock-jwt-token-user");
+          localStorage.setItem("omc_user", JSON.stringify(mockUser));
+          return mockUser;
+        }
       }
 
       throw new Error(errMsg);

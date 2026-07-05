@@ -19,7 +19,10 @@ import {
   X, 
   AlertCircle,
   RefreshCw,
-  PlusCircle
+  PlusCircle,
+  Settings,
+  Lock,
+  User as UserIcon
 } from "lucide-react";
 import axios from "axios";
 import { API_BASE_URL } from "@/config/api";
@@ -29,7 +32,7 @@ export default function AdminDashboard() {
   const { user, login, logout, token, isAdmin, isLoading } = useAuth();
 
   // Navigation tab state
-  const [activeTab, setActiveTab] = useState<"analytics" | "orders" | "reservations" | "menu" | "reviews" | "inquiries">("analytics");
+  const [activeTab, setActiveTab] = useState<"analytics" | "orders" | "reservations" | "menu" | "reviews" | "inquiries" | "settings">("analytics");
   
   // Data lists state
   const [orders, setOrders] = useState<any[]>([]);
@@ -40,9 +43,30 @@ export default function AdminDashboard() {
   const [metrics, setMetrics] = useState({ revenue: 0, orders: 0, reservations: 0, popular: "N/A" });
 
   // Login form state
-  const [email, setEmail] = useState("admin@oldmonkcafe.com");
-  const [password, setPassword] = useState("Admin@12345");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
+  
+  // Admin credentials change state
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [pwdError, setPwdError] = useState("");
+  const [pwdSuccess, setPwdSuccess] = useState("");
+  const [pwdLoading, setPwdLoading] = useState(false);
+
+  const [adminName, setAdminName] = useState("");
+  const [adminPhone, setAdminPhone] = useState("");
+  const [profileSuccess, setProfileSuccess] = useState("");
+  const [profileError, setProfileError] = useState("");
+  const [profileLoading, setProfileLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setAdminName(user.name);
+      setAdminPhone(user.phone || "");
+    }
+  }, [user]);
   const [authLoading, setAuthLoading] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [seedingMenu, setSeedingMenu] = useState(false);
@@ -197,6 +221,58 @@ export default function AdminDashboard() {
       setAuthError(err.message || "Failed to log in.");
     } finally {
       setAuthLoading(false);
+    }
+  };
+
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPwdError("");
+    setPwdSuccess("");
+
+    if (newPassword !== confirmPassword) {
+      setPwdError("New passwords do not match");
+      return;
+    }
+
+    setPwdLoading(true);
+    try {
+      await axios.patch(
+        `${API_BASE_URL}/auth/update-password`,
+        { currentPassword, newPassword },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setPwdSuccess("Password updated successfully!");
+      setCurrentPassword("");
+      newPassword && setNewPassword("");
+      confirmPassword && setConfirmPassword("");
+    } catch (err: any) {
+      setPwdError(err.response?.data?.message || err.message || "Failed to update password");
+    } finally {
+      setPwdLoading(false);
+    }
+  };
+
+  const handleUpdateProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setProfileError("");
+    setProfileSuccess("");
+    setProfileLoading(true);
+
+    try {
+      const res = await axios.patch(
+        `${API_BASE_URL}/users/me`,
+        { name: adminName, phone: adminPhone },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (res.data?.success && res.data?.data) {
+        setProfileSuccess("Admin profile updated successfully!");
+        const updatedUser = { ...user, name: adminName, phone: adminPhone };
+        localStorage.setItem("omc_user", JSON.stringify(updatedUser));
+      }
+    } catch (err: any) {
+      setProfileError(err.response?.data?.message || err.message || "Failed to update profile");
+    } finally {
+      setProfileLoading(false);
     }
   };
 
@@ -599,6 +675,7 @@ export default function AdminDashboard() {
             { key: "menu", label: "Menu Catalogue", icon: Coffee },
             { key: "reviews", label: "Review Moderation", icon: Star },
             { key: "inquiries", label: "Customer Inquiries", icon: MessageSquare },
+            { key: "settings", label: "Admin Settings", icon: Settings },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -1274,6 +1351,120 @@ export default function AdminDashboard() {
                     </div>
                   ))
                 )}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 7: ADMIN SETTINGS */}
+          {activeTab === "settings" && (
+            <div className="space-y-8 font-sans">
+              <h2 className="font-serif text-xl font-bold text-foreground border-b border-secondary/10 pb-2">Admin Settings</h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Change Password Form */}
+                <div className="bg-primary-dark p-6 rounded-xl border border-secondary/10 space-y-4 shadow-sm">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-secondary flex items-center gap-2">
+                    <Lock className="w-4 h-4" />
+                    Change Portal Password
+                  </h3>
+                  <form onSubmit={handleUpdatePassword} className="space-y-3.5">
+                    <div className="space-y-1">
+                      <label className="text-[10px] uppercase tracking-widest text-foreground/50 font-bold">Current Password</label>
+                      <input
+                        type="password"
+                        required
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        placeholder="••••••••"
+                        className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] uppercase tracking-widest text-foreground/50 font-bold">New Password</label>
+                      <input
+                        type="password"
+                        required
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        placeholder="••••••••"
+                        className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] uppercase tracking-widest text-foreground/50 font-bold">Confirm New Password</label>
+                      <input
+                        type="password"
+                        required
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="••••••••"
+                        className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary"
+                      />
+                    </div>
+
+                    {pwdError && (
+                      <p className="text-xs font-bold text-red-600 bg-red-500/10 p-2.5 rounded border border-red-200">{pwdError}</p>
+                    )}
+                    {pwdSuccess && (
+                      <p className="text-xs font-bold text-green-600 bg-green-500/10 p-2.5 rounded border border-green-200">{pwdSuccess}</p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={pwdLoading}
+                      className="px-5 py-2.5 bg-secondary hover:bg-secondary-dark text-white font-bold uppercase tracking-wider rounded text-xs transition-colors cursor-pointer w-full flex items-center justify-center gap-1.5"
+                    >
+                      {pwdLoading ? "Updating..." : "Update Password"}
+                    </button>
+                  </form>
+                </div>
+
+                {/* Update Profile / Contact Info Form */}
+                <div className="bg-primary-dark p-6 rounded-xl border border-secondary/10 space-y-4 shadow-sm">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-secondary flex items-center gap-2">
+                    <UserIcon className="w-4 h-4" />
+                    Update Profile Info
+                  </h3>
+                  <form onSubmit={handleUpdateProfile} className="space-y-3.5">
+                    <div className="space-y-1">
+                      <label className="text-[10px] uppercase tracking-widest text-foreground/50 font-bold">Admin Display Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={adminName}
+                        onChange={(e) => setAdminName(e.target.value)}
+                        placeholder="e.g. Old Monk Admin"
+                        className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] uppercase tracking-widest text-foreground/50 font-bold">Admin Contact Phone</label>
+                      <input
+                        type="text"
+                        required
+                        value={adminPhone}
+                        onChange={(e) => setAdminPhone(e.target.value)}
+                        placeholder="e.g. 92969 35757"
+                        className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary"
+                      />
+                    </div>
+
+                    {profileError && (
+                      <p className="text-xs font-bold text-red-600 bg-red-500/10 p-2.5 rounded border border-red-200">{profileError}</p>
+                    )}
+                    {profileSuccess && (
+                      <p className="text-xs font-bold text-green-600 bg-green-500/10 p-2.5 rounded border border-green-200">{profileSuccess}</p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={profileLoading}
+                      className="px-5 py-2.5 bg-secondary hover:bg-secondary-dark text-white font-bold uppercase tracking-wider rounded text-xs transition-colors cursor-pointer w-full flex items-center justify-center gap-1.5"
+                    >
+                      {profileLoading ? "Updating..." : "Update Profile"}
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           )}
