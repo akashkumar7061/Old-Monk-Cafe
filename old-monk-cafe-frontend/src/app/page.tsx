@@ -91,7 +91,7 @@ export default function Home() {
     { cat: "interior", title: "Cozy Seating & Wall Art", img: "/images/cafe_interior_buddha.jpg" },
     { cat: "interior", title: "Warm Cafe Ambience", img: "/images/cafe_interior_view.jpg" },
     { cat: "interior", title: "Cashier Counter & Logo", img: "/images/cafe_counter_close.jpg" },
-    { cat: "food", title: "Handcrafted Veg Noodles", img: "/images/veg_noodles.jpg" },
+    { cat: "food", title: "Handcrafted Veg Noodles", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400" },
     { cat: "coffee", title: "Pour Over Latte Art", img: "/images/coffee_art.png" },
     { cat: "drinks", title: "Blue Lagoon Mocktail", img: "/images/premium_mocktail.png" },
     { cat: "food", title: "Premium Paneer Burger", img: "/images/old_monk_burger.png" },

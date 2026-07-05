@@ -44,7 +44,7 @@ export const fallbackMenuItems: MenuItemData[] = [
   { id: "mo5", name: "Tandoori Momos (6 Pcs)", price: 189, description: "Momos marinated in tandoori paste, chargrilled in tandoor to perfection.", category: "momos", image: "https://images.unsplash.com/photo-1626132647523-66f5bf380027?q=80&w=400", isVeg: true, isAvailable: true },
 
   // CHINESE
-  { id: "ch1", name: "Veg Hakka Noodles", price: 169, description: "Stir-fried noodles with crunchy cabbage, capsicum, carrots, and spring onions.", category: "chinese", image: "/images/veg_noodles.jpg", isVeg: true, isAvailable: true },
+  { id: "ch1", name: "Veg Hakka Noodles", price: 169, description: "Stir-fried noodles with crunchy cabbage, capsicum, carrots, and spring onions.", category: "chinese", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400", isVeg: true, isAvailable: true },
   { id: "ch2", name: "Paneer Chilli Noodles", price: 199, description: "Stir-fried noodles loaded with spicy soy-glazed paneer cubes.", category: "chinese", image: "https://images.unsplash.com/photo-1618449840665-9ed506d73a34?q=80&w=400", isVeg: true, isAvailable: true },
   { id: "ch3", name: "Schezwan Noodles", price: 229, description: "Spicy stir-fried noodles tossed in rich garlic Schezwan sauce and vegetables.", category: "chinese", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=400", isVeg: true, isAvailable: true },
   { id: "ch4", name: "Veg Fried Rice", price: 179, description: "Wok-tossed rice with fresh seasonal vegetables and soy-garlic.", category: "chinese", image: "/images/veg_fried_rice.png", isVeg: true, isAvailable: true },
