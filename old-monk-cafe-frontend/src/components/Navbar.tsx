@@ -186,7 +186,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
 
             {/* User Profile / Dashboard */}
             {isAuthenticated ? (
-              <div className="relative group/profile">
+              <div className="relative group/profile hidden md:block">
                 <button
                   className="flex items-center gap-1.5 p-1 px-3 hover:bg-secondary/10 rounded-full transition-colors duration-300 border border-secondary/20 text-foreground"
                 >
@@ -237,7 +237,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onCartClick }) => {
             ) : (
               <Link
                 href="/login"
-                className="flex items-center gap-1.5 p-2 px-4 border border-secondary/20 hover:border-secondary rounded text-xs uppercase tracking-wider hover:bg-secondary/5 transition-all font-medium text-foreground hover:text-secondary"
+                className="hidden md:flex items-center gap-1.5 p-2 px-4 border border-secondary/20 hover:border-secondary rounded text-xs uppercase tracking-wider hover:bg-secondary/5 transition-all font-medium text-foreground hover:text-secondary"
               >
                 <UserIcon className="w-4 h-4" />
                 <span>Login</span>
