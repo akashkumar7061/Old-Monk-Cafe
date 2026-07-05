@@ -8,11 +8,18 @@ export const FloatingCTAs: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const threshold = 550; // Distance from the bottom of the document
       const totalHeight = document.documentElement.scrollHeight;
-      const scrollPosition = window.innerHeight + window.scrollY;
+      const windowHeight = window.innerHeight;
+      const scrollPosition = window.scrollY;
 
-      if (totalHeight - scrollPosition < threshold) {
+      // If the page is short (no scroll room), keep it visible
+      if (totalHeight - windowHeight < 100) {
+        setIsVisible(true);
+        return;
+      }
+
+      // Hide only when scrolled within 300px of the very bottom (footer view)
+      if (totalHeight - (scrollPosition + windowHeight) < 300) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
