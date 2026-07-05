@@ -140,6 +140,14 @@ export default function Home() {
     setActiveReviewIdx((prev) => (prev - 1 + reviews.length) % reviews.length);
   };
 
+  // Auto-slide reviews every 4.5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveReviewIdx((prev) => (prev + 1) % reviews.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [activeReviewIdx]);
+
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmittingContact(true);
