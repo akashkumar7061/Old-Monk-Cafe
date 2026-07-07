@@ -95,9 +95,7 @@ export default function Home() {
   }, []);
 
   const galleryItems = [
-    { cat: "interior", title: "Cafe Exterior at Night", img: "/images/real_cafe_exterior.jpg" },
     { cat: "interior", title: "Cozy Seating & Wall Art", img: "/images/real_cafe_interior_buddha.jpg" },
-    { cat: "interior", title: "Warm Cafe Ambience", img: "/images/cafe_interior_view.jpg" },
     { cat: "interior", title: "Cashier Counter & Logo", img: "/images/cafe_counter_close.jpg" },
     { cat: "food", title: "Signature Paneer Burger", img: "/images/real_cafe_burger.jpg" },
     { cat: "food", title: "Double Decker Burger", img: "/images/real_cafe_burger_2.jpg" },
@@ -520,20 +518,13 @@ export default function Home() {
                 {filteredGallery.map((item, idx) => (
                   <div 
                     key={idx} 
-                    className="w-full shrink-0 aspect-[4/5] sm:aspect-[16/9] relative group cursor-pointer overflow-hidden bg-black/95"
+                    className="w-full shrink-0 aspect-[16/10] sm:aspect-[16/9] relative group cursor-pointer"
                     onClick={() => setLightboxImg(item.img)}
                   >
-                    {/* Blurred Background for Premium No-Crop Visuals */}
-                    <img
-                      src={item.img}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-105 pointer-events-none"
-                    />
-                    {/* Centered Contain Image displaying the full picture */}
                     <img
                       src={item.img}
                       alt={item.title}
-                      className="relative w-full h-full object-contain mx-auto transition-transform duration-1000 group-hover:scale-[1.02]"
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                     {/* Widescreen Bottom Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-6 sm:p-10 animate-fade-in">
