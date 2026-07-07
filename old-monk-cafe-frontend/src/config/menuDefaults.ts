@@ -312,6 +312,16 @@ export const fallbackMenuItems: MenuItemData[] = [
     "isAvailable": true
   },
   {
+    "id": "item_addon_cheese",
+    "name": "Add-on Cheese",
+    "price": 25,
+    "description": "Extra slice of melted cheddar cheese to customize your burger. Handcrafted with signature Old Monk recipe.",
+    "category": "burgers",
+    "image": "https://images.unsplash.com/photo-1552763481-b5e28a4a7cbb?q=80&w=400&sig=301",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
     "id": "item_28",
     "name": "Aloo Burger",
     "price": 89,
