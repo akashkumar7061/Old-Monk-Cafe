@@ -37,10 +37,6 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
     : "";
 
   const handleAdd = () => {
-    if (!user) {
-      router.push("/login");
-      return;
-    }
     addToCart({
       id: item.id,
       name: item.name,
@@ -136,8 +132,6 @@ export const MenuCard: React.FC<MenuCardProps> = ({ item }) => {
             >
               {!item.isAvailable ? (
                 <span>Sold Out</span>
-              ) : !user ? (
-                <span>Login to Add</span>
               ) : (
                 <>
                   <Plus className="w-3.5 h-3.5" />

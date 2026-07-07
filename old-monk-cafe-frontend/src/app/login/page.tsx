@@ -23,11 +23,21 @@ export default function Login() {
   });
 
   // Redirect if already authenticated
+  const [redirectTo, setRedirectTo] = useState("/");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const r = params.get("redirect");
+      if (r) setRedirectTo(r);
+    }
+  }, []);
+
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
-      router.push("/");
+      router.push(redirectTo);
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isLoading, redirectTo, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,10 +47,10 @@ export default function Login() {
     try {
       if (isLoginMode) {
         await login(formData.email, formData.password);
-        router.push("/");
+        router.push(redirectTo);
       } else {
         await register(formData.name, formData.email, formData.phone, formData.password);
-        router.push("/");
+        router.push(redirectTo);
       }
     } catch (err: any) {
       setError(err.message || "Authentication failed. Please verify credentials.");

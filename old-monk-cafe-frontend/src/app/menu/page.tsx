@@ -113,10 +113,6 @@ export default function Menu() {
 
   // Zomato style add to cart handler
   const handleAdd = (item: MenuItemData, imageUrl: string) => {
-    if (!user) {
-      router.push("/login");
-      return;
-    }
     addToCart({
       id: item.id,
       name: item.name,
@@ -374,11 +370,6 @@ export default function Menu() {
                                   >
                                     {!item.isAvailable ? (
                                       <span>Sold Out</span>
-                                    ) : !user ? (
-                                      <span className="flex items-center gap-1">
-                                        <LogIn className="w-3 h-3" />
-                                        <span>Login to Add</span>
-                                      </span>
                                     ) : (
                                       <>
                                         <Plus className="w-3 h-3" />

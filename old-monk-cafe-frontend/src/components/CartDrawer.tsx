@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 import { X, Plus, Minus, ShoppingBag, Trash2, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -12,6 +13,7 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
+  const { user } = useAuth();
   const {
     cart,
     removeFromCart,
@@ -211,7 +213,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
 
               {/* Checkout button */}
               <Link
-                href="/checkout"
+                href={user ? "/checkout" : "/login?redirect=/checkout"}
                 onClick={onClose}
                 className="flex items-center justify-center gap-2 w-full py-3 bg-secondary text-white font-bold uppercase tracking-wider rounded text-sm transition-all duration-300 hover:bg-secondary-dark hover:shadow-md hover:shadow-secondary/25"
               >

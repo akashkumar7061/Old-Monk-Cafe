@@ -13,7 +13,7 @@ import { API_BASE_URL } from "@/config/api";
 export default function Checkout() {
   const router = useRouter();
   const { cart, cartTotal, orderType, tableNumber, deliveryAddress, clearCart, isLoaded } = useCart();
-  const { user, token } = useAuth();
+  const { user, token, isLoading } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"COD" | "RAZORPAY">("COD");
@@ -24,6 +24,13 @@ export default function Checkout() {
     deliveryAddress: "",
     tableNumber: "",
   });
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/login?redirect=/checkout");
+    }
+  }, [user, isLoading, router]);
 
   // Load cart parameters into state
   useEffect(() => {
