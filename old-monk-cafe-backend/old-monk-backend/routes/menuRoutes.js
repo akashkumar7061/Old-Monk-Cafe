@@ -36,7 +36,7 @@ const syncDatabaseDirectly = async (req, res) => {
       await Category.deleteMany({ _id: { $in: unwantedIds } });
     }
 
-    // 1. Fetch existing categories
+    // 1. Fetch existing categories and sync slugs
     const existingCats = await Category.find({});
     const categoryMap = {};
     existingCats.forEach(cat => {
@@ -44,28 +44,21 @@ const syncDatabaseDirectly = async (req, res) => {
     });
     
     const categorySlugMap = {};
-    existingCats.forEach(cat => {
-      categorySlugMap[cat.slug] = cat._id;
-    });
     
-    const categoriesToInsert = [];
-    categoriesToSeed.forEach(cat => {
+    for (const cat of categoriesToSeed) {
       const existingCat = categoryMap[cat.name.toLowerCase().trim()];
       if (!existingCat) {
-        categoriesToInsert.push(cat);
+        // Create Category dynamically with explicit slug preserved
+        const newCat = await Category.create(cat);
+        categorySlugMap[cat.slug] = newCat._id;
       } else {
+        // Correct slug in database if it was overwritten to something else
+        if (existingCat.slug !== cat.slug) {
+          existingCat.slug = cat.slug;
+          await existingCat.save();
+        }
         categorySlugMap[cat.slug] = existingCat._id;
       }
-    });
-    
-    if (categoriesToInsert.length > 0) {
-      const seededCategories = await Category.insertMany(categoriesToInsert);
-      seededCategories.forEach(cat => {
-        const originalSeedCat = categoriesToSeed.find(c => c.name.toLowerCase().trim() === cat.name.toLowerCase().trim());
-        if (originalSeedCat) {
-          categorySlugMap[originalSeedCat.slug] = cat._id;
-        }
-      });
     }
     
     // 2. Fetch existing menu items
