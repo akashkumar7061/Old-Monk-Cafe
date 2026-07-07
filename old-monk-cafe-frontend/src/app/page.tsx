@@ -308,13 +308,13 @@ export default function Home() {
             </div>
             <div className="space-y-4 pt-8">
               <img
-                src="/images/real_cafe_interior_buddha.jpg"
-                alt="Interior wall art seating at Old Monk Cafe"
+                src="/images/media__1783432087263.jpg"
+                alt="Old Monk Cafe Stunning Night Exterior View"
                 className="rounded-xl h-44 sm:h-52 w-full object-cover border border-secondary/10 hover:border-secondary/20 transition-colors duration-300 shadow-sm"
               />
               <img
-                src="/images/real_cafe_shelf.jpg"
-                alt="Hexagonal wall art shelf decoration at Old Monk Cafe"
+                src="/images/media__1783431935059.jpg"
+                alt="You're My Cup of Tea Seating Wall at Old Monk Cafe"
                 className="rounded-xl h-60 sm:h-72 w-full object-cover border border-secondary/10 hover:border-secondary/20 transition-colors duration-300 shadow-sm"
               />
             </div>
