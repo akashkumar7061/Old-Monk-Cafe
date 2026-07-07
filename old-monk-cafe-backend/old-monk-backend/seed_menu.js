@@ -131,26 +131,6 @@ const categoriesToSeed = [
     "name": "Dessert Dhamaka",
     "slug": "desserts",
     "displayOrder": 26
-  },
-  {
-    "name": "Coffee & Beverages",
-    "slug": "coffee",
-    "displayOrder": 27
-  },
-  {
-    "name": "Signature Mocktails",
-    "slug": "mocktails",
-    "displayOrder": 28
-  },
-  {
-    "name": "Chinese Mains",
-    "slug": "chinese",
-    "displayOrder": 29
-  },
-  {
-    "name": "Value Combos",
-    "slug": "combos",
-    "displayOrder": 30
   }
 ];
 

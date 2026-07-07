@@ -21,6 +21,15 @@ const syncDatabaseDirectly = async (req, res) => {
     const MenuItem = require('../models/MenuItem');
     const { categoriesToSeed, menuItemsToSeed } = require('../seed_menu');
     
+    // Delete the four unwanted categories and their items
+    const unwantedSlugs = ["coffee", "mocktails", "chinese", "combos"];
+    const unwantedCats = await Category.find({ slug: { $in: unwantedSlugs } });
+    const unwantedIds = unwantedCats.map(cat => cat._id);
+    if (unwantedIds.length > 0) {
+      await MenuItem.deleteMany({ category: { $in: unwantedIds } });
+      await Category.deleteMany({ _id: { $in: unwantedIds } });
+    }
+
     // 1. Fetch existing categories
     const existingCats = await Category.find({});
     const categoryMap = {};
