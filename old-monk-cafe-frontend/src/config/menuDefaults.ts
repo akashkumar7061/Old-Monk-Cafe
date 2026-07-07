@@ -17,7 +17,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 30,
     "description": "Our signature special spiced tea, slow-brewed to rich creamy perfection. Freshly handcrafted with authentic premium ingredients.",
     "category": "kadak_chai",
-    "image": "https://images.unsplash.com/photo-1594631252845-29fc458dd836?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
+    "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
     "isVeg": true,
     "isAvailable": true
   },
@@ -27,7 +27,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 30,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "kadak_chai",
-    "image": "https://images.unsplash.com/photo-1563887922-4749f040916e?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
@@ -147,7 +147,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 159,
     "description": "Decadent, creamy blended milkshake topped with rich flavors. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "milk_shake",
-    "image": "https://images.unsplash.com/photo-1534724962667-27923c727e8d?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
@@ -167,7 +167,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 169,
     "description": "Decadent, creamy blended milkshake topped with rich flavors. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "milk_shake",
-    "image": "https://images.unsplash.com/photo-1588724338965-fcfb03947477?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
+    "image": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
     "isVeg": true,
     "isAvailable": true
   },
@@ -197,7 +197,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 199,
     "description": "Decadent, creamy blended milkshake topped with rich flavors. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "milk_shake",
-    "image": "https://images.unsplash.com/photo-1534724962667-27923c727e8d?auto=format&fit=crop&q=80&w=400&h=300&sig=8",
+    "image": "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&q=80&w=400&h=300&sig=8",
     "isVeg": true,
     "isAvailable": true
   },
@@ -537,7 +537,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 89,
     "description": "Old school comfort noodles tossed in special spices. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "maggie",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
     "isVeg": true,
     "isAvailable": true
   },
@@ -557,7 +557,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 109,
     "description": "Old school comfort noodles tossed in special spices. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "maggie",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
@@ -567,7 +567,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 119,
     "description": "Old school comfort noodles tossed in special spices. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "maggie",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
     "isVeg": true,
     "isAvailable": true
   },
@@ -587,7 +587,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 159,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "special",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
     "isVeg": true,
     "isAvailable": true
   },
@@ -617,7 +617,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 189,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "special",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
     "isVeg": true,
     "isAvailable": true
   },
@@ -647,7 +647,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 239,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "special",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=8",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=8",
     "isVeg": true,
     "isAvailable": true
   },
@@ -667,7 +667,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 119,
     "description": "Steamed thin wrappers loaded with signature delicious fillings. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "momos",
-    "image": "https://images.unsplash.com/photo-1625220194771-7ebded0d90ae?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
     "isVeg": true,
     "isAvailable": true
   },
@@ -687,7 +687,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 139,
     "description": "Steamed thin wrappers loaded with signature delicious fillings. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "momos",
-    "image": "https://images.unsplash.com/photo-1626804475315-77983693e506?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
@@ -697,7 +697,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 149,
     "description": "Steamed thin wrappers loaded with signature delicious fillings. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "momos",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
     "isVeg": true,
     "isAvailable": true
   },
@@ -707,7 +707,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 149,
     "description": "Steamed thin wrappers loaded with signature delicious fillings. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "momos",
-    "image": "https://images.unsplash.com/photo-1625220194771-7ebded0d90ae?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
     "isVeg": true,
     "isAvailable": true
   },
@@ -747,7 +747,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 179,
     "description": "Tender penne pasta tossed in rich, flavorful gourmet sauce. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "pasta",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
@@ -757,7 +757,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 109,
     "description": "Warm flatbread wrap loaded with delicious spiced filling. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "rolls",
-    "image": "https://images.unsplash.com/photo-1626700051175-6518c4793f06?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
     "isVeg": true,
     "isAvailable": true
   },
@@ -767,7 +767,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 129,
     "description": "Warm flatbread wrap loaded with delicious spiced filling. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "rolls",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
     "isVeg": true,
     "isAvailable": true
   },
@@ -777,7 +777,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 139,
     "description": "Warm flatbread wrap loaded with delicious spiced filling. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "rolls",
-    "image": "https://images.unsplash.com/photo-1626700051175-6518c4793f06?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
@@ -787,7 +787,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 149,
     "description": "Warm flatbread wrap loaded with delicious spiced filling. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "rolls",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
     "isVeg": true,
     "isAvailable": true
   },
@@ -807,7 +807,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 139,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
     "isVeg": true,
     "isAvailable": true
   },
@@ -827,7 +827,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 159,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
     "isVeg": true,
     "isAvailable": true
   },
@@ -847,7 +847,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 159,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=6",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=6",
     "isVeg": true,
     "isAvailable": true
   },
@@ -867,7 +867,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 179,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=8",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=8",
     "isVeg": true,
     "isAvailable": true
   },
@@ -887,7 +887,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 189,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=10",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=10",
     "isVeg": true,
     "isAvailable": true
   },
@@ -907,7 +907,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 199,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=12",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=12",
     "isVeg": true,
     "isAvailable": true
   },
@@ -927,7 +927,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 219,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=14",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=14",
     "isVeg": true,
     "isAvailable": true
   },
@@ -937,7 +937,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 199,
     "description": "Smoky cottage cheese cubes cooked in rich tandoori gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "desi_paneer",
-    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
     "isVeg": true,
     "isAvailable": true
   },
@@ -957,7 +957,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 249,
     "description": "Smoky cottage cheese cubes cooked in rich tandoori gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "desi_paneer",
-    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
@@ -977,7 +977,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 269,
     "description": "Smoky cottage cheese cubes cooked in rich tandoori gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "desi_paneer",
-    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
     "isVeg": true,
     "isAvailable": true
   },
@@ -997,7 +997,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 289,
     "description": "Smoky cottage cheese cubes cooked in rich tandoori gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "desi_paneer",
-    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=400&h=300&sig=7",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300&sig=7",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1057,7 +1057,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 12,
     "description": "Fresh hot tawa bread or premium long grain steam rice. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "roti_rice",
-    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1077,7 +1077,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 89,
     "description": "Fresh hot tawa bread or premium long grain steam rice. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "roti_rice",
-    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1097,7 +1097,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 119,
     "description": "Fresh hot tawa bread or premium long grain steam rice. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "roti_rice",
-    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300&sig=5",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1257,7 +1257,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 149,
     "description": "Flavorful noodles wok-tossed with aromatic minced garlic and light seasoning. Handcrafted with signature Old Monk recipe.",
     "category": "noodles",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1277,7 +1277,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 169,
     "description": "Stir-fried noodles tossed with soft paneer cubes and mild spices. Handcrafted with signature Old Monk recipe.",
     "category": "noodles",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1297,7 +1297,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 179,
     "description": "Classic Indo-Chinese style Hakka noodles, wok-tossed to perfection. Handcrafted with signature Old Monk recipe.",
     "category": "noodles",
-    "image": "https://images.unsplash.com/photo-1612966608967-3029aa5098e2?auto=format&fit=crop&q=80&w=400&h=300&sig=6",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300&sig=6",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1317,7 +1317,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 149,
     "description": "Fluffy basmati rice wok-tossed with finely chopped fresh vegetables. Handcrafted with signature Old Monk recipe.",
     "category": "fried_rice",
-    "image": "https://images.unsplash.com/photo-1603133872878-6966b68270c5?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1347,7 +1347,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 179,
     "description": "Wok-tossed basmati rice with pan-seared paneer cubes and veggies. Handcrafted with signature Old Monk recipe.",
     "category": "fried_rice",
-    "image": "https://images.unsplash.com/photo-1603133872878-6966b68270c5?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&q=80&w=400&h=300&sig=4",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1377,7 +1377,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 99,
     "description": "Warm, creamy, and rich tomato soup served with crispy croutons. Handcrafted with signature Old Monk recipe.",
     "category": "soup",
-    "image": "https://images.unsplash.com/photo-1547592165-e1d17fed6005?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1387,7 +1387,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 109,
     "description": "Healthy and comforting clear soup loaded with finely chopped garden vegetables. Handcrafted with signature Old Monk recipe.",
     "category": "soup",
-    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1397,7 +1397,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 119,
     "description": "Spicy and tangy Indo-Chinese soup served with crispy fried noodles. Handcrafted with signature Old Monk recipe.",
     "category": "soup",
-    "image": "https://images.unsplash.com/photo-1547592165-e1d17fed6005?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1407,7 +1407,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 119,
     "description": "Spiced mashed vegetable gravy served with hot butter-toasted pav buns. Handcrafted with signature Old Monk recipe.",
     "category": "pav",
-    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1417,7 +1417,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 129,
     "description": "Classic Mumbai street food style spicy potato vada sandwiched in soft pav. Handcrafted with signature Old Monk recipe.",
     "category": "pav",
-    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
     "isVeg": true,
     "isAvailable": true
   },
