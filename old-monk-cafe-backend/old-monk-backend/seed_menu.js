@@ -352,6 +352,24 @@ const menuItemsToSeed = [
     "isVeg": true
   },
   {
+    "id": "item_cheese_garlic_bread",
+    "name": "Cheese Garlic Bread",
+    "price": 99,
+    "description": "Toasted artisan bread topped with melted mozzarella cheese, garlic butter, and fresh herbs. Handcrafted with signature Old Monk recipe.",
+    "categorySlug": "garlic_bread",
+    "image": "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?q=80&w=400&sig=221",
+    "isVeg": true
+  },
+  {
+    "id": "item_chilli_cheese_garlic_bread",
+    "name": "Chilli Cheese Garlic Bread",
+    "price": 109,
+    "description": "Toasted artisan bread topped with melted mozzarella, fiery green chillies, garlic butter, and herbs. Handcrafted with signature Old Monk recipe.",
+    "categorySlug": "garlic_bread",
+    "image": "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?q=80&w=400&sig=222",
+    "isVeg": true
+  },
+  {
     "id": "item_23",
     "name": "Chilli Cheese Toast Bread",
     "price": 139,
