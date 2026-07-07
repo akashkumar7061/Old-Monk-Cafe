@@ -95,10 +95,23 @@ export default function Home() {
   }, []);
 
   const galleryItems = [
-    { cat: "interior", title: "Cozy Seating & Wall Art", img: "/images/real_cafe_interior_buddha.jpg" },
-    { cat: "interior", title: "Cozy Dining & Posters", img: "/images/real_cafe_seating.jpg" },
-    { cat: "interior", title: "Hexagonal Wall Art Shelf", img: "/images/real_cafe_shelf.jpg" },
-    { cat: "interior", title: "Order Counter View", img: "/images/real_cafe_counter.jpg" },
+    { cat: "interior", title: "You're My Cup of Tea Seating", img: "/images/media__1783431935059.jpg" },
+    { cat: "interior", title: "Cozy Seating Cabin Corner", img: "/images/media__1783431935067.jpg" },
+    { cat: "interior", title: "Cafe Order Counter View", img: "/images/media__1783431935092.jpg" },
+    { cat: "interior", title: "Inspiring Frame Wall Art", img: "/images/media__1783432009368.jpg" },
+    { cat: "interior", title: "Luminous Desk Logo Desk", img: "/images/media__1783432009460.jpg" },
+    { cat: "interior", title: "Aesthetic Wall Poster Frame", img: "/images/media__1783432009463.jpg" },
+    { cat: "interior", title: "Seat Quote Wall Poster", img: "/images/media__1783432048294.jpg" },
+    { cat: "interior", title: "Buddha Miniature Desk Decor", img: "/images/media__1783432069361.jpg" },
+    { cat: "interior", title: "Scooter Miniature Decoration", img: "/images/media__1783432069364.jpg" },
+    { cat: "interior", title: "Wall Art Quote Count Calories", img: "/images/media__1783432069382.jpg" },
+    { cat: "interior", title: "Buddha Painted Frame", img: "/images/media__1783432069397.jpg" },
+    { cat: "interior", title: "Everything Gets Better with Coffee", img: "/images/media__1783432048305.jpg" },
+    { cat: "interior", title: "Cozy Dining Table Seating", img: "/images/media__1783431935050.jpg" },
+    { cat: "exterior", title: "Old Monk Cafe Facade Night", img: "/images/media__1783432087263.jpg" },
+    { cat: "exterior", title: "Outdoor Seating and Facade View", img: "/images/media__1783432048396.jpg" },
+    { cat: "exterior", title: "Exterior Container Brand Board", img: "/images/media__1783432069379.jpg" },
+    { cat: "food", title: "Steaming Kulhad Special Chai", img: "/images/media__1783432087219.jpg" },
     { cat: "food", title: "Signature Paneer Burger", img: "/images/real_cafe_burger.jpg" },
     { cat: "food", title: "Double Decker Burger", img: "/images/real_cafe_burger_2.jpg" },
     { cat: "food", title: "Crispy Palak Patta Platter", img: "/images/real_cafe_chaat.jpg" },
@@ -494,7 +507,7 @@ export default function Home() {
 
             {/* Filter buttons */}
             <div className="flex flex-wrap gap-2">
-              {["all", "interior", "food", "drinks"].map((cat) => (
+              {["all", "interior", "exterior", "food"].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveGalleryCat(cat)}

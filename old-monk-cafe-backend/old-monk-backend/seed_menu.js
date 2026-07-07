@@ -141,7 +141,7 @@ const menuItemsToSeed = [
     "price": 25,
     "description": "Rich, aromatic and brewed to perfection with fresh tea leaves. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "kadak_chai",
-    "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "/images/media__1783432087219.jpg",
     "isVeg": true
   },
   {
@@ -150,7 +150,7 @@ const menuItemsToSeed = [
     "price": 30,
     "description": "Our signature special spiced tea, slow-brewed to rich creamy perfection. Freshly handcrafted with authentic premium ingredients.",
     "categorySlug": "kadak_chai",
-    "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
+    "image": "/images/media__1783432087219.jpg",
     "isVeg": true
   },
   {
