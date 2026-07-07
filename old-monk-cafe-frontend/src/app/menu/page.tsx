@@ -134,7 +134,7 @@ export default function Menu() {
       <div className="relative h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black">
         {/* Background Image with slight blur */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-102 transition-transform duration-[10s] ease-out animate-pulse-slow filter blur-[1px]"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-[10s] ease-out animate-pulse-slow filter blur-[3px]"
           style={{ 
             backgroundImage: "url('/images/real_cafe_counter.jpg')",
           }}
