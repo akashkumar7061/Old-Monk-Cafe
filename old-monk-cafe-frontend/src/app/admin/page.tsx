@@ -361,121 +361,16 @@ export default function AdminDashboard() {
     setSeedingMenu(true);
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      
-      // 1. Fetch existing categories and items from the database
-      let existingCats: any[] = [];
-      try {
-        const catRes = await axios.get(`${API_BASE_URL}/categories`, { headers });
-        if (catRes.data?.success && catRes.data?.data) {
-          existingCats = catRes.data.data;
-        }
-      } catch (err) {
-        console.warn("Failed to fetch categories:", err);
+      const response = await axios.get(`${API_BASE_URL}/menu/sync-db`, { headers });
+      if (response.data?.success) {
+        alert(response.data.message || "Menu Synced successfully!");
+      } else {
+        alert("Sync completed, but success status was false.");
       }
-
-      let existingItems: any[] = [];
-      try {
-        const itemRes = await axios.get(`${API_BASE_URL}/menu`, { headers });
-        if (itemRes.data?.success && itemRes.data?.data) {
-          existingItems = itemRes.data.data;
-        }
-      } catch (err) {
-        console.warn("Failed to fetch menu items:", err);
-      }
-
-      // Map category slug to id
-      const categoryMap: { [key: string]: string } = {};
-      existingCats.forEach((cat) => {
-        categoryMap[cat.slug] = cat._id || cat.id;
-      });
-      
-      // 2. Categories definition
-      const categoriesToCreate = [
-        { name: "Kadak Chai", slug: "kadak_chai", displayOrder: 1 },
-        { name: "Hot Coffee", slug: "hot_coffee", displayOrder: 2 },
-        { name: "Hot Milk", slug: "hot_milk", displayOrder: 3 },
-        { name: "Cold Coffee", slug: "cold_coffee", displayOrder: 4 },
-        { name: "Milk Shake", slug: "milk_shake", displayOrder: 5 },
-        { name: "Coolers", slug: "coolers", displayOrder: 6 },
-        { name: "Garlic Bread", slug: "garlic_bread", displayOrder: 7 },
-        { name: "Firangi French Fries", slug: "french_fries", displayOrder: 8 },
-        { name: "Burger Buffet", slug: "burgers", displayOrder: 9 },
-        { name: "Pristine Pizza", slug: "pizza", displayOrder: 10 },
-        { name: "Shahi Sandwich", slug: "sandwich", displayOrder: 11 },
-        { name: "Majestic Maggie", slug: "maggie", displayOrder: 12 },
-        { name: "Old Monk Special", slug: "special", displayOrder: 13 },
-        { name: "Magical Momos", slug: "momos", displayOrder: 14 },
-        { name: "Aakhri Pasta", slug: "pasta", displayOrder: 15 },
-        { name: "Noodles", slug: "noodles", displayOrder: 16 },
-        { name: "Fried Rice", slug: "fried_rice", displayOrder: 17 },
-        { name: "Rolls", slug: "rolls", displayOrder: 18 },
-        { name: "Chinese Snacks", slug: "chinese_snacks", displayOrder: 19 },
-        { name: "Soup", slug: "soup", displayOrder: 20 },
-        { name: "Desi Paneer", slug: "desi_paneer", displayOrder: 21 },
-        { name: "Marvellous Mushroom", slug: "mushroom", displayOrder: 22 },
-        { name: "Roti & Rice", slug: "roti_rice", displayOrder: 23 },
-        { name: "Pav", slug: "pav", displayOrder: 24 },
-        { name: "South Indian", slug: "south_indian", displayOrder: 25 },
-        { name: "Dessert Dhamaka", slug: "desserts", displayOrder: 26 },
-        { name: "Coffee & Beverages", slug: "coffee", displayOrder: 27 },
-        { name: "Signature Mocktails", slug: "mocktails", displayOrder: 28 },
-        { name: "Chinese Mains", slug: "chinese", displayOrder: 29 },
-        { name: "Value Combos", slug: "combos", displayOrder: 30 }
-      ];
-      
-      // Create missing categories
-      for (const cat of categoriesToCreate) {
-        if (!categoryMap[cat.slug]) {
-          try {
-            const newCatRes = await axios.post(`${API_BASE_URL}/categories`, cat, { headers });
-            if (newCatRes.data?.success && newCatRes.data?.data) {
-              categoryMap[cat.slug] = newCatRes.data.data._id || newCatRes.data.data.id;
-            }
-          } catch (err) {
-            console.warn(`Category ${cat.slug} creation failed:`, err);
-          }
-        }
-      }
-      
-      // Create a set of existing item names (case-insensitive and trimmed) to prevent duplicates
-      const existingNamesSet = new Set(existingItems.map(item => item.name.toLowerCase().trim()));
-
-      // 3. Seed missing menu items
-      let count = 0;
-      for (const item of fallbackMenuItems) {
-        const categoryId = categoryMap[item.category];
-        if (!categoryId) continue;
-
-        // Skip if item name is already in the database
-        if (existingNamesSet.has(item.name.toLowerCase().trim())) {
-          continue;
-        }
-        
-        const payload = {
-          name: item.name,
-          description: item.description,
-          price: item.price,
-          category: categoryId,
-          image: { url: typeof item.image === "string" ? item.image : (item.image as any)?.url || "", publicId: "" },
-          isVeg: item.isVeg,
-          isAvailable: true,
-          isFeatured: item.id.startsWith("co") || item.id === "c6" || item.id === "m1" || item.id === "p2",
-          prepTimeMinutes: 15
-        };
-        
-        try {
-          await axios.post(`${API_BASE_URL}/menu`, payload, { headers });
-          count++;
-        } catch (itemErr) {
-          console.warn(`Failed to seed item: ${item.name}`, itemErr);
-        }
-      }
-      
-      alert(`Menu Synced! Added ${count} missing menu items successfully.`);
       loadDashboardData();
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error syncing menu:", err);
-      alert("Sync failed. Please check the backend connection.");
+      alert("Sync failed: " + (err.response?.data?.error || err.message));
     } finally {
       setSeedingMenu(false);
     }
