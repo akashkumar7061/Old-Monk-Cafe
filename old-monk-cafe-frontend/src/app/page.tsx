@@ -300,8 +300,8 @@ export default function Home() {
                 className="rounded-xl h-44 sm:h-52 w-full object-cover border border-secondary/10 hover:border-secondary/20 transition-colors duration-300 shadow-sm"
               />
               <img
-                src="/images/real_cafe_exterior.jpg"
-                alt="Exterior night view of Old Monk Cafe"
+                src="/images/real_cafe_shelf.jpg"
+                alt="Hexagonal wall art shelf decoration at Old Monk Cafe"
                 className="rounded-xl h-60 sm:h-72 w-full object-cover border border-secondary/10 hover:border-secondary/20 transition-colors duration-300 shadow-sm"
               />
             </div>
