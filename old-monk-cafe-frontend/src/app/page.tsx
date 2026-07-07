@@ -720,8 +720,8 @@ export default function Home() {
             {/* Event Images Slider */}
             <div>
               <img
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800"
-                alt="Cafe celebration event"
+                src="/images/real_cafe_counter.jpg"
+                alt="Cashier and billing counter of Old Monk Cafe"
                 className="rounded-2xl border border-secondary/10 shadow-lg hover:border-secondary/20 transition-all duration-500 w-full h-[380px] object-cover"
               />
             </div>
