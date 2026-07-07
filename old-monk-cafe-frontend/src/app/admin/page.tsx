@@ -356,31 +356,13 @@ export default function AdminDashboard() {
 
   const handleSeedDefaultMenu = async () => {
     if (!token) return;
-    if (!confirm("Are you sure you want to RESET the database with the default menu? This will clear all existing items and categories and load the updated list.")) return;
+    if (!confirm("Are you sure you want to SYNC the database with the default menu? This will only import missing categories and items, and will NOT delete any existing items.")) return;
     
     setSeedingMenu(true);
     try {
       const headers = { Authorization: `Bearer ${token}` };
       
-      // 1. Fetch and clear existing menu items and categories
-      let existingItems: any[] = [];
-      try {
-        const itemRes = await axios.get(`${API_BASE_URL}/menu`, { headers });
-        if (itemRes.data?.success && itemRes.data?.data) {
-          existingItems = itemRes.data.data;
-        }
-      } catch (err) {
-        console.warn("Failed to fetch menu items:", err);
-      }
-      
-      for (const item of existingItems) {
-        try {
-          await axios.delete(`${API_BASE_URL}/menu/${item._id || item.id}`, { headers });
-        } catch (err) {
-          console.warn("Failed to delete item:", item.name, err);
-        }
-      }
-
+      // 1. Fetch existing categories and items from the database
       let existingCats: any[] = [];
       try {
         const catRes = await axios.get(`${API_BASE_URL}/categories`, { headers });
@@ -391,13 +373,21 @@ export default function AdminDashboard() {
         console.warn("Failed to fetch categories:", err);
       }
 
-      for (const cat of existingCats) {
-        try {
-          await axios.delete(`${API_BASE_URL}/categories/${cat._id || cat.id}`, { headers });
-        } catch (err) {
-          console.warn("Failed to delete category:", cat.name, err);
+      let existingItems: any[] = [];
+      try {
+        const itemRes = await axios.get(`${API_BASE_URL}/menu`, { headers });
+        if (itemRes.data?.success && itemRes.data?.data) {
+          existingItems = itemRes.data.data;
         }
+      } catch (err) {
+        console.warn("Failed to fetch menu items:", err);
       }
+
+      // Map category slug to id
+      const categoryMap: { [key: string]: string } = {};
+      existingCats.forEach((cat) => {
+        categoryMap[cat.slug] = cat._id || cat.id;
+      });
       
       // 2. Categories definition
       const categoriesToCreate = [
@@ -426,28 +416,40 @@ export default function AdminDashboard() {
         { name: "Roti & Rice", slug: "roti_rice", displayOrder: 23 },
         { name: "Pav", slug: "pav", displayOrder: 24 },
         { name: "South Indian", slug: "south_indian", displayOrder: 25 },
-        { name: "Dessert Dhamaka", slug: "desserts", displayOrder: 26 }
+        { name: "Dessert Dhamaka", slug: "desserts", displayOrder: 26 },
+        { name: "Coffee & Beverages", slug: "coffee", displayOrder: 27 },
+        { name: "Signature Mocktails", slug: "mocktails", displayOrder: 28 },
+        { name: "Chinese Mains", slug: "chinese", displayOrder: 29 },
+        { name: "Value Combos", slug: "combos", displayOrder: 30 }
       ];
       
-      const categoryMap: { [key: string]: string } = {};
-      
-      // Create categories
+      // Create missing categories
       for (const cat of categoriesToCreate) {
-        try {
-          const newCatRes = await axios.post(`${API_BASE_URL}/categories`, cat, { headers });
-          if (newCatRes.data?.success && newCatRes.data?.data) {
-            categoryMap[cat.slug] = newCatRes.data.data._id;
+        if (!categoryMap[cat.slug]) {
+          try {
+            const newCatRes = await axios.post(`${API_BASE_URL}/categories`, cat, { headers });
+            if (newCatRes.data?.success && newCatRes.data?.data) {
+              categoryMap[cat.slug] = newCatRes.data.data._id || newCatRes.data.data.id;
+            }
+          } catch (err) {
+            console.warn(`Category ${cat.slug} creation failed:`, err);
           }
-        } catch (err) {
-          console.warn(`Category ${cat.slug} creation failed:`, err);
         }
       }
       
-      // 3. Seed menu items
+      // Create a set of existing item names (case-insensitive and trimmed) to prevent duplicates
+      const existingNamesSet = new Set(existingItems.map(item => item.name.toLowerCase().trim()));
+
+      // 3. Seed missing menu items
       let count = 0;
       for (const item of fallbackMenuItems) {
         const categoryId = categoryMap[item.category];
         if (!categoryId) continue;
+
+        // Skip if item name is already in the database
+        if (existingNamesSet.has(item.name.toLowerCase().trim())) {
+          continue;
+        }
         
         const payload = {
           name: item.name,
@@ -469,11 +471,11 @@ export default function AdminDashboard() {
         }
       }
       
-      alert(`Database Reset & Seeded ${count} menu items successfully!`);
+      alert(`Menu Synced! Added ${count} missing menu items successfully.`);
       loadDashboardData();
     } catch (err) {
-      console.error("Error seeding menu:", err);
-      alert("Seeding failed. Please check the backend connection.");
+      console.error("Error syncing menu:", err);
+      alert("Sync failed. Please check the backend connection.");
     } finally {
       setSeedingMenu(false);
     }
@@ -1239,7 +1241,7 @@ export default function AdminDashboard() {
                     ) : (
                       <>
                         <RefreshCw className="w-3.5 h-3.5" />
-                        <span>Reset & Sync Menu</span>
+                        <span>Sync Menu</span>
                       </>
                     )}
                   </button>
@@ -1273,10 +1275,10 @@ export default function AdminDashboard() {
                     {seedingMenu ? (
                       <>
                         <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                        <span>Seeding Items...</span>
+                        <span>Syncing...</span>
                       </>
                     ) : (
-                      <span>Seed Default Cafe Menu</span>
+                      <span>Sync Menu</span>
                     )}
                   </button>
                 </div>

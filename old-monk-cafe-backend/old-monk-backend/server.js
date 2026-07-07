@@ -14,35 +14,61 @@ process.on('uncaughtException', (err) => {
 const startServer = async () => {
   await connectDB();
 
-  // Auto-sync seed data on startup if count is different
+  // Auto-sync seed data on startup (non-destructive)
   try {
     const MenuItem = require('./models/MenuItem');
     const Category = require('./models/Category');
     const { categoriesToSeed, menuItemsToSeed } = require('./seed_menu');
-    const dbItemsCount = await MenuItem.countDocuments();
-    if (dbItemsCount !== menuItemsToSeed.length) {
-      logger.info(`Database count (${dbItemsCount}) differs from seed count (${menuItemsToSeed.length}). Re-seeding database...`);
-      await MenuItem.deleteMany({});
-      await Category.deleteMany({});
-      const seededCategories = await Category.insertMany(categoriesToSeed);
-      const categoryMap = {};
-      seededCategories.forEach((cat) => {
+    
+    // 1. Sync Categories
+    const existingCats = await Category.find({});
+    const categoryMap = {};
+    existingCats.forEach(cat => {
+      categoryMap[cat.slug] = cat._id;
+    });
+    
+    const categoriesToInsert = [];
+    categoriesToSeed.forEach(cat => {
+      if (!categoryMap[cat.slug]) {
+        categoriesToInsert.push(cat);
+      }
+    });
+    
+    if (categoriesToInsert.length > 0) {
+      logger.info(`Inserting ${categoriesToInsert.length} missing categories...`);
+      const seededCategories = await Category.insertMany(categoriesToInsert);
+      seededCategories.forEach(cat => {
         categoryMap[cat.slug] = cat._id;
       });
-      const preparedMenuItems = menuItemsToSeed.map((item) => {
-        return {
-          name: item.name,
-          description: item.description,
-          price: item.price,
-          category: categoryMap[item.categorySlug],
-          image: { url: item.image, publicId: "" },
-          isVeg: item.isVeg,
-          isAvailable: true,
-          isFeatured: false,
-          prepTimeMinutes: 12
-        };
-      });
-      await MenuItem.insertMany(preparedMenuItems);
+    }
+    
+    // 2. Sync Menu Items
+    const existingItems = await MenuItem.find({});
+    const existingNamesSet = new Set(existingItems.map(item => item.name.toLowerCase().trim()));
+    
+    const itemsToInsert = [];
+    menuItemsToSeed.forEach(item => {
+      if (!existingNamesSet.has(item.name.toLowerCase().trim())) {
+        const categoryId = categoryMap[item.categorySlug];
+        if (categoryId) {
+          itemsToInsert.push({
+            name: item.name,
+            description: item.description,
+            price: item.price,
+            category: categoryId,
+            image: { url: item.image, publicId: "" },
+            isVeg: item.isVeg,
+            isAvailable: true,
+            isFeatured: false,
+            prepTimeMinutes: 12
+          });
+        }
+      }
+    });
+    
+    if (itemsToInsert.length > 0) {
+      logger.info(`Auto-seeding ${itemsToInsert.length} missing items on startup...`);
+      await MenuItem.insertMany(itemsToInsert);
       logger.info("Database auto-seeded successfully on startup.");
     }
   } catch (seedErr) {
