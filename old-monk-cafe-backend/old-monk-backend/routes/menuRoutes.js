@@ -25,20 +25,31 @@ const syncDatabaseDirectly = async (req, res) => {
     const existingCats = await Category.find({});
     const categoryMap = {};
     existingCats.forEach(cat => {
-      categoryMap[cat.slug] = cat._id;
+      categoryMap[cat.name.toLowerCase().trim()] = cat;
+    });
+    
+    const categorySlugMap = {};
+    existingCats.forEach(cat => {
+      categorySlugMap[cat.slug] = cat._id;
     });
     
     const categoriesToInsert = [];
     categoriesToSeed.forEach(cat => {
-      if (!categoryMap[cat.slug]) {
+      const existingCat = categoryMap[cat.name.toLowerCase().trim()];
+      if (!existingCat) {
         categoriesToInsert.push(cat);
+      } else {
+        categorySlugMap[cat.slug] = existingCat._id;
       }
     });
     
     if (categoriesToInsert.length > 0) {
       const seededCategories = await Category.insertMany(categoriesToInsert);
       seededCategories.forEach(cat => {
-        categoryMap[cat.slug] = cat._id;
+        const originalSeedCat = categoriesToSeed.find(c => c.name.toLowerCase().trim() === cat.name.toLowerCase().trim());
+        if (originalSeedCat) {
+          categorySlugMap[originalSeedCat.slug] = cat._id;
+        }
       });
     }
     
@@ -49,7 +60,7 @@ const syncDatabaseDirectly = async (req, res) => {
     const itemsToInsert = [];
     menuItemsToSeed.forEach(item => {
       if (!existingNamesSet.has(item.name.toLowerCase().trim())) {
-        const categoryId = categoryMap[item.categorySlug];
+        const categoryId = categorySlugMap[item.categorySlug];
         if (categoryId) {
           itemsToInsert.push({
             name: item.name,
