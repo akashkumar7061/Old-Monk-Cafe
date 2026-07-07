@@ -93,7 +93,7 @@ const syncDatabaseDirectly = async (req, res) => {
     
     res.json({
       success: true,
-      message: `Database synced successfully! Added ${categoriesToInsert.length} categories and ${seededCount} items.`
+      message: `Database synced successfully! Added missing categories and ${seededCount} items.`
     });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
