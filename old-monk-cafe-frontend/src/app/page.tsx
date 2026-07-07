@@ -185,8 +185,8 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <img
-            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600"
-            alt="Coffee Background"
+            src="/images/real_cafe_counter.jpg"
+            alt="Old Monk Cafe Cashier Counter"
             className="w-full h-full object-cover"
           />
         </div>
