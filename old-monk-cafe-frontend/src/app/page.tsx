@@ -96,7 +96,9 @@ export default function Home() {
 
   const galleryItems = [
     { cat: "interior", title: "Cozy Seating & Wall Art", img: "/images/real_cafe_interior_buddha.jpg" },
-    { cat: "interior", title: "Cashier Counter & Logo", img: "/images/cafe_counter_close.jpg" },
+    { cat: "interior", title: "Cozy Dining & Posters", img: "/images/real_cafe_seating.jpg" },
+    { cat: "interior", title: "Hexagonal Wall Art Shelf", img: "/images/real_cafe_shelf.jpg" },
+    { cat: "interior", title: "Order Counter View", img: "/images/real_cafe_counter.jpg" },
     { cat: "food", title: "Signature Paneer Burger", img: "/images/real_cafe_burger.jpg" },
     { cat: "food", title: "Double Decker Burger", img: "/images/real_cafe_burger_2.jpg" },
     { cat: "food", title: "Crispy Palak Patta Platter", img: "/images/real_cafe_chaat.jpg" },
