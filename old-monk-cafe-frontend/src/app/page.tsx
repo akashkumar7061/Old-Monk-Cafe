@@ -180,14 +180,14 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col justify-between overflow-hidden">
         {/* Background Overlay */}
-        <div className="absolute inset-0 bg-black/65 z-10 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 bg-black/55 z-10" />
 
         {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <div className="absolute inset-0 w-full h-full">
           <img
             src="/images/real_cafe_counter.jpg"
             alt="Old Monk Cafe Cashier Counter"
-            className="w-full h-full object-cover scale-105 filter blur-[3px]"
+            className="w-full h-full object-cover"
           />
         </div>
 

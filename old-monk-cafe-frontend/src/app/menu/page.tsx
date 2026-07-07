@@ -134,9 +134,9 @@ export default function Menu() {
       <div className="relative h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black">
         {/* Background Image with slight blur */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-[10s] ease-out animate-pulse-slow filter blur-[3px]"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-transform duration-[10s] ease-out animate-pulse-slow"
           style={{ 
-            backgroundImage: "url('/images/real_cafe_counter.jpg')",
+            backgroundImage: "url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1600')",
           }}
         />
         {/* Overlay with slight blur transitioning to theme background */}
