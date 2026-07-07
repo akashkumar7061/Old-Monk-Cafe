@@ -1188,9 +1188,9 @@ export default function AdminDashboard() {
                 <h2 className="font-serif text-xl font-bold text-foreground">Menu Catalogue</h2>
                 <button
                   onClick={() => openMenuModal("add")}
-                  className="px-4 py-2 bg-secondary text-white hover:bg-secondary-dark rounded text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer shadow-sm font-sans"
+                  className="px-3 py-1.5 bg-secondary text-white hover:bg-secondary-dark rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-pointer shadow-sm font-sans"
                 >
-                  <PlusCircle className="w-4 h-4" />
+                  <PlusCircle className="w-3.5 h-3.5" />
                       <span>Add New Item</span>
                 </button>
               </div>
@@ -1489,9 +1489,9 @@ export default function AdminDashboard() {
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowMenuModal(false)} />
           
-          <div className="relative w-full max-w-lg bg-primary border border-secondary/15 rounded-2xl p-6 sm:p-8 shadow-2xl z-10 font-sans space-y-6">
+          <div className="relative w-full max-w-md bg-primary border border-secondary/15 rounded-2xl p-6 shadow-2xl z-10 font-sans space-y-5">
             <div className="flex items-center justify-between border-b border-secondary/10 pb-3">
-              <h3 className="font-serif text-lg font-bold text-foreground">
+              <h3 className="font-serif text-base font-bold text-foreground">
                 {modalMode === "add" ? "Add Menu Item" : "Edit Menu Item"}
               </h3>
               <button onClick={() => setShowMenuModal(false)} className="p-1 hover:bg-secondary/10 rounded-full">
