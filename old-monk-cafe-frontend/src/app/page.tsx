@@ -193,14 +193,14 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col justify-between overflow-hidden">
         {/* Background Overlay */}
-        <div className="absolute inset-0 bg-black/35 z-10" />
+        <div className="absolute inset-0 bg-black/20 z-10" />
 
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <img
             src="/images/media__1783432167113.jpg"
             alt="Old Monk Cafe Interior Tea Pour"
-            className="w-full h-full object-cover object-[72%_center] md:object-center"
+            className="w-full h-full object-cover object-[58%_center] md:object-center"
           />
         </div>
 
