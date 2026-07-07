@@ -102,6 +102,16 @@ export const fallbackMenuItems: MenuItemData[] = [
     "isAvailable": true
   },
   {
+    "id": "item_classic_cold_coffee",
+    "name": "Classic Cold Coffee",
+    "price": 149,
+    "description": "Smooth, creamy blended coffee, served ice-cold to refresh your senses. Handcrafted with signature Old Monk recipe.",
+    "category": "cold_coffee",
+    "image": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=400&sig=109",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
     "id": "item_10",
     "name": "Hazelnut Premium",
     "price": 159,
