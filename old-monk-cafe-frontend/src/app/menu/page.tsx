@@ -55,7 +55,7 @@ export default function Menu() {
             price: item.price,
             discountPrice: item.discountPrice,
             description: item.description,
-            category: item.category?.slug || item.category || "coffee",
+            category: (item.category?.slug || (typeof item.category === "string" ? item.category : "") || "coffee").replace(/_/g, "-"),
             image: typeof item.image === "string" ? item.image : (item.image?.url || ""),
             isVeg: item.isVeg ?? true,
             isAvailable: item.isAvailable ?? true,
@@ -118,7 +118,7 @@ export default function Menu() {
       name: item.name,
       price: item.price,
       image: imageUrl,
-      category: item.category,
+      category: item.category.replace(/_/g, "-"),
     });
   };
 
@@ -239,7 +239,7 @@ export default function Menu() {
               .map((cat) => {
                 // Filter items belonging to this category
                 const itemsInCategory = menuItems.filter(item => {
-                  const matchesCategory = item.category === cat.key;
+                  const matchesCategory = item.category.replace(/_/g, "-") === cat.key.replace(/_/g, "-");
                   const matchesSearch = searchQuery === "" || 
                                        item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                                        item.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -399,7 +399,7 @@ export default function Menu() {
 
             {/* Empty state if search returned absolutely nothing */}
             {menuItems.filter(item => {
-              const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
+              const matchesCategory = selectedCategory === "all" || item.category.replace(/_/g, "-") === selectedCategory.replace(/_/g, "-");
               const matchesSearch = searchQuery === "" || 
                                    item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                                    item.description.toLowerCase().includes(searchQuery.toLowerCase());
