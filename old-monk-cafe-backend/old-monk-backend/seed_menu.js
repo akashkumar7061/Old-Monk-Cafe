@@ -1384,8 +1384,52 @@ const menuItemsToSeed = [
     "name": "Singapuri Fried Rice",
     "price": 189,
     "description": "Fragrant and colorful rice tossed with curry powder, cashew nuts, and fresh veggies. Handcrafted with signature Old Monk recipe.",
-    "categorySlug": "fried_rice",
     "image": "https://images.unsplash.com/photo-1603133872878-6966b68270c5?q=80&w=400&sig=606",
+    "isVeg": true
+  },
+  {
+    "id": "item_tomato_soup",
+    "name": "Tomato Soup",
+    "price": 99,
+    "description": "Warm, creamy, and rich tomato soup served with crispy croutons. Handcrafted with signature Old Monk recipe.",
+    "categorySlug": "soup",
+    "image": "https://images.unsplash.com/photo-1547592165-e1d17fed6005?q=80&w=400&sig=701",
+    "isVeg": true
+  },
+  {
+    "id": "item_mix_veg_soup",
+    "name": "Mix Veg Soup",
+    "price": 109,
+    "description": "Healthy and comforting clear soup loaded with finely chopped garden vegetables. Handcrafted with signature Old Monk recipe.",
+    "categorySlug": "soup",
+    "image": "https://images.unsplash.com/photo-1547592165-e1d17fed6005?q=80&w=400&sig=702",
+    "isVeg": true
+  },
+  {
+    "id": "item_veg_manchow_soup",
+    "name": "Veg Manchow Soup",
+    "price": 119,
+    "description": "Spicy and tangy Indo-Chinese soup served with crispy fried noodles. Handcrafted with signature Old Monk recipe.",
+    "categorySlug": "soup",
+    "image": "https://images.unsplash.com/photo-1547592165-e1d17fed6005?q=80&w=400&sig=703",
+    "isVeg": true
+  },
+  {
+    "id": "item_pav_bhaji",
+    "name": "Pav Bhaji",
+    "price": 119,
+    "description": "Spiced mashed vegetable gravy served with hot butter-toasted pav buns. Handcrafted with signature Old Monk recipe.",
+    "categorySlug": "pav",
+    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?q=80&w=400&sig=801",
+    "isVeg": true
+  },
+  {
+    "id": "item_vada_pav",
+    "name": "Vada Pav",
+    "price": 129,
+    "description": "Classic Mumbai street food style spicy potato vada sandwiched in soft pav. Handcrafted with signature Old Monk recipe.",
+    "categorySlug": "pav",
+    "image": "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?q=80&w=400&sig=802",
     "isVeg": true
   }
 ];
