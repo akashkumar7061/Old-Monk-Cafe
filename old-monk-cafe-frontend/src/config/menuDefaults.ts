@@ -247,7 +247,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 99,
     "description": "Toasted artisan bread topped with melted mozzarella cheese, garlic butter, and fresh herbs. Handcrafted with signature Old Monk recipe.",
     "category": "garlic_bread",
-    "image": "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&q=80&w=400&h=300&sig=1",
+    "image": "",
     "isVeg": true,
     "isAvailable": true
   },
