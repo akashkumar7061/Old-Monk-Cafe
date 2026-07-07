@@ -478,6 +478,15 @@ const menuItemsToSeed = [
     "isVeg": true
   },
   {
+    "id": "item_addon_cheese_pizza",
+    "name": "Add-on Cheese (Pizza)",
+    "price": 35,
+    "description": "Extra loading of premium mozzarella cheese to customize your pizza. Handcrafted with signature Old Monk recipe.",
+    "categorySlug": "pizza",
+    "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400&sig=341",
+    "isVeg": true
+  },
+  {
     "id": "item_34",
     "name": "Margherita Pizza",
     "price": 189,
