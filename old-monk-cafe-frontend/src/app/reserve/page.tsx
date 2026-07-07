@@ -333,6 +333,9 @@ export default function Reserve() {
       </main>
 
       <Footer />
+      <Chatbot />
+      <FloatingCTAs />
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   );
 }
