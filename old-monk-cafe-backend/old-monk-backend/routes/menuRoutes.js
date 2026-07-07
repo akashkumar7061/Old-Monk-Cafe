@@ -22,8 +22,14 @@ const syncDatabaseDirectly = async (req, res) => {
     const { categoriesToSeed, menuItemsToSeed } = require('../seed_menu');
     
     // Delete the four unwanted categories and their items
-    const unwantedSlugs = ["coffee", "mocktails", "chinese", "combos"];
-    const unwantedCats = await Category.find({ slug: { $in: unwantedSlugs } });
+    const unwantedSlugs = ["coffee", "mocktails", "chinese", "combos", "coffee-beverages", "signature-mocktails", "chinese-mains", "value-combos"];
+    const unwantedNames = ["Coffee & Beverages", "Signature Mocktails", "Chinese Mains", "Value Combos"];
+    const unwantedCats = await Category.find({
+      $or: [
+        { slug: { $in: unwantedSlugs } },
+        { name: { $in: unwantedNames } }
+      ]
+    });
     const unwantedIds = unwantedCats.map(cat => cat._id);
     if (unwantedIds.length > 0) {
       await MenuItem.deleteMany({ category: { $in: unwantedIds } });
