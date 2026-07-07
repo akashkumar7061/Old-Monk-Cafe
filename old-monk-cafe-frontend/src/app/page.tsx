@@ -520,13 +520,20 @@ export default function Home() {
                 {filteredGallery.map((item, idx) => (
                   <div 
                     key={idx} 
-                    className="w-full shrink-0 aspect-[16/10] sm:aspect-[16/9] relative group cursor-pointer"
+                    className="w-full shrink-0 aspect-[4/5] sm:aspect-[16/9] relative group cursor-pointer overflow-hidden bg-black/95"
                     onClick={() => setLightboxImg(item.img)}
                   >
+                    {/* Blurred Background for Premium No-Crop Visuals */}
+                    <img
+                      src={item.img}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-105 pointer-events-none"
+                    />
+                    {/* Centered Contain Image displaying the full picture */}
                     <img
                       src={item.img}
                       alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                      className="relative w-full h-full object-contain mx-auto transition-transform duration-1000 group-hover:scale-[1.02]"
                     />
                     {/* Widescreen Bottom Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-6 sm:p-10 animate-fade-in">
