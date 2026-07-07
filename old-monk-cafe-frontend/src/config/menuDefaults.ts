@@ -1240,5 +1240,135 @@ export const fallbackMenuItems: MenuItemData[] = [
     "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=400&sig=118",
     "isVeg": true,
     "isAvailable": true
+  },
+  {
+    "id": "item_veg_noodles",
+    "name": "Veg Noodles",
+    "price": 139,
+    "description": "Stir-fried noodles tossed with fresh garden vegetables and savory Chinese sauces. Handcrafted with signature Old Monk recipe.",
+    "category": "noodles",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400&sig=501",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_garlic_noodles",
+    "name": "Garlic Noodles",
+    "price": 149,
+    "description": "Flavorful noodles wok-tossed with aromatic minced garlic and light seasoning. Handcrafted with signature Old Monk recipe.",
+    "category": "noodles",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400&sig=502",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_mix_veg_noodles",
+    "name": "Mix Veg Noodles",
+    "price": 159,
+    "description": "Stir-fried noodles loaded with an assortment of crisp vegetables. Handcrafted with signature Old Monk recipe.",
+    "category": "noodles",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400&sig=503",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_paneer_noodles",
+    "name": "Paneer Noodles",
+    "price": 169,
+    "description": "Stir-fried noodles tossed with soft paneer cubes and mild spices. Handcrafted with signature Old Monk recipe.",
+    "category": "noodles",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400&sig=504",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_schezwan_fried_noodles",
+    "name": "Schezwan Fried Noodles",
+    "price": 169,
+    "description": "Spicy stir-fried noodles tossed in hot and fiery Schezwan sauce. Handcrafted with signature Old Monk recipe.",
+    "category": "noodles",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400&sig=505",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_veg_hakka_noodles",
+    "name": "Veg Hakka Noodles",
+    "price": 179,
+    "description": "Classic Indo-Chinese style Hakka noodles, wok-tossed to perfection. Handcrafted with signature Old Monk recipe.",
+    "category": "noodles",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400&sig=506",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_paneer_singapuri_noodles",
+    "name": "Paneer Singapuri Noodles",
+    "price": 189,
+    "description": "Exotic stir-fried noodles cooked with paneer, curry powder, and a touch of sweetness. Handcrafted with signature Old Monk recipe.",
+    "category": "noodles",
+    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=400&sig=507",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_veg_fried_rice",
+    "name": "Veg Fried Rice",
+    "price": 149,
+    "description": "Fluffy basmati rice wok-tossed with finely chopped fresh vegetables. Handcrafted with signature Old Monk recipe.",
+    "category": "fried_rice",
+    "image": "https://images.unsplash.com/photo-1603133872878-6966b68270c5?q=80&w=400&sig=601",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_schezwan_fried_rice",
+    "name": "Schezwan Fried Rice",
+    "price": 159,
+    "description": "Spicy and flavorful fried rice tossed in zesty Schezwan sauce. Handcrafted with signature Old Monk recipe.",
+    "category": "fried_rice",
+    "image": "https://images.unsplash.com/photo-1603133872878-6966b68270c5?q=80&w=400&sig=602",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_mix_fried_rice",
+    "name": "Mix Fried Rice",
+    "price": 169,
+    "description": "Basmati rice tossed with a loaded assortment of vegetables and mild spices. Handcrafted with signature Old Monk recipe.",
+    "category": "fried_rice",
+    "image": "https://images.unsplash.com/photo-1603133872878-6966b68270c5?q=80&w=400&sig=603",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_paneer_fried_rice",
+    "name": "Paneer Fried Rice",
+    "price": 179,
+    "description": "Wok-tossed basmati rice with pan-seared paneer cubes and veggies. Handcrafted with signature Old Monk recipe.",
+    "category": "fried_rice",
+    "image": "https://images.unsplash.com/photo-1603133872878-6966b68270c5?q=80&w=400&sig=604",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_triple_fried_rice",
+    "name": "Triple Fried Rice",
+    "price": 189,
+    "description": "A combination of fried rice, crispy fried noodles, and a rich spicy Chinese gravy. Handcrafted with signature Old Monk recipe.",
+    "category": "fried_rice",
+    "image": "https://images.unsplash.com/photo-1603133872878-6966b68270c5?q=80&w=400&sig=605",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_singapuri_fried_rice",
+    "name": "Singapuri Fried Rice",
+    "price": 189,
+    "description": "Fragrant and colorful rice tossed with curry powder, cashew nuts, and fresh veggies. Handcrafted with signature Old Monk recipe.",
+    "category": "fried_rice",
+    "image": "https://images.unsplash.com/photo-1603133872878-6966b68270c5?q=80&w=400&sig=606",
+    "isVeg": true,
+    "isAvailable": true
   }
 ];

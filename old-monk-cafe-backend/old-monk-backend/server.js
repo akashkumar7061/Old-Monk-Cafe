@@ -14,6 +14,41 @@ process.on('uncaughtException', (err) => {
 const startServer = async () => {
   await connectDB();
 
+  // Auto-sync seed data on startup if count is different
+  try {
+    const MenuItem = require('./models/MenuItem');
+    const Category = require('./models/Category');
+    const { categoriesToSeed, menuItemsToSeed } = require('./seed_menu');
+    const dbItemsCount = await MenuItem.countDocuments();
+    if (dbItemsCount !== menuItemsToSeed.length) {
+      logger.info(`Database count (${dbItemsCount}) differs from seed count (${menuItemsToSeed.length}). Re-seeding database...`);
+      await MenuItem.deleteMany({});
+      await Category.deleteMany({});
+      const seededCategories = await Category.insertMany(categoriesToSeed);
+      const categoryMap = {};
+      seededCategories.forEach((cat) => {
+        categoryMap[cat.slug] = cat._id;
+      });
+      const preparedMenuItems = menuItemsToSeed.map((item) => {
+        return {
+          name: item.name,
+          description: item.description,
+          price: item.price,
+          category: categoryMap[item.categorySlug],
+          image: { url: item.image, publicId: "" },
+          isVeg: item.isVeg,
+          isAvailable: true,
+          isFeatured: false,
+          prepTimeMinutes: 12
+        };
+      });
+      await MenuItem.insertMany(preparedMenuItems);
+      logger.info("Database auto-seeded successfully on startup.");
+    }
+  } catch (seedErr) {
+    logger.error("Database startup auto-seed failed: " + seedErr.message);
+  }
+
   const server = app.listen(PORT, () => {
     logger.info(`OLD MONK CAFE API running on port ${PORT} [${process.env.NODE_ENV}]`);
   });
