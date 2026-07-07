@@ -267,7 +267,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 139,
     "description": "Freshly baked bread infused with rich garlic butter and herbs. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "garlic_bread",
-    "image": "https://images.unsplash.com/photo-1544982503-9f984c14501a?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
+    "image": "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=400&h=300&sig=3",
     "isVeg": true,
     "isAvailable": true
   },
