@@ -356,57 +356,94 @@ export default function AdminDashboard() {
 
   const handleSeedDefaultMenu = async () => {
     if (!token) return;
-    if (!confirm("Are you sure you want to seed the database with the default cafe menu items? This will create categories first if they don't exist in the database.")) return;
+    if (!confirm("Are you sure you want to RESET the database with the default menu? This will clear all existing items and categories and load the updated list.")) return;
     
     setSeedingMenu(true);
     try {
       const headers = { Authorization: `Bearer ${token}` };
       
-      // 1. Fetch existing categories
-      let categories: any[] = [];
+      // 1. Fetch and clear existing menu items and categories
+      let existingItems: any[] = [];
+      try {
+        const itemRes = await axios.get(`${API_BASE_URL}/menu`, { headers });
+        if (itemRes.data?.success && itemRes.data?.data) {
+          existingItems = itemRes.data.data;
+        }
+      } catch (err) {
+        console.warn("Failed to fetch menu items:", err);
+      }
+      
+      for (const item of existingItems) {
+        try {
+          await axios.delete(`${API_BASE_URL}/menu/${item._id || item.id}`, { headers });
+        } catch (err) {
+          console.warn("Failed to delete item:", item.name, err);
+        }
+      }
+
+      let existingCats: any[] = [];
       try {
         const catRes = await axios.get(`${API_BASE_URL}/categories`, { headers });
         if (catRes.data?.success && catRes.data?.data) {
-          categories = catRes.data.data;
+          existingCats = catRes.data.data;
         }
       } catch (err) {
-        console.warn("Failed to fetch existing categories, proceeding to create them:", err);
+        console.warn("Failed to fetch categories:", err);
       }
-      
-      // Map category slug to id
-      const categoryMap: { [key: string]: string } = {};
-      categories.forEach((cat) => {
-        categoryMap[cat.slug] = cat._id;
-      });
-      
-      // Categories definition
-      const categoriesToCreate = [
-        { name: "Coffee & Beverages", slug: "coffee", displayOrder: 1 },
-        { name: "Signature Mocktails", slug: "mocktails", displayOrder: 2 },
-        { name: "Burgers & Slides", slug: "burgers", displayOrder: 3 },
-        { name: "Stone-baked Pizza", slug: "pizza", displayOrder: 4 },
-        { name: "Gourmet Pasta", slug: "pasta", displayOrder: 5 },
-        { name: "Steaming Momos", slug: "momos", displayOrder: 6 },
-        { name: "Chinese Mains", slug: "chinese", displayOrder: 7 },
-        { name: "Desserts & Sweets", slug: "desserts", displayOrder: 8 },
-        { name: "Value Combos", slug: "combos", displayOrder: 9 }
-      ];
-      
-      // Create missing categories
-      for (const cat of categoriesToCreate) {
-        if (!categoryMap[cat.slug]) {
-          try {
-            const newCatRes = await axios.post(`${API_BASE_URL}/categories`, cat, { headers });
-            if (newCatRes.data?.success && newCatRes.data?.data) {
-              categoryMap[cat.slug] = newCatRes.data.data._id;
-            }
-          } catch (err) {
-            console.warn(`Category ${cat.slug} creation failed:`, err);
-          }
+
+      for (const cat of existingCats) {
+        try {
+          await axios.delete(`${API_BASE_URL}/categories/${cat._id || cat.id}`, { headers });
+        } catch (err) {
+          console.warn("Failed to delete category:", cat.name, err);
         }
       }
       
-      // 3. Seed menu items in parallel / sequential batches
+      // 2. Categories definition
+      const categoriesToCreate = [
+        { name: "Kadak Chai", slug: "kadak_chai", displayOrder: 1 },
+        { name: "Hot Coffee", slug: "hot_coffee", displayOrder: 2 },
+        { name: "Hot Milk", slug: "hot_milk", displayOrder: 3 },
+        { name: "Cold Coffee", slug: "cold_coffee", displayOrder: 4 },
+        { name: "Milk Shake", slug: "milk_shake", displayOrder: 5 },
+        { name: "Coolers", slug: "coolers", displayOrder: 6 },
+        { name: "Garlic Bread", slug: "garlic_bread", displayOrder: 7 },
+        { name: "Firangi French Fries", slug: "french_fries", displayOrder: 8 },
+        { name: "Burger Buffet", slug: "burgers", displayOrder: 9 },
+        { name: "Pristine Pizza", slug: "pizza", displayOrder: 10 },
+        { name: "Shahi Sandwich", slug: "sandwich", displayOrder: 11 },
+        { name: "Majestic Maggie", slug: "maggie", displayOrder: 12 },
+        { name: "Old Monk Special", slug: "special", displayOrder: 13 },
+        { name: "Magical Momos", slug: "momos", displayOrder: 14 },
+        { name: "Aakhri Pasta", slug: "pasta", displayOrder: 15 },
+        { name: "Noodles", slug: "noodles", displayOrder: 16 },
+        { name: "Fried Rice", slug: "fried_rice", displayOrder: 17 },
+        { name: "Rolls", slug: "rolls", displayOrder: 18 },
+        { name: "Chinese Snacks", slug: "chinese_snacks", displayOrder: 19 },
+        { name: "Soup", slug: "soup", displayOrder: 20 },
+        { name: "Desi Paneer", slug: "desi_paneer", displayOrder: 21 },
+        { name: "Marvellous Mushroom", slug: "mushroom", displayOrder: 22 },
+        { name: "Roti & Rice", slug: "roti_rice", displayOrder: 23 },
+        { name: "Pav", slug: "pav", displayOrder: 24 },
+        { name: "South Indian", slug: "south_indian", displayOrder: 25 },
+        { name: "Dessert Dhamaka", slug: "desserts", displayOrder: 26 }
+      ];
+      
+      const categoryMap: { [key: string]: string } = {};
+      
+      // Create categories
+      for (const cat of categoriesToCreate) {
+        try {
+          const newCatRes = await axios.post(`${API_BASE_URL}/categories`, cat, { headers });
+          if (newCatRes.data?.success && newCatRes.data?.data) {
+            categoryMap[cat.slug] = newCatRes.data.data._id;
+          }
+        } catch (err) {
+          console.warn(`Category ${cat.slug} creation failed:`, err);
+        }
+      }
+      
+      // 3. Seed menu items
       let count = 0;
       for (const item of fallbackMenuItems) {
         const categoryId = categoryMap[item.category];
@@ -432,7 +469,7 @@ export default function AdminDashboard() {
         }
       }
       
-      alert(`Seeded ${count} menu items successfully!`);
+      alert(`Database Reset & Seeded ${count} menu items successfully!`);
       loadDashboardData();
     } catch (err) {
       console.error("Error seeding menu:", err);
@@ -1186,13 +1223,34 @@ export default function AdminDashboard() {
             <div className="space-y-6">
               <div className="flex items-center justify-between border-b border-secondary/10 pb-3">
                 <h2 className="font-serif text-xl font-bold text-foreground">Menu Catalogue</h2>
-                <button
-                  onClick={() => openMenuModal("add")}
-                  className="px-3 py-1.5 bg-secondary text-white hover:bg-secondary-dark rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-pointer shadow-sm font-sans"
-                >
-                  <PlusCircle className="w-3.5 h-3.5" />
-                      <span>Add New Item</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleSeedDefaultMenu}
+                    disabled={seedingMenu}
+                    className={`px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-pointer shadow-sm font-sans transition-all ${
+                      seedingMenu ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    {seedingMenu ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        <span>Syncing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        <span>Reset & Sync Menu</span>
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => openMenuModal("add")}
+                    className="px-3 py-1.5 bg-secondary text-white hover:bg-secondary-dark rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-pointer shadow-sm font-sans"
+                  >
+                    <PlusCircle className="w-3.5 h-3.5" />
+                    <span>Add New Item</span>
+                  </button>
+                </div>
               </div>
 
               {/* Items List */}
