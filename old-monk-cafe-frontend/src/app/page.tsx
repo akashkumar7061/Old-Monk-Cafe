@@ -95,16 +95,13 @@ export default function Home() {
   }, []);
 
   const galleryItems = [
-    { cat: "interior", title: "Cafe Exterior at Night", img: "/images/cafe_exterior_night.jpg" },
-    { cat: "interior", title: "Cozy Seating & Wall Art", img: "/images/cafe_interior_buddha.jpg" },
+    { cat: "interior", title: "Cafe Exterior at Night", img: "/images/real_cafe_exterior.jpg" },
+    { cat: "interior", title: "Cozy Seating & Wall Art", img: "/images/real_cafe_interior_buddha.jpg" },
     { cat: "interior", title: "Warm Cafe Ambience", img: "/images/cafe_interior_view.jpg" },
     { cat: "interior", title: "Cashier Counter & Logo", img: "/images/cafe_counter_close.jpg" },
-    { cat: "coffee", title: "Pour Over Latte Art", img: "/images/coffee_art.png" },
-    { cat: "drinks", title: "Blue Lagoon Mocktail", img: "/images/premium_mocktail.png" },
-    { cat: "food", title: "Premium Paneer Burger", img: "/images/old_monk_burger.png" },
-    { cat: "food", title: "Artisanal Pizza", img: "/images/old_monk_pizza.png" },
-    { cat: "food", title: "Pan-Fried Momos", img: "/images/old_monk_momos.png" },
-    { cat: "drinks", title: "Virgin Mojito Refresh", img: "/images/old_monk_mojito.png" },
+    { cat: "food", title: "Signature Paneer Burger", img: "/images/real_cafe_burger.jpg" },
+    { cat: "food", title: "Double Decker Burger", img: "/images/real_cafe_burger_2.jpg" },
+    { cat: "food", title: "Crispy Palak Patta Platter", img: "/images/real_cafe_chaat.jpg" },
   ];
 
   const filteredGallery = activeGalleryCat === "all" 
@@ -286,24 +283,24 @@ export default function Home() {
             <div className="absolute inset-0 bg-secondary/5 rounded-full blur-3xl -z-10 w-72 h-72 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
             <div className="space-y-4">
               <img
-                src="/images/cafe_interior_view.jpg"
-                alt="Cozy interior view of Old Monk Cafe"
+                src="/images/real_cafe_chaat.jpg"
+                alt="Crispy Palak Patta Platter at Old Monk Cafe"
                 className="rounded-xl h-60 sm:h-72 w-full object-cover border border-secondary/10 hover:border-secondary/20 transition-colors duration-300 shadow-sm"
               />
               <img
-                src="/images/cafe_counter_close.jpg"
-                alt="Cashier counter of Old Monk Cafe"
+                src="/images/real_cafe_burger.jpg"
+                alt="Signature paneer burger of Old Monk Cafe"
                 className="rounded-xl h-44 sm:h-52 w-full object-cover border border-secondary/10 hover:border-secondary/20 transition-colors duration-300 shadow-sm"
               />
             </div>
             <div className="space-y-4 pt-8">
               <img
-                src="/images/cafe_interior_buddha.jpg"
+                src="/images/real_cafe_interior_buddha.jpg"
                 alt="Interior wall art seating at Old Monk Cafe"
                 className="rounded-xl h-44 sm:h-52 w-full object-cover border border-secondary/10 hover:border-secondary/20 transition-colors duration-300 shadow-sm"
               />
               <img
-                src="/images/cafe_exterior_night.jpg"
+                src="/images/real_cafe_exterior.jpg"
                 alt="Exterior night view of Old Monk Cafe"
                 className="rounded-xl h-60 sm:h-72 w-full object-cover border border-secondary/10 hover:border-secondary/20 transition-colors duration-300 shadow-sm"
               />

@@ -8,7 +8,7 @@ const { uploadBufferToCloudinary, deleteFromCloudinary } = require('../config/cl
 // @route   PATCH /api/v1/users/me
 // @access  Private
 const updateMe = asyncHandler(async (req, res) => {
-  const allowedFields = ['name', 'phone', 'addresses'];
+  const allowedFields = ['name', 'phone', 'addresses', 'email'];
   const updates = {};
   allowedFields.forEach((field) => {
     if (req.body[field] !== undefined) updates[field] = req.body[field];

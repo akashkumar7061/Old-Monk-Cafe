@@ -125,11 +125,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const isNetworkError = !err.response;
       if (isNetworkError) {
         // Fallback for offline testing / demo
-        if (email === "admin@oldmonkcafe.com" && password === "Admin@12345") {
+        if (email === "Swastikpurefoods25@gmail.com" && password === "Admin@12345") {
           const mockAdmin: User = {
             id: "mock-admin-id",
             name: "Old Monk Admin (Offline)",
-            email: "admin@oldmonkcafe.com",
+            email: "Swastikpurefoods25@gmail.com",
             phone: "9296935757",
             role: "admin",
           };

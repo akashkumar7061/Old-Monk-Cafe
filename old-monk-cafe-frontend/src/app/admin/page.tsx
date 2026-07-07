@@ -57,6 +57,7 @@ export default function AdminDashboard() {
 
   const [adminName, setAdminName] = useState("");
   const [adminPhone, setAdminPhone] = useState("");
+  const [adminEmail, setAdminEmail] = useState("");
   const [profileSuccess, setProfileSuccess] = useState("");
   const [profileError, setProfileError] = useState("");
   const [profileLoading, setProfileLoading] = useState(false);
@@ -65,6 +66,7 @@ export default function AdminDashboard() {
     if (user) {
       setAdminName(user.name);
       setAdminPhone(user.phone || "");
+      setAdminEmail(user.email || "");
     }
   }, [user]);
   const [authLoading, setAuthLoading] = useState(false);
@@ -261,12 +263,12 @@ export default function AdminDashboard() {
     try {
       const res = await axios.patch(
         `${API_BASE_URL}/users/me`,
-        { name: adminName, phone: adminPhone },
+        { name: adminName, phone: adminPhone, email: adminEmail },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.data?.success && res.data?.data) {
         setProfileSuccess("Admin profile updated successfully!");
-        const updatedUser = { ...user, name: adminName, phone: adminPhone };
+        const updatedUser = { ...user, name: adminName, phone: adminPhone, email: adminEmail };
         localStorage.setItem("omc_user", JSON.stringify(updatedUser));
       }
     } catch (err: any) {
@@ -599,7 +601,7 @@ export default function AdminDashboard() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="e.g. admin@oldmonkcafe.com"
+                  placeholder="e.g. Swastikpurefoods25@gmail.com"
                   className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary"
                 />
               </div>
@@ -1445,6 +1447,17 @@ export default function AdminDashboard() {
                         value={adminPhone}
                         onChange={(e) => setAdminPhone(e.target.value)}
                         placeholder="e.g. 92969 35757"
+                        className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] uppercase tracking-widest text-foreground/50 font-bold">Admin Contact Email</label>
+                      <input
+                        type="email"
+                        required
+                        value={adminEmail}
+                        onChange={(e) => setAdminEmail(e.target.value)}
+                        placeholder="e.g. Swastikpurefoods25@gmail.com"
                         className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary"
                       />
                     </div>
