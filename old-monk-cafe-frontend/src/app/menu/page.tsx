@@ -246,8 +246,17 @@ export default function Menu() {
                   return matchesCategory && matchesSearch;
                 });
 
+                // Sort items: ascending order by price, with "Add-on" / "Addon" items always placed last
+                const sortedItems = [...itemsInCategory].sort((a, b) => {
+                  const isAddonA = a.name.toLowerCase().includes("add-on") || a.name.toLowerCase().includes("addon");
+                  const isAddonB = b.name.toLowerCase().includes("add-on") || b.name.toLowerCase().includes("addon");
+                  if (isAddonA && !isAddonB) return 1;
+                  if (!isAddonA && isAddonB) return -1;
+                  return a.price - b.price;
+                });
+
                 // If no items match the search query in this category, don't render the category card
-                if (itemsInCategory.length === 0) return null;
+                if (sortedItems.length === 0) return null;
 
                 return (
                   <div 
@@ -264,13 +273,13 @@ export default function Menu() {
                         </h2>
                       </div>
                       <span className="text-xs text-foreground/50 uppercase tracking-widest font-medium">
-                        {itemsInCategory.length} {itemsInCategory.length === 1 ? "Item" : "Items"}
+                        {sortedItems.length} {sortedItems.length === 1 ? "Item" : "Items"}
                       </span>
                     </div>
 
                     {/* Category Menu Items Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {itemsInCategory.map((item) => {
+                      {sortedItems.map((item) => {
                         const imageUrl = item.image
                           ? typeof item.image === "string"
                             ? item.image

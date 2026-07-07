@@ -1290,6 +1290,14 @@ export default function AdminDashboard() {
                       return itemCatId === cat._id || itemCatId === cat.id;
                     });
 
+                    const sortedItems = [...itemsInCat].sort((a, b) => {
+                      const isAddonA = a.name.toLowerCase().includes("add-on") || a.name.toLowerCase().includes("addon");
+                      const isAddonB = b.name.toLowerCase().includes("add-on") || b.name.toLowerCase().includes("addon");
+                      if (isAddonA && !isAddonB) return 1;
+                      if (!isAddonA && isAddonB) return -1;
+                      return a.price - b.price;
+                    });
+
                     return (
                       <div key={cat._id} className="space-y-4">
                         {/* Category Subheader with dedicated +Add button */}
@@ -1297,7 +1305,7 @@ export default function AdminDashboard() {
                           <div className="flex items-center gap-2">
                             <h3 className="font-serif text-sm font-bold text-secondary uppercase tracking-wider">{cat.name}</h3>
                             <span className="text-[10px] font-sans font-bold bg-secondary/10 text-secondary px-2 py-0.5 rounded-full border border-secondary/10">
-                              {itemsInCat.length} {itemsInCat.length === 1 ? "Item" : "Items"}
+                              {sortedItems.length} {sortedItems.length === 1 ? "Item" : "Items"}
                             </span>
                           </div>
                           <button
@@ -1310,11 +1318,11 @@ export default function AdminDashboard() {
                         </div>
 
                         {/* Items Grid */}
-                        {itemsInCat.length === 0 ? (
+                        {sortedItems.length === 0 ? (
                           <p className="text-xs text-foreground/45 italic pl-4">No items in this category yet. Click "+ Add to {cat.name}" to create one.</p>
                         ) : (
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pl-2">
-                            {itemsInCat.map((item) => (
+                            {sortedItems.map((item) => (
                               <div key={item._id} className="bg-primary-dark/70 p-4 rounded-xl border border-secondary/10 flex gap-4 items-start font-sans shadow-sm hover:border-secondary/25 transition-all">
                                 <img
                                   src={(typeof item.image === "string" ? item.image : item.image?.url) || "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=200"}
