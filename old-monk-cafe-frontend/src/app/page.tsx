@@ -187,7 +187,7 @@ export default function Home() {
           <img
             src="/images/real_cafe_counter.jpg"
             alt="Old Monk Cafe Cashier Counter"
-            className="w-full h-full object-cover scale-105 filter blur-[3px]"
+            className="w-full h-full object-cover scale-102 filter blur-[1px]"
           />
         </div>
 
