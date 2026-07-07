@@ -63,8 +63,28 @@ const syncDatabaseDirectly = async (req, res) => {
     
     // 2. Fetch existing menu items
     const existingItems = await MenuItem.find({});
-    const existingNamesSet = new Set(existingItems.map(item => item.name.toLowerCase().trim()));
+    const existingItemsMap = {};
+    existingItems.forEach(item => {
+      existingItemsMap[item.name.toLowerCase().trim()] = item;
+    });
     
+    // Auto-update images of existing items to direct cached Unsplash URLs
+    let updatedCount = 0;
+    for (const item of menuItemsToSeed) {
+      const existingItem = existingItemsMap[item.name.toLowerCase().trim()];
+      if (existingItem) {
+        if (existingItem.image?.url !== item.image) {
+          existingItem.image = { url: item.image, publicId: "" };
+          await existingItem.save();
+          updatedCount++;
+        }
+      }
+    }
+    if (updatedCount > 0) {
+      console.log(`Updated images for ${updatedCount} existing items.`);
+    }
+    
+    const existingNamesSet = new Set(existingItems.map(item => item.name.toLowerCase().trim()));
     const itemsToInsert = [];
     menuItemsToSeed.forEach(item => {
       if (!existingNamesSet.has(item.name.toLowerCase().trim())) {
