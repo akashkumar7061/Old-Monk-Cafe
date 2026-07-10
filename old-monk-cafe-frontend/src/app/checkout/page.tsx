@@ -16,7 +16,8 @@ export default function Checkout() {
   const { user, token, isLoading } = useAuth();
 
   const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<"COD" | "RAZORPAY">("COD");
+  const [paymentMethod, setPaymentMethod] = useState<"COD" | "ONLINE_QR">("COD");
+  const [utrNumber, setUtrNumber] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -66,6 +67,7 @@ export default function Checkout() {
         })),
         orderType,
         paymentMethod,
+        transactionId: paymentMethod === "ONLINE_QR" ? utrNumber : undefined,
         deliveryAddress: orderType === "delivery" ? formData.deliveryAddress : undefined,
         tableNumber: orderType === "dine_in" ? formData.tableNumber : undefined,
         guestDetails: user ? undefined : {
@@ -82,11 +84,10 @@ export default function Checkout() {
         const orderData = res.data.data.order || res.data.data;
         const orderId = orderData._id || orderData.id;
         
-        if (paymentMethod === "RAZORPAY") {
-          // Simulate Razorpay payment processing overlay
+        if (paymentMethod === "ONLINE_QR") {
           setTimeout(() => {
             clearCart();
-            router.push(`/orders/track/${orderId}?payment=success`);
+            router.push(`/orders/track/${orderId}?payment=success&utr=${utrNumber}`);
           }, 1500);
         } else {
           clearCart();
@@ -98,7 +99,7 @@ export default function Checkout() {
       const mockOrderId = "mock-order-" + Math.floor(100000 + Math.random() * 900000);
       setTimeout(() => {
         clearCart();
-        router.push(`/orders/track/${mockOrderId}`);
+        router.push(`/orders/track/${mockOrderId}${paymentMethod === "ONLINE_QR" ? `?payment=success&utr=${utrNumber}` : ""}`);
       }, 1000);
     }
   };
@@ -268,26 +269,83 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                {/* Razorpay Option */}
+                {/* UPI QR Scan & Pay Option */}
                 <div
-                  onClick={() => setPaymentMethod("RAZORPAY")}
+                  onClick={() => setPaymentMethod("ONLINE_QR")}
                   className={`border rounded-xl p-4 flex items-center gap-3 cursor-pointer transition-all bg-background ${
-                    paymentMethod === "RAZORPAY"
+                    paymentMethod === "ONLINE_QR"
                       ? "border-secondary bg-secondary/5 shadow-sm"
                       : "border-secondary/15 hover:border-secondary/25"
                   }`}
                 >
                   <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
-                    paymentMethod === "RAZORPAY" ? "border-secondary" : "border-secondary/35"
+                    paymentMethod === "ONLINE_QR" ? "border-secondary" : "border-secondary/35"
                   }`}>
-                    {paymentMethod === "RAZORPAY" && <div className="w-2.5 h-2.5 rounded-full bg-secondary" />}
+                    {paymentMethod === "ONLINE_QR" && <div className="w-2.5 h-2.5 rounded-full bg-secondary" />}
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-foreground">Razorpay (Online UPI/Card)</p>
-                    <p className="text-[10px] text-foreground/50 mt-0.5 font-sans">UPI, NetBanking, Visa, MasterCard</p>
+                    <p className="text-sm font-bold text-foreground">Scan & Pay (UPI QR)</p>
+                    <p className="text-[10px] text-foreground/50 mt-0.5 font-sans">GPay, PhonePe, Paytm, BHIM</p>
                   </div>
                 </div>
               </div>
+
+              {/* Dynamic QR Code Section */}
+              {paymentMethod === "ONLINE_QR" && (
+                <div className="bg-secondary/5 border border-secondary/15 rounded-xl p-5 space-y-4 animate-fadeIn">
+                  <div className="text-center space-y-1">
+                    <span className="text-xs uppercase tracking-widest text-secondary font-bold">Instant UPI Payment</span>
+                    <p className="text-xs text-foreground/70">Scan QR code using any UPI app. The amount is pre-filled.</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center justify-center space-y-2">
+                    <div className="bg-white p-3 rounded-xl border border-secondary/10 shadow-sm">
+                      <img 
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(
+                          `upi://pay?pa=SBIBHIM.INSTANT26815181221563031@sbipay&pn=SWASTIK PURE FOODS&am=${finalTotal}&cu=INR`
+                        )}`}
+                        alt="UPI Payment QR Code"
+                        className="w-40 h-40"
+                      />
+                    </div>
+                    
+                    {/* Deep link for mobile devices */}
+                    <a 
+                      href={`upi://pay?pa=SBIBHIM.INSTANT26815181221563031@sbipay&pn=SWASTIK PURE FOODS&am=${finalTotal}&cu=INR`}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary hover:underline mt-1"
+                    >
+                      <span>📱 Mobile: Tap here to pay directly</span>
+                    </a>
+                  </div>
+
+                  <div className="border-t border-secondary/10 pt-3 space-y-2.5">
+                    <div className="grid grid-cols-2 text-xs text-foreground/70 gap-y-1 bg-background/50 p-2.5 rounded-lg border border-secondary/5">
+                      <span className="font-medium">Payee Name:</span>
+                      <span className="font-semibold text-foreground text-right">SWASTIK PURE FOODS</span>
+                      <span className="font-medium">Amount:</span>
+                      <span className="font-bold text-secondary text-right">₹{finalTotal}</span>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] uppercase tracking-widest text-foreground/50 font-bold block">
+                        12-Digit UPI Transaction ID / UTR
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        pattern="[0-9]{12}"
+                        value={utrNumber}
+                        onChange={(e) => setUtrNumber(e.target.value.replace(/\D/g, '').substring(0, 12))}
+                        placeholder="Enter 12-digit UTR (e.g. 306512345678)"
+                        className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary text-center tracking-widest font-mono font-bold"
+                      />
+                      <p className="text-[9px] text-foreground/45 leading-relaxed">
+                        Required: Enter the 12-digit UPI UTR number from your payment receipt to help us verify your transaction.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Security Note */}
