@@ -17,7 +17,6 @@ export default function Checkout() {
 
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"COD" | "ONLINE_QR">("COD");
-  const [utrNumber, setUtrNumber] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -67,7 +66,7 @@ export default function Checkout() {
         })),
         orderType,
         paymentMethod,
-        transactionId: paymentMethod === "ONLINE_QR" ? utrNumber : undefined,
+        transactionId: paymentMethod === "ONLINE_QR" ? "AUTOMATIC_QR" : undefined,
         deliveryAddress: orderType === "delivery" ? formData.deliveryAddress : undefined,
         tableNumber: orderType === "dine_in" ? formData.tableNumber : undefined,
         guestDetails: user ? undefined : {
@@ -87,7 +86,7 @@ export default function Checkout() {
         if (paymentMethod === "ONLINE_QR") {
           setTimeout(() => {
             clearCart();
-            router.push(`/orders/track/${orderId}?payment=success&utr=${utrNumber}`);
+            router.push(`/orders/track/${orderId}?payment=success`);
           }, 1500);
         } else {
           clearCart();
@@ -99,7 +98,7 @@ export default function Checkout() {
       const mockOrderId = "mock-order-" + Math.floor(100000 + Math.random() * 900000);
       setTimeout(() => {
         clearCart();
-        router.push(`/orders/track/${mockOrderId}${paymentMethod === "ONLINE_QR" ? `?payment=success&utr=${utrNumber}` : ""}`);
+        router.push(`/orders/track/${mockOrderId}${paymentMethod === "ONLINE_QR" ? "?payment=success" : ""}`);
       }, 1000);
     }
   };
@@ -324,24 +323,6 @@ export default function Checkout() {
                       <span className="font-semibold text-foreground text-right">SWASTIK PURE FOODS</span>
                       <span className="font-medium">Amount:</span>
                       <span className="font-bold text-secondary text-right">₹{finalTotal}</span>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="text-[10px] uppercase tracking-widest text-foreground/50 font-bold block">
-                        12-Digit UPI Transaction ID / UTR
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        pattern="[0-9]{12}"
-                        value={utrNumber}
-                        onChange={(e) => setUtrNumber(e.target.value.replace(/\D/g, '').substring(0, 12))}
-                        placeholder="Enter 12-digit UTR (e.g. 306512345678)"
-                        className="w-full bg-background border border-secondary/20 rounded px-3 py-2 text-sm text-foreground focus:outline-none focus:border-secondary text-center tracking-widest font-mono font-bold"
-                      />
-                      <p className="text-[9px] text-foreground/45 leading-relaxed">
-                        Required: Enter the 12-digit UPI UTR number from your payment receipt to help us verify your transaction.
-                      </p>
                     </div>
                   </div>
                 </div>
