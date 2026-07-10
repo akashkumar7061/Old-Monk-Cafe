@@ -35,6 +35,7 @@ export default function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const [brokenImages, setBrokenImages] = useState<Record<string, string>>({});
 
   const { cart, addToCart, updateQuantity } = useCart();
   const { user } = useAuth();
@@ -286,6 +287,8 @@ export default function Menu() {
                             : (item.image as any).url || ""
                           : "";
 
+                        const currentSrc = brokenImages[item.id] || imageUrl || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=400";
+
                         const cartItem = cart.find((i) => i.id === item.id);
                         const quantityInCart = cartItem ? cartItem.quantity : 0;
                         
@@ -302,10 +305,43 @@ export default function Menu() {
                             {/* Small food image */}
                             <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden shrink-0 bg-black/5 dark:bg-black/20">
                               <img 
-                                src={imageUrl || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=400"} 
+                                src={currentSrc} 
                                 alt={item.name} 
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
                                 loading="lazy" 
+                                onError={() => {
+                                  const fallbacks: Record<string, string> = {
+                                    "kadak_chai": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "hot_coffee": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "hot_milk": "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "cold_coffee": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "milk_shake": "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "coolers": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "garlic_bread": "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "french_fries": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "burgers": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "pizza": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "sandwich": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "maggie": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "special": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "momos": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "pasta": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "noodles": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "fried_rice": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "rolls": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "chinese_snacks": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "soup": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "desi_paneer": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "mushroom": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "roti_rice": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "pav": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "south_indian": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400&h=300",
+                                    "desserts": "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&q=80&w=400&h=300"
+                                  };
+                                  const category = item.category || "";
+                                  const fallbackSrc = fallbacks[category] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=400";
+                                  setBrokenImages(prev => ({ ...prev, [item.id]: fallbackSrc }));
+                                }}
                               />
                               {/* Optional Popular Badge */}
                               {isPopular && item.isAvailable && (
