@@ -9,6 +9,7 @@ const {
   forgotPassword,
   resetPassword,
   updatePassword,
+  resetPasswordDirect,
 } = require('../controllers/authController');
 const { protect } = require('../middleware/auth');
 const validateRequest = require('../middleware/validateRequest');
@@ -27,6 +28,7 @@ router.post('/logout', protect, logout);
 router.get('/me', protect, getMe);
 router.post('/forgot-password', authLimiter, forgotPasswordValidator, validateRequest, forgotPassword);
 router.patch('/reset-password/:token', resetPasswordValidator, validateRequest, resetPassword);
+router.post('/reset-password-direct', authLimiter, resetPasswordDirect);
 router.patch('/update-password', protect, updatePasswordValidator, validateRequest, updatePassword);
 
 module.exports = router;

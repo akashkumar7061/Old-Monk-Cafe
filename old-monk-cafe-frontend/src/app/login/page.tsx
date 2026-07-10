@@ -138,7 +138,7 @@ export default function Login() {
                 {isLoginMode && (
                   <button
                     type="button"
-                    onClick={() => alert("Please contact the administrator to reset your password.")}
+                    onClick={() => router.push("/forgot-password")}
                     className="text-[10px] uppercase text-secondary hover:underline font-bold"
                   >
                     Forgot?

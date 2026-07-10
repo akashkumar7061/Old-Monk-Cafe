@@ -121,6 +121,37 @@ const updatePassword = asyncHandler(async (req, res) => {
   new ApiResponse(200, null, 'Password updated successfully').send(res);
 });
 
+// @desc    Directly reset password using matching email and phone verification
+// @route   POST /api/v1/auth/reset-password-direct
+// @access  Public
+const resetPasswordDirect = asyncHandler(async (req, res) => {
+  const { email, phone, newPassword } = req.body;
+
+  if (!email || !phone || !newPassword) {
+    throw ApiError.badRequest('Email, phone and new password are required');
+  }
+
+  const user = await User.findOne({ email: email.toLowerCase().trim() });
+  
+  if (!user) {
+    throw ApiError.notFound('No user found with this email');
+  }
+
+  const cleanInputPhone = phone.replace(/\D/g, '');
+  const cleanUserPhone = user.phone.replace(/\D/g, '');
+
+  if (!cleanUserPhone.endsWith(cleanInputPhone) && !cleanInputPhone.endsWith(cleanUserPhone)) {
+    throw ApiError.badRequest('Phone number verification failed');
+  }
+
+  user.password = newPassword;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
+
+  new ApiResponse(200, null, 'Password reset successful').send(res);
+});
+
 module.exports = {
   register,
   login,
@@ -129,4 +160,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   updatePassword,
+  resetPasswordDirect,
 };
