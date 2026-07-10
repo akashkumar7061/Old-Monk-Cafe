@@ -5,7 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { Coffee, Mail, Lock, User as UserIcon, Phone, AlertCircle } from "lucide-react";
+import { Coffee, Mail, Lock, User as UserIcon, Phone, AlertCircle, Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
   const router = useRouter();
@@ -14,6 +14,7 @@ export default function Login() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -147,13 +148,20 @@ export default function Login() {
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/35" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="••••••••"
-                  className="w-full bg-[#FAF9F6] border border-secondary/20 rounded-lg pl-10 pr-3 py-2.5 text-sm text-foreground focus:outline-none focus:border-secondary"
+                  className="w-full bg-[#FAF9F6] border border-secondary/20 rounded-lg pl-10 pr-10 py-2.5 text-sm text-foreground focus:outline-none focus:border-secondary"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-foreground/35 hover:text-secondary cursor-pointer focus:outline-none"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
             </div>
 
