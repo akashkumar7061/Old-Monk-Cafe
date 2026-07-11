@@ -834,7 +834,7 @@ const menuItemsToSeed = [
     "price": 129,
     "description": "Warm flatbread wrap loaded with delicious spiced filling. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "rolls",
-    "image": "https://images.unsplash.com/photo-1669340781012-ae89fbac9fc3?auto=format&fit=crop&q=80&w=400&h=300&sig=77",
+    "image": "/images/paneer_chilli_roll.jpg",
     "isVeg": true
   },
   {
