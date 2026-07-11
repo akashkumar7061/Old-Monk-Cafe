@@ -762,7 +762,7 @@ const menuItemsToSeed = [
     "price": 139,
     "description": "Steamed thin wrappers loaded with signature delicious fillings. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "momos",
-    "image": "https://images.unsplash.com/photo-1781332146569-9c5093bc2ca5?auto=format&fit=crop&q=80&w=400&h=300&sig=69",
+    "image": "/images/paneer_steam_momos.jpg",
     "isVeg": true
   },
   {
@@ -771,7 +771,7 @@ const menuItemsToSeed = [
     "price": 149,
     "description": "Steamed thin wrappers loaded with signature delicious fillings. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "momos",
-    "image": "https://images.unsplash.com/photo-1589047133481-02b4a5327d89?auto=format&fit=crop&q=80&w=400&h=300&sig=70",
+    "image": "/images/paneer_fried_momos.jpg",
     "isVeg": true
   },
   {
@@ -780,7 +780,7 @@ const menuItemsToSeed = [
     "price": 149,
     "description": "Steamed thin wrappers loaded with signature delicious fillings. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "momos",
-    "image": "https://images.unsplash.com/photo-1630748663209-c4a490505198?auto=format&fit=crop&q=80&w=400&h=300&sig=71",
+    "image": "/images/corn_cheese_momos.jpg",
     "isVeg": true
   },
   {
