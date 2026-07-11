@@ -150,7 +150,7 @@ const menuItemsToSeed = [
     "price": 30,
     "description": "Our signature special spiced tea, slow-brewed to rich creamy perfection. Freshly handcrafted with authentic premium ingredients.",
     "categorySlug": "kadak_chai",
-    "image": "https://images.unsplash.com/photo-1575739263357-efe1118edb47?auto=format&fit=crop&q=80&w=400&h=300&sig=2",
+    "image": "/images/old_monk_special_chai.jpg",
     "isVeg": true
   },
   {
