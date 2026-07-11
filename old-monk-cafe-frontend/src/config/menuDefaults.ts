@@ -837,7 +837,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 159,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1559631526-5716df3cfacd?auto=format&fit=crop&q=80&w=400&h=300&sig=83",
+    "image": "/images/crispy_baby_corn.jpg",
     "isVeg": true,
     "isAvailable": true
   },
