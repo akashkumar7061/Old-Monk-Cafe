@@ -1050,7 +1050,7 @@ const menuItemsToSeed = [
     "price": 199,
     "description": "Gourmet button mushrooms slow-cooked in aromatic spices. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "mushroom",
-    "image": "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&q=80&w=400&h=300&sig=101",
+    "image": "/images/mushroom_matar_masala.jpg",
     "isVeg": true
   },
   {
@@ -1059,7 +1059,7 @@ const menuItemsToSeed = [
     "price": 229,
     "description": "Gourmet button mushrooms slow-cooked in aromatic spices. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "mushroom",
-    "image": "https://images.unsplash.com/photo-1597701655287-2ea251d9c447?auto=format&fit=crop&q=80&w=400&h=300&sig=102",
+    "image": "/images/mushroom_do_pyaza.jpg",
     "isVeg": true
   },
   {
@@ -1077,7 +1077,7 @@ const menuItemsToSeed = [
     "price": 259,
     "description": "Gourmet button mushrooms slow-cooked in aromatic spices. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "mushroom",
-    "image": "https://images.unsplash.com/photo-1624968814155-236efede1cec?auto=format&fit=crop&q=80&w=400&h=300&sig=104",
+    "image": "/images/mushroom_kadai.jpg",
     "isVeg": true
   },
   {
@@ -1113,7 +1113,7 @@ const menuItemsToSeed = [
     "price": 89,
     "description": "Fresh hot tawa bread or premium long grain steam rice. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "roti_rice",
-    "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=400&h=300&sig=108",
+    "image": "/images/steam_rice.jpg",
     "isVeg": true
   },
   {
@@ -1122,7 +1122,7 @@ const menuItemsToSeed = [
     "price": 99,
     "description": "Fresh hot tawa bread or premium long grain steam rice. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "roti_rice",
-    "image": "https://images.unsplash.com/photo-1647577931985-e0c3e8fb815c?auto=format&fit=crop&q=80&w=400&h=300&sig=109",
+    "image": "/images/jeera_rice.jpg",
     "isVeg": true
   },
   {
