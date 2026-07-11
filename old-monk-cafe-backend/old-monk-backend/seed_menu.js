@@ -789,7 +789,7 @@ const menuItemsToSeed = [
     "price": 159,
     "description": "Steamed thin wrappers loaded with signature delicious fillings. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "momos",
-    "image": "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&q=80&w=400&h=300&sig=72",
+    "image": "/images/kurkure_momos.jpg",
     "isVeg": true
   },
   {
