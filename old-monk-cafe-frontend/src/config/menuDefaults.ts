@@ -1107,7 +1107,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 119,
     "description": "Fresh hot tawa bread or premium long grain steam rice. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "roti_rice",
-    "image": "https://images.unsplash.com/photo-1708782343717-be4ea260249a?auto=format&fit=crop&q=80&w=400&h=300&sig=110",
+    "image": "/images/dal_fry.jpg",
     "isVeg": true,
     "isAvailable": true
   },
