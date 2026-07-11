@@ -897,7 +897,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 189,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&q=80&w=400&h=300&sig=89",
+    "image": "/images/mushroom_chilli_gravy.jpg",
     "isVeg": true,
     "isAvailable": true
   },
@@ -907,7 +907,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 189,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1565310022174-df1ff17791e1?auto=format&fit=crop&q=80&w=400&h=300&sig=90",
+    "image": "/images/paneer_manchurian_gravy.jpg",
     "isVeg": true,
     "isAvailable": true
   },
@@ -917,7 +917,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 199,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1596560981701-bfadc91c47ce?auto=format&fit=crop&q=80&w=400&h=300&sig=91",
+    "image": "/images/paneer_65_dry.jpg",
     "isVeg": true,
     "isAvailable": true
   },
@@ -927,7 +927,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 209,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&q=80&w=400&h=300&sig=92",
+    "image": "/images/chilli_paneer_gravy.jpg",
     "isVeg": true,
     "isAvailable": true
   },
@@ -937,7 +937,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 219,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1658951870170-95e4744abdc4?auto=format&fit=crop&q=80&w=400&h=300&sig=93",
+    "image": "/images/paneer_65_gravy.jpg",
     "isVeg": true,
     "isAvailable": true
   },
@@ -997,7 +997,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 279,
     "description": "Smoky cottage cheese cubes cooked in rich tandoori gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "desi_paneer",
-    "image": "https://images.unsplash.com/photo-1690403160225-3db8cc8babd5?auto=format&fit=crop&q=80&w=400&h=300&sig=99",
+    "image": "/images/paneer_punjabi.jpg",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1387,7 +1387,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 99,
     "description": "Warm, creamy, and rich tomato soup served with crispy croutons. Handcrafted with signature Old Monk recipe.",
     "category": "soup",
-    "image": "https://images.unsplash.com/photo-1620791144170-8a443bf37a33?auto=format&fit=crop&q=80&w=400&h=300&sig=138",
+    "image": "/images/tomato_soup.jpg",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1407,7 +1407,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 119,
     "description": "Spicy and tangy Indo-Chinese soup served with crispy fried noodles. Handcrafted with signature Old Monk recipe.",
     "category": "soup",
-    "image": "https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?auto=format&fit=crop&q=80&w=400&h=300&sig=140",
+    "image": "/images/veg_manchow_soup.jpg",
     "isVeg": true,
     "isAvailable": true
   },
