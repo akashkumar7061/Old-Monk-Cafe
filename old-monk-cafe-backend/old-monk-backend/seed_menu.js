@@ -699,7 +699,7 @@ const menuItemsToSeed = [
     "price": 189,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "special",
-    "image": "https://images.unsplash.com/photo-1714256635057-2a831a5c7e8d?auto=format&fit=crop&q=80&w=400&h=300&sig=62",
+    "image": "/images/cheese_corn_ball.jpg",
     "isVeg": true
   },
   {
@@ -708,7 +708,7 @@ const menuItemsToSeed = [
     "price": 189,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "special",
-    "image": "https://images.unsplash.com/photo-1590005176489-db2e714711fc?auto=format&fit=crop&q=80&w=400&h=300&sig=63",
+    "image": "/images/baby_corn_finger.jpg",
     "isVeg": true
   },
   {
@@ -717,7 +717,7 @@ const menuItemsToSeed = [
     "price": 229,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "special",
-    "image": "https://images.unsplash.com/photo-1775717427684-75b886ebbfc9?auto=format&fit=crop&q=80&w=400&h=300&sig=64",
+    "image": "/images/cheese_paneer_dosa.jpg",
     "isVeg": true
   },
   {
@@ -726,7 +726,7 @@ const menuItemsToSeed = [
     "price": 239,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "special",
-    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&q=80&w=400&h=300&sig=65",
+    "image": "/images/bold_biryani.jpg",
     "isVeg": true
   },
   {
