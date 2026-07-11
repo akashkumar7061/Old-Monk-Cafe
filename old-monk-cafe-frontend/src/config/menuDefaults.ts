@@ -1367,7 +1367,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 189,
     "description": "A combination of fried rice, crispy fried noodles, and a rich spicy Chinese gravy. Handcrafted with signature Old Monk recipe.",
     "category": "fried_rice",
-    "image": "https://images.unsplash.com/photo-1647093953000-9065ed6f85ef?auto=format&fit=crop&q=80&w=400&h=300&sig=136",
+    "image": "/images/triple_fried_rice.jpg",
     "isVeg": true,
     "isAvailable": true
   },
@@ -1377,7 +1377,17 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 189,
     "description": "Fragrant and colorful rice tossed with curry powder, cashew nuts, and fresh veggies. Handcrafted with signature Old Monk recipe.",
     "category": "fried_rice",
-    "image": "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&q=80&w=400&h=300&sig=137",
+    "image": "/images/singapuri_fried_rice.jpg",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
+    "id": "item_garlic_fried_rice",
+    "name": "Garlic Fried Rice",
+    "price": 149,
+    "description": "Fragrant rice wok-tossed with aromatic golden garlic, fresh vegetables, and light seasoning. Handcrafted with signature Old Monk recipe.",
+    "category": "fried_rice",
+    "image": "/images/garlic_fried_rice.jpg",
     "isVeg": true,
     "isAvailable": true
   },
