@@ -654,7 +654,7 @@ const menuItemsToSeed = [
     "price": 119,
     "description": "Old school comfort noodles tossed in special spices. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "maggie",
-    "image": "https://images.unsplash.com/photo-1612927601601-6638404737ce?auto=format&fit=crop&q=80&w=400&h=300&sig=57",
+    "image": "/images/chatori_maggie.jpg",
     "isVeg": true
   },
   {
