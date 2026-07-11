@@ -867,7 +867,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 169,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1710091691780-c7eb0dc50cf8?auto=format&fit=crop&q=80&w=400&h=300&sig=86",
+    "image": "/images/chilli_paneer_dry.jpg",
     "isVeg": true,
     "isAvailable": true
   },
@@ -887,7 +887,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 179,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1761545832843-f551732204fb?auto=format&fit=crop&q=80&w=400&h=300&sig=88",
+    "image": "/images/mushroom_chilli_dry.jpg",
     "isVeg": true,
     "isAvailable": true
   },
