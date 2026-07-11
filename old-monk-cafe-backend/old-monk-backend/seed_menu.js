@@ -816,7 +816,7 @@ const menuItemsToSeed = [
     "price": 179,
     "description": "Tender penne pasta tossed in rich, flavorful gourmet sauce. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "pasta",
-    "image": "https://images.unsplash.com/photo-1708184528301-b0dad28dded5?auto=format&fit=crop&q=80&w=400&h=300&sig=75",
+    "image": "/images/pink_cheese_sauce_pasta.jpg",
     "isVeg": true
   },
   {
@@ -1185,7 +1185,7 @@ const menuItemsToSeed = [
     "price": 129,
     "description": "Traditional steamed rice cakes or crispy dosas served with sambhar. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "south_indian",
-    "image": "https://images.unsplash.com/photo-1725483990685-820291c0fca1?auto=format&fit=crop&q=80&w=400&h=300&sig=116",
+    "image": "/images/onion_dosa.jpg",
     "isVeg": true
   },
   {
@@ -1239,7 +1239,7 @@ const menuItemsToSeed = [
     "price": 69,
     "description": "Decadent sweet dessert to end your meal on a perfect note. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "desserts",
-    "image": "https://images.unsplash.com/photo-1666190092159-3171cf0fbb12?auto=format&fit=crop&q=80&w=400&h=300&sig=122",
+    "image": "/images/hot_gulab_jamun.jpg",
     "isVeg": true
   },
   {
@@ -1248,7 +1248,7 @@ const menuItemsToSeed = [
     "price": 109,
     "description": "Decadent sweet dessert to end your meal on a perfect note. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "desserts",
-    "image": "https://images.unsplash.com/photo-1707895601623-a0115d2bd91e?auto=format&fit=crop&q=80&w=400&h=300&sig=123",
+    "image": "/images/gulab_jamun_with_ice_cream.jpg",
     "isVeg": true
   },
   {
