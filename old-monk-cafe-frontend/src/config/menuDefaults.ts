@@ -552,6 +552,16 @@ export const fallbackMenuItems: MenuItemData[] = [
     "isAvailable": true
   },
   {
+    "id": "item_cheese_maggie",
+    "name": "Cheese Maggie",
+    "price": 99,
+    "description": "Old school comfort noodles loaded with premium melted cheese. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
+    "category": "maggie",
+    "image": "/images/cheese_maggie.jpg",
+    "isVeg": true,
+    "isAvailable": true
+  },
+  {
     "id": "item_50",
     "name": "Corn Cheese Maggie",
     "price": 109,
