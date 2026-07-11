@@ -861,7 +861,7 @@ const menuItemsToSeed = [
     "price": 139,
     "description": "Spicy wok-tossed indo-chinese appetizer, cooked dry or gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "chinese_snacks",
-    "image": "https://images.unsplash.com/photo-1708771862265-f54741c65a89?auto=format&fit=crop&q=80&w=400&h=300&sig=80",
+    "image": "/images/chilli_potato.jpg",
     "isVeg": true
   },
   {
