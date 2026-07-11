@@ -213,7 +213,7 @@ const menuItemsToSeed = [
     "price": 89,
     "description": "Classic hot milk blend, comforting and healthy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "hot_milk",
-    "image": "https://images.unsplash.com/photo-1508768088800-43c68b8ea271?auto=format&fit=crop&q=80&w=400&h=300&sig=9",
+    "image": "/images/bournvita_old_school.jpg",
     "isVeg": true
   },
   {
