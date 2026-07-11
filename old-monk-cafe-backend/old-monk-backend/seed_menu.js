@@ -1023,7 +1023,7 @@ const menuItemsToSeed = [
     "price": 269,
     "description": "Smoky cottage cheese cubes cooked in rich tandoori gravy. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "desi_paneer",
-    "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&q=80&w=400&h=300&sig=98",
+    "image": "/images/paneer_handi.jpg",
     "isVeg": true
   },
   {
