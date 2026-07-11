@@ -597,7 +597,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 159,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "special",
-    "image": "https://images.unsplash.com/photo-1586357507341-3fbe59f2a5d9?auto=format&fit=crop&q=80&w=400&h=300&sig=59",
+    "image": "/images/palak_patta_chaat.jpg",
     "isVeg": true,
     "isAvailable": true
   },
