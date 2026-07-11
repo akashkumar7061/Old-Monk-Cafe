@@ -240,7 +240,7 @@ const menuItemsToSeed = [
     "price": 159,
     "description": "Rich and creamy whipped cold coffee served chilled. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "cold_coffee",
-    "image": "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&q=80&w=400&h=300&sig=12",
+    "image": "/images/hazelnut_premium_cold_coffee.jpg",
     "isVeg": true
   },
   {
@@ -249,7 +249,7 @@ const menuItemsToSeed = [
     "price": 149,
     "description": "Decadent, creamy blended milkshake topped with rich flavors. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "milk_shake",
-    "image": "https://images.unsplash.com/photo-1588710929895-6ee7a0a4d155?auto=format&fit=crop&q=80&w=400&h=300&sig=13",
+    "image": "/images/vanilla_milkshake.jpg",
     "isVeg": true
   },
   {
