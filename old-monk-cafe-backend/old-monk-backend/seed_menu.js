@@ -492,7 +492,7 @@ const menuItemsToSeed = [
     "price": 189,
     "description": "Fresh artisanal hand-tossed stone-baked pizza loaded with cheese. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "pizza",
-    "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=400&h=300&sig=40",
+    "image": "/images/margherita_pizza.jpg",
     "isVeg": true
   },
   {
