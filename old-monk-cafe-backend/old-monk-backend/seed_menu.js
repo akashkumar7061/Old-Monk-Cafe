@@ -1158,7 +1158,7 @@ const menuItemsToSeed = [
     "price": 119,
     "description": "Traditional steamed rice cakes or crispy dosas served with sambhar. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "categorySlug": "south_indian",
-    "image": "https://images.unsplash.com/photo-1678984815159-5490cf0296ea?auto=format&fit=crop&q=80&w=400&h=300&sig=113",
+    "image": "/images/vada_sambhar.jpg",
     "isVeg": true
   },
   {
