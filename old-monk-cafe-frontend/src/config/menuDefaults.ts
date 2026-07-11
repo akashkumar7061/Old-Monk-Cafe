@@ -57,7 +57,7 @@ export const fallbackMenuItems: MenuItemData[] = [
     "price": 50,
     "description": "Old Monk exclusive gourmet creation, prepared fresh. Freshly handcrafted with authentic premium ingredients and signature Old Monk recipe.",
     "category": "kadak_chai",
-    "image": "https://images.unsplash.com/photo-1759782177037-ea0b0879fb03?auto=format&fit=crop&q=80&w=400&h=300&sig=6",
+    "image": "/images/kesar_chai.jpg",
     "isVeg": true,
     "isAvailable": true
   },
